@@ -2,6 +2,8 @@
  * 
  */
 
+import java.util.List;
+
 /**
  * 
  */
@@ -9,10 +11,12 @@ public class Acteurs {
 	
 	private String prenomA;
 	private String nomA;
+	private final List<Acteurs> acteurs;
 	
-	 public Acteurs(String aPrenomA, String aNomA) {
+	 public Acteurs(String aPrenomA, String aNomA, List<Acteurs> aActeurs) {
 	        this.prenomA = aPrenomA;
 	        this.nomA = aNomA;
+	        this.acteurs= aActeurs;
 	    }
 	
 	
@@ -40,6 +44,12 @@ public class Acteurs {
 	 */
 	public void setNomA(String aNomA) {
 		this.nomA = aNomA;
+	}
+
+
+
+	public List<Acteurs> getActeurs() {
+		return acteurs;
 	}
 
 }
