@@ -1,22 +1,22 @@
 /**
- * 
+ * A class to represent the "Acteurs"
  */
 
-import java.util.List;
 
-/**
- * 
- */
 public class Acteurs {
 	
 	private String prenomA;
 	private String nomA;
-	private final List<Acteurs> acteurs;
 	
-	 public Acteurs(String aPrenomA, String aNomA, List<Acteurs> aActeurs) {
+	/**
+	 * Constructor of the class of 'Acteurs'
+	 * @param prenomA
+	 * @param nomA
+	 */
+	 public Acteurs(String aPrenomA, String aNomA) {
 	        this.prenomA = aPrenomA;
 	        this.nomA = aNomA;
-	        this.acteurs= aActeurs;
+	        
 	    }
 	
 	
@@ -48,8 +48,5 @@ public class Acteurs {
 
 
 
-	public List<Acteurs> getActeurs() {
-		return acteurs;
-	}
 
 }
