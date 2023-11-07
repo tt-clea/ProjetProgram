@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Film {
 	private String titreF;
@@ -120,8 +117,28 @@ public class Film {
 	{
 		acteurs.remove(aActeurs);
 	}
-	
-	
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Film film = (Film) o;
+		return couleurF == film.couleurF && NbStockage == film.NbStockage && Objects.equals(titreF, film.titreF) && Objects.equals(acteurs, film.acteurs) && Objects.equals(location, film.location);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(titreF, couleurF, NbStockage, acteurs, location);
+	}
+
+	@Override
+	public String toString() {
+		return "Film{" +
+				"titreF='" + titreF + '\'' +
+				", couleurF=" + couleurF +
+				", NbStockage=" + NbStockage +
+				", acteurs=" + acteurs +
+				", location=" + location +
+				'}';
+	}
 }
