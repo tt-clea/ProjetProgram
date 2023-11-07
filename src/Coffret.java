@@ -1,2 +1,6 @@
-package PACKAGE_NAME;public class Coffret {
+public class Coffret {
+    private String titreC;
+    private String genreC;
+
+
 }
