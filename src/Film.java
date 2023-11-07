@@ -6,6 +6,7 @@ public class Film {
 	private int NbStockage = 10;
 	private List<Acteurs> acteurs;
 	private Map<Abonnes,DateLocation> location;
+	private Genre genre;
 	
 	/**
 	 * @param location
@@ -19,16 +20,31 @@ public class Film {
 	 * @param titreF
 	 * @param couleurF
 	 * @param acteurs
-	 * @param location
 	 */
 	public Film(String titreF, boolean couleurF, List<Acteurs> acteurs) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
 		this.acteurs = acteurs;
 	}
-	
-	
-	
+	/**
+	 * @param titreF
+	 * @param couleurF
+	 * @param acteurs
+	 * @param location
+	 * @param genre
+	 * @param nbStockage
+	 */
+
+
+	public Film(String titreF, boolean couleurF, int nbStockage, List<Acteurs> acteurs, Map<Abonnes, DateLocation> location, Genre genre) {
+		this.titreF = titreF;
+		this.couleurF = couleurF;
+		NbStockage = nbStockage;
+		this.acteurs = acteurs;
+		this.location = location;
+		this.genre = genre;
+	}
+
 	/**
 	 * @param titreF
 	 * @param couleurF
@@ -103,6 +119,20 @@ public class Film {
 	}
 
 	/**
+	 * @return the genre
+	 */
+	public Genre getGenre() {
+		return genre;
+	}
+
+	/**
+	 * @set the titre de film
+	 */
+	public void setTitreF(String titreF) {
+		this.titreF = titreF;
+	}
+
+	/**
 	 * @param nbStockage the nbStockage to set
 	 */
 	public void setNbStockage(int nbStockage) {
@@ -123,12 +153,12 @@ public class Film {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Film film = (Film) o;
-		return couleurF == film.couleurF && NbStockage == film.NbStockage && Objects.equals(titreF, film.titreF) && Objects.equals(acteurs, film.acteurs) && Objects.equals(location, film.location);
+		return couleurF == film.couleurF && NbStockage == film.NbStockage && Objects.equals(titreF, film.titreF) && Objects.equals(acteurs, film.acteurs) && Objects.equals(location, film.location) && Objects.equals(genre, film.genre);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(titreF, couleurF, NbStockage, acteurs, location);
+		return Objects.hash(titreF, couleurF, NbStockage, acteurs, location, genre);
 	}
 
 	@Override
@@ -139,6 +169,7 @@ public class Film {
 				", NbStockage=" + NbStockage +
 				", acteurs=" + acteurs +
 				", location=" + location +
+				", genre=" + genre +
 				'}';
 	}
 }
