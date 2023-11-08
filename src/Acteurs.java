@@ -48,5 +48,14 @@ public class Acteurs {
 
 
 
+	@Override
+	public String toString() {
+		return "Acteurs [prenomA=" + prenomA + ", nomA=" + nomA + "]";
+	}
+	
+	
+
+
+
 
 }
