@@ -7,78 +7,57 @@ public class Film {
 	private List<Acteurs> acteurs;
 	private Map<Abonnes,DateLocation> location;
 	private Genre genre;
-	
-	/**
-	 * @param location
-	**/
-	public Film()
-	{
-		this.location=new HashMap<>(NbStockage);
-	}
-	
+
+
+
 	/**
 	 * @param titreF
 	 * @param couleurF
-	 * @param acteurs
-	 */
-	public Film(String titreF, boolean couleurF, List<Acteurs> acteurs) {
-		this.titreF = titreF;
-		this.couleurF = couleurF;
-		this.acteurs = acteurs;
-	}
-	/**
-	 * @param titreF
-	 * @param couleurF
-	 * @param acteurs
-	 * @param location
 	 * @param genre
-	 * @param nbStockage
 	 */
-
-
-	public Film(String titreF, boolean couleurF, int nbStockage, List<Acteurs> acteurs, Map<Abonnes, DateLocation> location, Genre genre) {
+	public Film(String titreF, boolean couleurF, Genre genre) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
-		NbStockage = nbStockage;
-		this.acteurs = acteurs;
-		this.location = location;
+		this.acteurs = new ArrayList<>();
+		location = new HashMap<>(NbStockage);
 		this.genre = genre;
 	}
 
-	/**
-	 * @param titreF
-	 * @param couleurF
-	 */
-	public Film(String titreF, boolean couleurF) {
-		this.titreF = titreF;
-		this.couleurF = couleurF;
-//		this(titreF,couleurF,new ArrayList<>());
-	}
-	
-	/**
-	 * @param titreF
-	 * @param acteurs
-	 */
-	public Film(String titreF, List<Acteurs> acteurs) {
-		this.titreF = titreF;
-		this.acteurs = acteurs;
-		
-	}
+//	/**
+//	 * @param titreF
+//	 * @param couleurF
+//	 */
+//	public Film(String titreF, boolean couleurF) {
+//		this.titreF = titreF;
+//		this.couleurF = couleurF;
+////		this(titreF,couleurF,new ArrayList<>());
+//	}
+//
+//	/**
+//	 * @param titreF
+//	 * @param acteurs
+//	 */
+//	public Film(String titreF) {
+//		this.titreF = titreF;
+//		this.acteurs = new ArrayList<>();
+//	}
 
 	/**
 	 * @add the location
 	 */
-	public void addLocation(final Abonnes abonnes,final DateLocation datelocation)
+	public boolean addLocation(final Abonnes abonnes,final DateLocation datelocation)
 	{
 		if(NbStockage>0)
 		{
 			NbStockage--;
 			location.put(abonnes, datelocation);
 			System.out.println("ok"+titreF);
+			return true;
 		}
 		else
 		{
 			System.out.println("non stockage");
+			return false;
 		}
 		
 	}
@@ -105,9 +84,9 @@ public class Film {
 		return couleurF;
 	}
 	/**
-	 * @return the acteurs
+	 * @return the list of acteurs
 	 */
-	public List<Acteurs> getActeurs() 
+	public List<Acteurs> getActeursList()
 	{
 		return acteurs;
 	}
@@ -139,10 +118,20 @@ public class Film {
 		NbStockage = nbStockage;
 	}
 
+	/**
+	 *
+	 * @param aActeurs ajouter les acteurs de cette film
+	 */
+
 	public void addActeurs(Acteurs aActeurs)
 	{
 		acteurs.add(aActeurs);
 	}
+
+	/**
+	 *
+	 * @param aActeurs supprimer les acteurs de cette film
+	 */
 	public void removeActeurs(Acteurs aActeurs)
 	{
 		acteurs.remove(aActeurs);
