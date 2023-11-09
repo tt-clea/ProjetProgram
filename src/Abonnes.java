@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -17,8 +19,10 @@ public class Abonnes {
 	private String dateNaissanceAb;
 	private String sexeAb;
 	private String fourchetteRevenus;
-	private final List<DateLocation> dateLocation;
 	private final List<Film> locationFilm;
+	private Map<Film, DateLocation> location; // History of Subscriber Rentals
+
+	
 	
 	
 
@@ -35,15 +39,16 @@ public class Abonnes {
 	 * 
 	 */
 	public Abonnes(String aPrenomAb,String aNomAb, String aDateNaissanceAb, String aSexeAb, String aFourchetteRevenus,
-			List<DateLocation> aDateLocation, List<Film> aLocationFilm) {
+			 List<Film> aLocationFilm) {
 		super();
 		this.prenomAb= aPrenomAb;
 		this.nomAb = aNomAb;
 		this.dateNaissanceAb = aDateNaissanceAb;
 		this.sexeAb = aSexeAb;
 		this.fourchetteRevenus = aFourchetteRevenus;
-		this.dateLocation = aDateLocation;
 		this.locationFilm= aLocationFilm;
+		
+        location = new HashMap<>(); // Initialize the HashMap
 	
 	}
 
@@ -53,9 +58,10 @@ public class Abonnes {
 	/**
 	 * @return the dateLocation
 	 */
-	public List<DateLocation> getDateLocation() {
-		return dateLocation;
-	}
+
+	public Map<Film, DateLocation> getLocation() {
+        return location;
+    }
 	
 	private String prenomAb;
 	/**
@@ -134,11 +140,11 @@ public class Abonnes {
 	 */
     public void setFourchetteRevenus(int aFourchetteRevenus) {
         if (aFourchetteRevenus <= 1000) {
-            this.fourchetteRevenus = "revenu faible";
+            this.fourchetteRevenus = "revenu faible: Tranche 1";
         } else if (aFourchetteRevenus <= 2000) {
-            this.fourchetteRevenus = "revenu moyen";
+            this.fourchetteRevenus = "revenu moyen: Tranche 2";
         } else {
-            this.fourchetteRevenus = "revenu élevé";
+            this.fourchetteRevenus = "revenu élevé: Tranche 3";
         }
     }
     
@@ -155,7 +161,7 @@ public class Abonnes {
 	@Override
 	public String toString() {
 		return "Abonnes [prenomAb=" + prenomAb + ",  nomAb=" + nomAb + ", dateNaissanceAb=" + dateNaissanceAb + ", sexeAb=" + sexeAb
-				+ ", fourchetteRevenus=" + fourchetteRevenus + ", dateLocation=" + dateLocation + ", locationFilm="
+				+ ", fourchetteRevenus=" + fourchetteRevenus + ", locationFilm="
 				+ locationFilm + "]";
 	}
 
@@ -167,6 +173,9 @@ public class Abonnes {
 	public int hashCode() {
 	    return Objects.hash(prenomAb,nomAb, dateNaissanceAb, sexeAb, fourchetteRevenus);
 	}
+	
+
+
 	
 	
 
