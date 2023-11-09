@@ -8,6 +8,7 @@ import java.util.Map;
 
 
 
+
 /**
  *Allows to build a subscriber 
  */
@@ -148,11 +149,7 @@ public class Abonnes {
         }
     }
     
-    
-
-
-
-	
+ 
 
 
 
