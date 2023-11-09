@@ -1,13 +1,20 @@
-public class sousGenre extends Genre{
+public class SousGenre extends Genre{
+
 
 	/**
-	 * @param genreNom
+	 * Constructor for the subclass 'sousGenre' that initializes the genre name.
+	 * @param genreNom The name of the genre.
 	 */
-	public sousGenre(String genreNom) {
+	public SousGenre(String genreNom) {
 		super(genreNom);
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	/**
+	 * Returns the name of the sub-genre.
+	 * @return The name of the sub-genre.
+	 */
 	public String getSousGenre()
 	{
 		return getGenreNom();
