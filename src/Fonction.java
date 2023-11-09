@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class Fonction {
 	// Mettre les MAP()
 	
 	private List<Abonnes> listeAbonnes;
-    private List<Film> listeFilms;
+    private List<Film> filmlist;
 	
     private Map<String, Abonnes> abonne;
 	private Map<String, Film> film;
@@ -35,7 +37,7 @@ public class Fonction {
 		
 		
 	}
-	
+	//•	Ajouter un abonné dans une liste d'abonnés.
 	// Methods to add subscribers and films to their respective lists
 
     
@@ -43,31 +45,31 @@ public class Fonction {
      * Method to add a subscriber to the list, avoiding duplicates.
      * @param subscriber The subscriber to be added
      */
-    public void addListAbonnes(Abonnes aAbonnes) {
+    public void addListAbonnes(Abonnes aAbonne) {
         // Check if the subscriber is not already in the list
-        if (!listeAbonnes.contains(aAbonnes)) {
-        	listeAbonnes.add(aAbonnes);
+        if (!listeAbonnes.contains(aAbonne)) {
+        	listeAbonnes.add(aAbonne);
             System.out.println("Abonné ajouté avec succès.");
         } else {
             System.out.println("Abonné est déjà dans la liste.");
         }
     }
     
-    
+    //•	Ajouter un film à une liste de films.
     /**
      * Method to add a film to the list, avoiding duplicates.
      * @param film The film to be added
      */
     public void addListeFilm(Film aFilm) {
         // Check if the film is not already in the list
-        if (!listeFilms.contains(aFilm)) {
-        	listeFilms.add(aFilm);
+        if (!filmlist.contains(aFilm)) {
+        	filmlist.add(aFilm);
             System.out.println("Film ajouté avec succès.");
         } else {
             System.out.println("Film est déjà dans la liste.");
         }
     }
-    
+    //•	Retrouver dans la liste des abonnés un abonné à partir de son nom et prénom.
     /**
      * Method to find a subscriber by their first name and last name.
      * @param firstName The first name of the subscriber
@@ -82,6 +84,7 @@ public class Fonction {
         }
         return null; // Return null if the subscriber is not found
     }
+    //•	Enregistrer un prêt : un abonné loue un film.
     
     /**
      * Method to register a loan: a subscriber rents a film.
@@ -108,6 +111,7 @@ public class Fonction {
         }
     }
     
+    //•	Extraire les abonnés dans la même fourchette de revenu.
     
     /**
     * Extracts the subscribers within the same income bracket.
@@ -128,14 +132,14 @@ public class Fonction {
         return abonnesMemeRevenu;
     }
     
-    
+    //•	Extraire le genre de films le plus populaire (le plus loué).
     
     	
     	 public String extraireGenrePlusLoue() {
     	        Map<String, Integer> comptesGenre = new HashMap<>();
     	        //Calculate the frequency of each type of film rented
 
-    	        for (Film film : listeFilms) {  // Iterate through each film in the film list
+    	        for (Film film : filmlist) {  // Iterate through each film in the film list
     	            String genre = film.getGenre().toString(); // Get the genre of the film as a string
     	            comptesGenre.put(genre, comptesGenre.getOrDefault(genre, 0) + 1); // Update the count for the genre
     	        }
@@ -191,6 +195,8 @@ public class Fonction {
         
         */
     	 
+    	 //•Extraire de la liste des films les films les plus similaires à un film ayant le titre « ? ».
+    	 
     	 /**
     	     * Extracts a list of films that are similar to the given title.
     	     * @param title The title of the film to search for.
@@ -199,7 +205,7 @@ public class Fonction {
     	
     	 public List<Film> extraireListeFilmSimilaire(Film film) { //browse the list of movies and add similar movies to the list 'filmSimilaires'
     		    List<Film> filmsSimilaires = new ArrayList<>();
-    		    for (Film f : listeFilms) {
+    		    for (Film f : filmlist) {
     		        if (f.getTitreF().equals(film.getTitreF()) && isFilmSimilaire(f, film)) {
     		            filmsSimilaires.add(f);
     		        }
@@ -237,6 +243,8 @@ public class Fonction {
     		    return true; // returns true If all similarity criteria are met 
     		}
     	 
+    	 //•	Extraire de la liste des abonnés, les abonnés « les plus curieux » : les films loués par ces abonnés se ressemblent le moins possible.
+    	 
     	 /**
     	  * Extracts a list of subscribers who do not watch similar films.
     	  * @return A list of subscribers who watch dissimilar films.
@@ -268,7 +276,7 @@ public class Fonction {
     	 
     	 
     	 
-    	 
+    	 //•	Extraire de la liste des films les films ayant un public « typé » : les abonnés louant ces films sont similaires (on fournira en paramètre le seuil de similarité entre abonnés).
     	 /**
     	     * Extracts films with a "typed" audience, where subscribers renting these films are similar.
     	     * @param similarityThreshold The threshold of similarity between subscribers.
@@ -276,7 +284,7 @@ public class Fonction {
     	     */
     	    public List<Film> extraireListeFilmsSimilaireAbonne(double similariteSeuil) {
     	        List<Film> similaireAudienceFilms = new ArrayList<>();
-    	        for (Film film : listeFilms) {
+    	        for (Film film : filmlist) {
     	            boolean similaireAudience = true; // Check if the film has a similar audience
     	            List<Abonnes> rentingSubscribers = film.getRentingSubscribers();
     	            if (rentingSubscribers.size() > 1) { // If there are more than one subscriber for the film
@@ -296,45 +304,62 @@ public class Fonction {
     	    }
     	    
     	    /**
-    	     * Checks if two subscribers are similar based on specified criteria.
-    	     * @param subscriber1 The first subscriber.
-    	     * @param subscriber2 The second subscriber.
-    	     * @param similarityThreshold The threshold of similarity between subscribers.
-    	     * @return True if the subscribers are similar, otherwise false.
+    	     * Checks if the subscriber's age falls within a specific category.
+    	     * @param subscriber The subscriber to check.
+    	     * @param similariteSeuil 
+    	     * @param aAbonne2 
+    	     * @return True if the subscriber's age falls within a specific category, otherwise false.
     	     */
     	    private boolean abonneSimilaire(Abonnes aAbonne1, Abonnes aAbonne2, double similariteSeuil) {
-    	        if (!aAbonne1.getSexeAb().equals(aAbonne2.getSexeAb())) { // Check if the subscribers have the same gender
-    	            return false;
-    	        }  // Check if the subscribers have the same income bracket
-    	        if (!aAbonne1.getFourchetteRevenus().equals(aAbonne2.getFourchetteRevenus())) {
-    	            return false;
-    	        } // Calculate the difference in age between the subscribers
-    	        int dateDifference = Math.abs(Integer.parseInt(aAbonne1.getDateNaissanceAb()) - Integer.parseInt(aAbonne2.getDateNaissanceAb()));
-    	        return dateDifference <= 10 && (dateDifference / 10) <= similariteSeuil; // Check if the age difference is within the threshold for similarity
+    	        int age = calculateAge(aAbonne1.getDateNaissanceAb());
+    	        if (age >= 0 && age <= 13 && aAbonne1.getFourchetteRevenus().equals("Enfant")) {
+    	            return true;
+    	        } else if (age >= 14 && age <= 17 && aAbonne1.getFourchetteRevenus().equals("Adolescent")) {
+    	            return true;
+    	        } else if (age >= 18 && age <= 26 && aAbonne1.getFourchetteRevenus().equals("Jeune adulte")) {
+    	            return true;
+    	        } else if (age >= 27 && age <= 63 && aAbonne1.getFourchetteRevenus().equals("Adulte")) {
+    	            return true;
+    	        } else return age > 63 && aAbonne1.getFourchetteRevenus().equals("Sénior");
     	    }
-    	    
-    	    
-    	    /**
-    	     * Extracts subscribers who are closest to a typical profile based on the genre of films they rent.
-    	     * @param targetGenre The target genre for comparison.
-    	     * @return A list of subscribers closest to the typical profile.
-    	     */
-    	    public List<Abonnes> extraireListeAbonneProcheProfil(Genre targetGenre) {
-    	        List<Abonnes> abonnesProchesProfil = new ArrayList<>();
-    	        for (Abonnes abonne : listeAbonnes) {
-    	            List<Film> filmsLoues = abonne.getLocationFilm();
-    	            for (Film film : filmsLoues) {
-    	                if (film.getGenre().equals(targetGenre)) {
-    	                    abonnesProchesProfil.add(abonne);
-    	                    break;
-    	                }
-    	            }
-    	        }
-    	        return abonnesProchesProfil;
-    	    }
-    	
 
-    	 
+
+    	   
+    	   
+    	    private int calculateAge(String dateNaissanceAb) {
+    	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    	        LocalDate birthDate = LocalDate.parse(dateNaissanceAb, formatter);
+    	        LocalDate currentDate = LocalDate.now();
+    	        return Period.between(birthDate, currentDate).getYears();
+    	    }
+    	    
+    	    //•	Extraire de la liste des abonnés, les abonnés les plus proches d'un profil type.
+
+		/**
+    	    * Extracts subscribers who are closest to a typical profile based on the genre and sub-genre of films they rent.
+    	    * @param targetGenre The target genre for comparison.
+    	    * @return A list of subscribers closest to the typical profile.
+    	    */
+    	   public List<Abonnes> extraireListeAbonneProcheProfil(Genre targetGenre) {
+    		    List<Abonnes> abonnesProchesProfil = new ArrayList<>();
+    		    for (Abonnes abonne : listeAbonnes) {
+    		        List<Film> filmsLoues = abonne.getLocationFilm();
+    		        for (Film film : filmsLoues) { // Check if the genre of the film is the same as the target genre
+    		            if (film.getGenre().equals(targetGenre)) {
+    		                abonnesProchesProfil.add(abonne);
+    		                break;
+    		            } // Check if the genre of the film is an instance of a sub-genre
+    		            if (film.getGenre() instanceof SousGenre) {
+    		                SousGenre sousGenreFilm = (SousGenre) film.getGenre(); // Check if the sub-genre of the film is the same as the target genre
+    		                if (sousGenreFilm.getSousGenre().equals(targetGenre.getGenreNom())) {
+    		                    abonnesProchesProfil.add(abonne);
+    		                    break;
+    		                }
+    		            }
+    		        }
+    		    }
+    		    return abonnesProchesProfil;
+    		}
     	 
     	 
     	 
