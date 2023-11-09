@@ -24,7 +24,7 @@ public class Film {
 		this.couleurF = couleurF;
 		this.acteurs = new ArrayList<>();
 		location = new HashMap<>(NbStockage);
-		this.genre = genre;
+		this.setGenre(genre);
 	}
 
 	
@@ -132,7 +132,7 @@ public class Film {
 
 	/**
 	 *
-	 * @param aActeurs ajouter les acteurs de cette film
+	 * @param aActeurs ajouter les acteurs de ce film
 	 */
 
 	public void addActeurs(Acteurs aActeurs)
@@ -142,12 +142,37 @@ public class Film {
 
 	/**
 	 *
-	 * @param aActeurs supprimer les acteurs de cette film
+	 * @param aActeurs supprimer les acteurs de ce film
 	 */
 	public void removeActeurs(Acteurs aActeurs)
 	{
 		acteurs.remove(aActeurs);
 	}
+
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+	private List<Abonnes> listeAbonnes;
+
+    // Autres attributs et méthodes de la classe Film
+
+    /**
+     * Récupère la liste des abonnés qui louent le film.
+     * @return La liste des abonnés qui louent le film.
+     */
+    public List<Abonnes> getRentingSubscribers() {
+        return listeAbonnes;
+    }
+
+
+
+
 	
 	
 

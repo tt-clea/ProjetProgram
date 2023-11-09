@@ -14,7 +14,7 @@ public class DateLocation {
      * Sets the start date of the rental.
      * @param dateDebut the start date of the rental in the format "DD-MM-YYYY"
      */
-    public void setDateDebut(String aDateDebut) {
+    public void setDateDebut(CharSequence aDateDebut) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         this.dateDebut = LocalDate.parse(aDateDebut, formatter);
     }
@@ -24,7 +24,7 @@ public class DateLocation {
      * @param dateFin the end date of the rental in the format "DD-MM-YYYY"
      * @throws IllegalArgumentException if the rental duration exceeds 30 days or if the end date is before the start date
      */
-    public void setDateFin(String aDateFin) {
+    public void setDateFin(CharSequence aDateFin) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate newDateFin = LocalDate.parse(aDateFin, formatter);
         if (newDateFin.isBefore(this.dateDebut)) {
@@ -56,6 +56,8 @@ public class DateLocation {
 	public String toString() {
 		return "DateLocation [dateDebut=" + dateDebut + ", dateFin=" + dateFin + "]";
 	}
+
+
     
     
     
