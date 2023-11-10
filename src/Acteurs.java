@@ -46,5 +46,11 @@ public class Acteurs {
 		this.nomA = aNomA;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Acteurs{" +
+				"prenomA='" + prenomA + '\'' +
+				", nomA='" + nomA + '\'' +
+				'}';
+	}
 }

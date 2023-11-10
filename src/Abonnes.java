@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,8 +12,8 @@ public class Abonnes {
 	private String nomAb;
 	private String dateNaissanceAb;
 	private String sexeAb;
-	private String fourchetteRevenus;
-	private final List<DateLocation> dateLocation;
+	private int fourchetteRevenus;
+
 	
 	
 
@@ -27,27 +28,14 @@ public class Abonnes {
 	 * @param fourchetteRevenus
 	 * @param dateLocation
 	 */
-	public Abonnes(String aNomAb, String aDateNaissanceAb, String aSexeAb, String aFourchetteRevenus,
-			List<DateLocation> aDateLocation) {
+	public Abonnes(String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {
 		super();
 		this.nomAb = aNomAb;
 		this.dateNaissanceAb = aDateNaissanceAb;
 		this.sexeAb = aSexeAb;
 		this.fourchetteRevenus = aFourchetteRevenus;
-		this.dateLocation = aDateLocation;
 	}
 
-
-
-
-	/**
-	 * @return the dateLocation
-	 */
-	public List<DateLocation> getDateLocation() {
-		return dateLocation;
-	}
-	
-	
 	
 	/**
 	 * @return the nomAb
@@ -88,13 +76,13 @@ public class Abonnes {
 	/**
 	 * @return the fourchetteRevenus
 	 */
-	public String getFourchetteRevenus() {
+	public int getFourchetteRevenus() {
 		return fourchetteRevenus;
 	}
 	/**
 	 * @param fourchetteRevenus the fourchetteRevenus to set
 	 */
-	public void setFourchetteRevenus(String aFourchetteRevenus) {
+	public void setFourchetteRevenus(int aFourchetteRevenus) {
 		this.fourchetteRevenus = aFourchetteRevenus;
 	}
 	

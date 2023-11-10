@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="film.java : ajouter genre">
-      <change afterPath="$PROJECT_DIR$/src/Evolues.java" afterDir="false" />
+    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="modifier Coffret.java , Film.java&#10;creer class de Evolues.java">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Abonnes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Abonnes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Acteurs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Acteurs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Coffret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coffret.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evolues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evolues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Film.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Genre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Genre.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sousGenre.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +83,7 @@
       <workItem from="1699352413596" duration="220000" />
       <workItem from="1699357074700" duration="2313000" />
       <workItem from="1699370763946" duration="867000" />
-      <workItem from="1699371679816" duration="11608000" />
+      <workItem from="1699371679816" duration="37168000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
@@ -146,7 +149,23 @@
       <option name="project" value="LOCAL" />
       <updated>1699373503401</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="modifier Coffret.java , Film.java&#10;creer class de Evolues.java">
+      <option name="closed" value="true" />
+      <created>1699455963181</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1699455963181</updated>
+    </task>
+    <task id="LOCAL-00010" summary="modifier Coffret.java , Film.java&#10;creer class de Evolues.java">
+      <option name="closed" value="true" />
+      <created>1699456286078</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1699456286078</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,6 +176,7 @@
     <MESSAGE value="pour construire sousGenre.java" />
     <MESSAGE value="ajouter toString,hashcode,equals" />
     <MESSAGE value="film.java : ajouter genre" />
-    <option name="LAST_COMMIT_MESSAGE" value="film.java : ajouter genre" />
+    <MESSAGE value="modifier Coffret.java , Film.java&#10;creer class de Evolues.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="modifier Coffret.java , Film.java&#10;creer class de Evolues.java" />
   </component>
 </project>

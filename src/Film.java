@@ -7,6 +7,7 @@ public class Film {
 	private List<Acteurs> acteurs;
 	private Map<Abonnes,DateLocation> location;
 	private Genre genre;
+	private Map<String,Integer> historique;
 
 
 
