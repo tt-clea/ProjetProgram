@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="tiantian modifier">
+    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="tiantian modifier film">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Abonnes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Abonnes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Acteurs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Acteurs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DateLocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DateLocation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evolues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evolues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Film.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +60,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging Tiantian-test",
+    "git-widget-placeholder": "Tiantian-test",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -78,7 +80,7 @@
       <workItem from="1699352413596" duration="220000" />
       <workItem from="1699357074700" duration="2313000" />
       <workItem from="1699370763946" duration="867000" />
-      <workItem from="1699371679816" duration="37600000" />
+      <workItem from="1699371679816" duration="49930000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
@@ -192,6 +194,7 @@
     <MESSAGE value="film.java : ajouter genre" />
     <MESSAGE value="modifier Coffret.java , Film.java&#10;creer class de Evolues.java" />
     <MESSAGE value="tiantian modifier" />
-    <option name="LAST_COMMIT_MESSAGE" value="tiantian modifier" />
+    <MESSAGE value="tiantian modifier film" />
+    <option name="LAST_COMMIT_MESSAGE" value="tiantian modifier film" />
   </component>
 </project>

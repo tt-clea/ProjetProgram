@@ -133,56 +133,69 @@ public class Evolues {
         //获得两个节点
         Genre genreF1=films1.getGenre();
         Genre genreF2=films2.getGenre();
+        String nomGenreFilm1= genreF1.getGenreNom(); //get the nom of genre.
+        String nomGenreFilm2= genreF2.getGenreNom();
 //        System.out.println("genreF1 : "+genreF1);
 //        System.out.println("genreF2 : "+genreF2);
         int size=0;
+
+
         if (genreF1.equals(genreF2))
         {
             size=calculateHeight(g)-1;
-            System.out.println("Size "+size);
+//            System.out.println("Size "+size);
             return size;
         }
         else{
 
             //判断子节点是否为同一个父节点
-            size=calculateSize(g,size);
+//
+            List<String> path1=new ArrayList<>();
+            List<String> path2=new ArrayList<>();
+            List<String> pathdeGenre1=SearchNode(g,nomGenreFilm1,path1);
+            List<String> pathdeGenre2=SearchNode(g,nomGenreFilm2,path2);
+//            System.out.println("path1  :"+pathdeGenre1);
+//            System.out.println("path2  :"+pathdeGenre2);
+            List<String> path_save_same_genre=pathdeGenre1;
+            path_save_same_genre.retainAll(pathdeGenre2);
+//            System.out.println("same genre  :"+path_save_same_genre);
+            size=path_save_same_genre.size()-1;
 
-            System.out.println("Size "+size);
+//            System.out.println("Size :"+size);
             return size;
         }
     }
-    public static int calculateSize(Genre g,int size)
-    {
-        Genre genreF1=films1.getGenre();
-        Genre genreF2=films2.getGenre();
-        String nomGenreFilm1= genreF1.getGenreNom(); //get the nom of genre.
-        String nomGenreFilm2= genreF2.getGenreNom();
-        System.out.println("les genre de film1 est : "+nomGenreFilm1);
-        System.out.println("les genre de film2 est : "+nomGenreFilm2);
 
-        if(g!=null)
+    public  List<String> SearchNode(Genre g,String f,List<String> path)
+    {
+
+        if(g == null)
         {
-//            System.out.println(g.getGenreNom()+" ");
-            for(Genre glist:g.getSubGenre())
+            return null;
+
+        }
+        //将首节点添加到路径中
+        path.add(g.getGenreNom());
+//        System.out.println("path : "+path);
+        if (g.getGenreNom().equals(f))
+        {
+            return path;
+        }
+        //如果没找到，在子节点急需寻找
+        for(Genre sub:g.getSubGenre())
+        {
+            List<String> res=  SearchNode(sub,f,new ArrayList<>(path));
+            if(res!=null)
             {
-                if (glist!=null)
-                {
-                    System.out.println("Father :"+glist.getGenreNom()); //action
-                    for (Genre ggg:glist.getSubGenre())
-                    {
-                        System.out.println("Son :"+ggg.getGenreNom());
-                        if ((nomGenreFilm1.equals(ggg.getGenreNom())))
-                        {
-                            size++;
-                            System.out.println(size);
-                        }
-                    }
-                    calculateSize(glist,size);
-                }
+                return res;
             }
         }
-        return size;
+
+        //如果首节点及其子节点都没有找到目标节点，返回空结果
+        return null;
+
     }
+
 
     public static int calculateHeight(Genre g)
     {
@@ -198,6 +211,10 @@ public class Evolues {
         }
         return maxChildDepth+1;
     }
+
+
+
+
 
 
 

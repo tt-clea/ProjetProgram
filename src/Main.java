@@ -51,8 +51,8 @@ public class Main {
         System.out.println(tree.getSubGenre());
 
 
-        Film f3=new Film("Runing man",true,western);
-        Film f4=new Film("Runing man2",true,aventure);
+        Film f3=new Film("Runing man",true,musique);
+        Film f4=new Film("Runing man2",true,musique);
         System.out.println("film3 "+f3);
 
         Evolues ev1=new Evolues(ab1,ab2);
@@ -63,10 +63,5 @@ public class Main {
 
         //将构造的二叉树传入到evolues中
         System.out.println(ev2.similarite_Film(tree));
-
-
-
-
-
     }
 }
