@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+
 
 
 
@@ -9,10 +12,16 @@ import java.util.List;
  */
 
 public class Abonnes {
+
+
 	private String nomAb;
 	private String dateNaissanceAb;
 	private String sexeAb;
+
 	private int fourchetteRevenus;
+
+	private final List<DateLocation> dateLocation;
+	private final List<Film> locationFilm;
 
 	
 	
@@ -27,16 +36,54 @@ public class Abonnes {
 	 * @param sexeAb
 	 * @param fourchetteRevenus
 	 * @param dateLocation
+	 * 
 	 */
 	public Abonnes(String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {
+
+	public Abonnes(String aPrenomAb,String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {
+
 		super();
+		this.prenomAb= aPrenomAb;
 		this.nomAb = aNomAb;
 		this.dateNaissanceAb = aDateNaissanceAb;
 		this.sexeAb = aSexeAb;
 		this.fourchetteRevenus = aFourchetteRevenus;
+
 	}
 
+		this.dateLocation = aDateLocation;
+		this.locationFilm= aLocationFilm;
 	
+	}
+
+
+
+
+	/**
+	 * @return the dateLocation
+	 */
+	public List<DateLocation> getDateLocation() {
+		return dateLocation;
+	}
+	
+	private String prenomAb;
+	/**
+	 * @return the prenomAb
+	 */
+	public String getPrenomAb() {
+		return prenomAb;
+	}
+
+
+
+
+	/**
+	 * @param prenomAb the prenomAb to set
+	 */
+	public void setPrenomAb(String prenomAb) {
+		this.prenomAb = prenomAb;
+	}
+
 	/**
 	 * @return the nomAb
 	 */
@@ -79,13 +126,30 @@ public class Abonnes {
 	public int getFourchetteRevenus() {
 		return fourchetteRevenus;
 	}
+	
+	/**
+	 * @return the locationFilm
+	 */
+	public List<Film> getLocationFilm() {
+		return locationFilm;
+	}
 	/**
 	 * @param fourchetteRevenus the fourchetteRevenus to set
+	 *
+	 *Method to set the income bracket based on the income value
 	 */
+
 	public void setFourchetteRevenus(int aFourchetteRevenus) {
 		this.fourchetteRevenus = aFourchetteRevenus;
-	}
-	
-	
-	
+
+    public void setFourchetteRevenus(int aFourchetteRevenus) {
+        if (aFourchetteRevenus <= 1000) {
+            this.fourchetteRevenus = "revenu faible";
+        } else if (aFourchetteRevenus <= 2000) {
+            this.fourchetteRevenus = "revenu moyen";
+        } else {
+            this.fourchetteRevenus = "revenu élevé";
+        }
+    }
+
 }
