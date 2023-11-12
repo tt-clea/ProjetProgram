@@ -15,13 +15,39 @@ public class Coffret {
     private static int NOMBRE_FILMS = 10;
     private Map<String,List<Acteurs>> coffretList;
 
-    public Coffret(String titreC, Genre genre,  boolean couleurC, boolean bonus) {
+    public Coffret(String titreC, boolean bonus) {
         this.titreC = titreC;
-        this.genre = genre;
-        this.couleurC = couleurC;
         this.bonus = bonus;
         this.filmlist=new ArrayList<>();
         coffretList=new HashMap<>();
+        this.couleurC=collection_color();
+        this.genre=collection_genre();
+    }
+
+
+    /**
+     * set color of coffret as same as film ;
+     */
+    private boolean collection_color()
+    {
+        if (!filmlist.isEmpty())
+        {
+
+            return filmlist.get(0).isCouleurF();
+        }
+        return false;
+    }
+
+    /**
+     * set genre of coffret as same as film;
+     */
+    private Genre collection_genre()
+    {
+        if(!filmlist.isEmpty())
+        {
+            return this.genre=filmlist.get(0).getGenre();
+        }
+        return null;
     }
 
 
@@ -30,8 +56,13 @@ public class Coffret {
     }
 
     public Genre getGenre() {
-        return genre;
+        return collection_genre();
     }
+
+    public boolean isCouleurC() {
+        return collection_color();
+    }
+
 
     public List<Film> getFilmlist() {
         return filmlist;
@@ -39,10 +70,6 @@ public class Coffret {
 
     public Film getFilm() {
         return film;
-    }
-
-    public boolean isCouleurC() {
-        return couleurC;
     }
 
     public boolean isBonus() {
@@ -65,28 +92,29 @@ public class Coffret {
 
 
 
-    public Map<String,List<Acteurs>> getActeursForFilm()
-    {
-        for(Film f:filmlist)
-        {
-            List<Acteurs> acteursList = f.getActeursList();
-            coffretList.put(f.getTitreF(),acteursList);
-        }
-        return coffretList;
-    }
+//    public Map<String,List<Acteurs>> getActeursForFilm()
+//    {
+//        for(Film f:filmlist)
+//        {
+//            List<Acteurs> acteursList = f.getActeursList();
+//            coffretList.put(f.getTitreF(),acteursList);
+//        }
+//        return coffretList;
+//    }
 
     @Override
     public String toString() {
         return "Coffret{" +
                 "titreC='" + titreC + '\'' +
-                ", genre=" + genre +
+
                 ", filmlist=" + filmlist +
                 ", film=" + film +
-                ", couleurC=" + couleurC +
+
                 ", bonus=" + bonus +
                 ", coffretList=" + coffretList +
                 '}';
     }
+
 
 
 

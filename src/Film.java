@@ -4,12 +4,21 @@ public class Film {
 	private String titreF;
 	private boolean couleurF;
 	private int NbStockage = 10;
-	private List<Acteurs> acteurs;
+	private List<Acteurs> acteursList;
 	private Map<Abonnes,DateLocation> location;
 
 	private Genre genre;
+	private Acteurs acteurs;
 	private Map<String,List<List<String>>> historique;
 
+	/**
+	 *
+	 **/
+	public Film()
+	{
+		this.location=new HashMap<>(NbStockage);
+		this.historique=new HashMap<>();
+	}
 
 
 	/**
@@ -20,32 +29,20 @@ public class Film {
 	public Film(String titreF, boolean couleurF, Genre genre) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
-		this.acteurs = new ArrayList<>();
+		this.acteursList = new ArrayList<>();
 		location = new HashMap<>(NbStockage);
 		this.genre = genre;
 		historique=new HashMap<>();
 	}
 
-	
-	/**
-	 * @param location
-	**/
-	public Film()
-	{
-		this.location=new HashMap<>(NbStockage);
-		this.historique=new HashMap<>();
-	}
-	
-	/**
-	 * @param titreF
-	 * @param couleurF
-	 * @param acteurs
-	 * @param location
-	 */
-	public Film(String titreF, boolean couleurF, List<Acteurs> acteurs) {
+	public Film(String titreF, boolean couleurF,Genre genre, Acteurs acteurs) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
+		this.acteursList = new ArrayList<>();
+		location = new HashMap<>(NbStockage);
+		this.genre = genre;
 		this.acteurs = acteurs;
+		historique=new HashMap<>();
 	}
 
 	public Genre getGenre() {
@@ -114,7 +111,7 @@ public class Film {
 	 */
 	public List<Acteurs> getActeursList()
 	{
-		return acteurs;
+		return acteursList;
 	}
 	/**
 	 * @return the nbStockage
@@ -130,6 +127,10 @@ public class Film {
 		NbStockage = nbStockage;
 	}
 
+	public Acteurs getActeurs() {
+		return acteurs;
+	}
+
 	/**
 	 *
 	 * @param aActeurs ajouter les acteurs de cette film
@@ -137,7 +138,7 @@ public class Film {
 
 	public void addActeurs(Acteurs aActeurs)
 	{
-		acteurs.add(aActeurs);
+		acteursList.add(aActeurs);
 	}
 
 	/**
@@ -146,21 +147,9 @@ public class Film {
 	 */
 	public void removeActeurs(Acteurs aActeurs)
 	{
-		acteurs.remove(aActeurs);
+		acteursList.remove(aActeurs);
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Film film = (Film) o;
-		return couleurF == film.couleurF && NbStockage == film.NbStockage && Objects.equals(titreF, film.titreF) && Objects.equals(acteurs, film.acteurs) && Objects.equals(location, film.location) && Objects.equals(genre, film.genre) && Objects.equals(historique, film.historique);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(titreF, couleurF, NbStockage, acteurs, location, genre, historique);
-	}
 
 	@Override
 	public String toString() {
@@ -168,10 +157,24 @@ public class Film {
 				"titreF='" + titreF + '\'' +
 				", couleurF=" + couleurF +
 				", NbStockage=" + NbStockage +
-				", acteurs=" + acteurs +
+				", acteursList=" + acteursList +
 				", location=" + location +
 				", genre=" + genre +
+				", acteurs=" + acteurs +
 				", historique=" + historique +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Film film = (Film) o;
+		return couleurF == film.couleurF && NbStockage == film.NbStockage && Objects.equals(titreF, film.titreF) && Objects.equals(acteursList, film.acteursList) && Objects.equals(location, film.location) && Objects.equals(genre, film.genre) && Objects.equals(acteurs, film.acteurs) && Objects.equals(historique, film.historique);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(titreF, couleurF, NbStockage, acteursList, location, genre, acteurs, historique);
 	}
 }
