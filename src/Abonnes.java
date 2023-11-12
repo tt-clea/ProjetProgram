@@ -1,6 +1,8 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 
@@ -17,12 +19,11 @@ public class Abonnes {
 	private String nomAb;
 	private String dateNaissanceAb;
 	private String sexeAb;
-
-	private int fourchetteRevenus;
-
-	private final List<DateLocation> dateLocation;
+	private String fourchetteRevenus;
 	private final List<Film> locationFilm;
+	private Map<Film, DateLocation> location; // History of Subscriber Rentals
 
+	
 	
 	
 
@@ -38,21 +39,17 @@ public class Abonnes {
 	 * @param dateLocation
 	 * 
 	 */
-	public Abonnes(String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {
-
-	public Abonnes(String aPrenomAb,String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {
-
+	public Abonnes(String aPrenomAb,String aNomAb, String aDateNaissanceAb, String aSexeAb, String aFourchetteRevenus,
+			 List<Film> aLocationFilm) {
 		super();
 		this.prenomAb= aPrenomAb;
 		this.nomAb = aNomAb;
 		this.dateNaissanceAb = aDateNaissanceAb;
 		this.sexeAb = aSexeAb;
 		this.fourchetteRevenus = aFourchetteRevenus;
-
-	}
-
-		this.dateLocation = aDateLocation;
 		this.locationFilm= aLocationFilm;
+		
+        location = new HashMap<>(); // Initialize the HashMap
 	
 	}
 
@@ -62,9 +59,10 @@ public class Abonnes {
 	/**
 	 * @return the dateLocation
 	 */
-	public List<DateLocation> getDateLocation() {
-		return dateLocation;
-	}
+
+	public Map<Film, DateLocation> getLocation() {
+        return location;
+    }
 	
 	private String prenomAb;
 	/**
@@ -84,6 +82,9 @@ public class Abonnes {
 		this.prenomAb = prenomAb;
 	}
 
+	
+	
+	
 	/**
 	 * @return the nomAb
 	 */
@@ -123,7 +124,7 @@ public class Abonnes {
 	/**
 	 * @return the fourchetteRevenus
 	 */
-	public int getFourchetteRevenus() {
+	public String getFourchetteRevenus() {
 		return fourchetteRevenus;
 	}
 	
@@ -138,18 +139,47 @@ public class Abonnes {
 	 *
 	 *Method to set the income bracket based on the income value
 	 */
-
-	public void setFourchetteRevenus(int aFourchetteRevenus) {
-		this.fourchetteRevenus = aFourchetteRevenus;
-
     public void setFourchetteRevenus(int aFourchetteRevenus) {
         if (aFourchetteRevenus <= 1000) {
-            this.fourchetteRevenus = "revenu faible";
+            this.fourchetteRevenus = "revenu faible: Tranche 1";
         } else if (aFourchetteRevenus <= 2000) {
-            this.fourchetteRevenus = "revenu moyen";
+            this.fourchetteRevenus = "revenu moyen: Tranche 2";
         } else {
-            this.fourchetteRevenus = "revenu élevé";
+            this.fourchetteRevenus = "revenu élevé: Tranche 3";
         }
     }
+    
+ 
 
+
+
+
+
+	@Override
+	public String toString() {
+		return "Abonnes [prenomAb=" + prenomAb + ",  nomAb=" + nomAb + ", dateNaissanceAb=" + dateNaissanceAb + ", sexeAb=" + sexeAb
+				+ ", fourchetteRevenus=" + fourchetteRevenus + ", locationFilm="
+				+ locationFilm + "]";
+	}
+
+
+
+
+	// Implementation of the hashCode method to enable hashing of the Abonnes object
+	@Override
+	public int hashCode() {
+	    return Objects.hash(prenomAb,nomAb, dateNaissanceAb, sexeAb, fourchetteRevenus);
+	}
+	
+
+
+	
+	
+
+
+
+	
+	
+	
+	
 }

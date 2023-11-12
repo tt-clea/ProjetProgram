@@ -1,61 +1,43 @@
-import java.util.ArrayList;
 import java.util.Objects;
-import java.util.List;
-import java.util.HashMap;
 
 public class Genre {
+	private final String genreNom;
 
-	private String genreNom;
-	private List<Genre> subGenre;
-
-
-
+	/**
+	 * @param genreNom
+	 */
 	public Genre(String genreNom) {
-		this.genreNom=genreNom;
-		this.subGenre=new ArrayList<>();
+		this.genreNom = genreNom;
 	}
 
+	/**
+	 * @return the genreNom
+	 */
 	public String getGenreNom() {
 		return genreNom;
 	}
 
-	public List<Genre> getSubGenre() {
-		return subGenre;
-	}
-
-	public void addSubGenre(Genre sub)
-	{
-		subGenre.add(sub);
-	}
-
-	public void removeSubGenre(Genre sub)
-	{
-		subGenre.remove(sub);
-	}
-
-	public void setGenreNom(String genreNom) {
-		this.genreNom = genreNom;
-	}
-
-	public void setSubGenre(List<Genre> subGenre) {
-		this.subGenre = subGenre;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Genre genre = (Genre) o;
-		return Objects.equals(genreNom, genre.genreNom) && Objects.equals(subGenre, genre.subGenre);
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(genreNom, subGenre);
+		return Objects.hash(genreNom);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Genre other = (Genre) obj;
+		return Objects.equals(genreNom, other.genreNom);
 	}
 
 	@Override
 	public String toString() {
-		return genreNom+":"+subGenre;
+		return "Genre [genreNom=" + genreNom + "]";
 	}
+	
+	
 }

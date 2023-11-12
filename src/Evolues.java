@@ -1,13 +1,7 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 public class Evolues {
-    private Abonnes abonnes1;
-    private Abonnes abonnes2;
-    private static Film films1;
-    private static Film films2;
+    private Abonnes abonnes;
+    private Film films;
+
 
     private Coffret coffret;
 
@@ -326,10 +320,4 @@ public class Evolues {
     }
 
 
-
-
-
-
 }
-
-

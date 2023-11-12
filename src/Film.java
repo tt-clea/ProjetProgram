@@ -8,8 +8,10 @@ public class Film {
 	private Map<Abonnes,DateLocation> location;
 
 	private Genre genre;
+
 	private Acteurs acteurs;
 	private Map<String,List<List<String>>> historique;
+
 
 	/**
 	 *
@@ -31,8 +33,12 @@ public class Film {
 		this.couleurF = couleurF;
 		this.acteursList = new ArrayList<>();
 		location = new HashMap<>(NbStockage);
+
 		this.genre = genre;
 		historique=new HashMap<>();
+
+		this.setGenre(genre);
+
 	}
 
 	public Film(String titreF, boolean couleurF,Genre genre, Acteurs acteurs) {
@@ -44,11 +50,26 @@ public class Film {
 		this.acteurs = acteurs;
 		historique=new HashMap<>();
 	}
+	
 
-	public Genre getGenre() {
-		return genre;
-	}
-
+//	/**
+//	 * @param titreF
+//	 * @param couleurF
+//	 */
+//	public Film(String titreF, boolean couleurF) {
+//		this.titreF = titreF;
+//		this.couleurF = couleurF;
+////		this(titreF,couleurF,new ArrayList<>());
+//	}
+//
+//	/**
+//	 * @param titreF
+//	 * @param acteurs
+//	 */
+//	public Film(String titreF) {
+//		this.titreF = titreF;
+//		this.acteurs = new ArrayList<>();
+//	}
 
 	/**
 	 * @add the location
@@ -133,7 +154,7 @@ public class Film {
 
 	/**
 	 *
-	 * @param aActeurs ajouter les acteurs de cette film
+	 * @param aActeurs ajouter les acteurs de ce film
 	 */
 
 	public void addActeurs(Acteurs aActeurs)
@@ -143,12 +164,40 @@ public class Film {
 
 	/**
 	 *
-	 * @param aActeurs supprimer les acteurs de cette film
+	 * @param aActeurs supprimer les acteurs de ce film
 	 */
 	public void removeActeurs(Acteurs aActeurs)
 	{
 		acteursList.remove(aActeurs);
 	}
+
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+	private List<Abonnes> listeAbonnes;
+
+    // Autres attributs et méthodes de la classe Film
+
+    /**
+     * Récupère la liste des abonnés qui louent le film.
+     * @return La liste des abonnés qui louent le film.
+     */
+    public List<Abonnes> getRentingSubscribers() {
+        return listeAbonnes;
+    }
+
+
+
+
+	
+	
+
 
 
 	@Override
