@@ -1,3 +1,5 @@
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -23,42 +25,57 @@ public class Fonction {
     private Map<String, Abonnes> abonne;
 	private Map<String, Film> film;
 	private Map<String, Coffret> coffret;
+//	private Connection bd;
+	private BdConnector bd;
 	
 
 	
 	
 	
-	public Fonction() {
-		abonne = new HashMap<>();
+	public Fonction(BdConnector bd) {
+		this.bd=bd;
+        abonne = new HashMap<>();
 		film = new HashMap<>();
 		coffret = new HashMap<>();
-		
-
-		
-		
+		this.listeAbonnes=new ArrayList<>();
+		this.filmlist=new ArrayList<>();
 	}
+
+
+
 	//•	Ajouter un abonné dans une liste d'abonnés.
 	// Methods to add subscribers and films to their respective lists
 
     
     /**
      * Method to add a subscriber to the list, avoiding duplicates.
-     * @param subscriber The subscriber to be added
+     * @param aAbonne The subscriber to be added
      */
-    public void addListAbonnes(Abonnes aAbonne) {
+    public void addAbonnesBD(Abonnes aAbonne) throws SQLException {
         // Check if the subscriber is not already in the list
-        if (!listeAbonnes.contains(aAbonne)) {
-        	listeAbonnes.add(aAbonne);
-            System.out.println("Abonné ajouté avec succès.");
-        } else {
-            System.out.println("Abonné est déjà dans la liste.");
-        }
+		boolean find=bd.findAbonne(aAbonne.getNomAb(),aAbonne.getPrenomAb());
+		if(find)
+		{
+			//prenomAb,nomAb,dateNaissanceAb,sexeAb,fourchetteRevenus
+			//insert les information to abonnes
+			boolean insert=bd.insert_abonne(aAbonne.getPrenomAb(),aAbonne.getNomAb(),aAbonne.getDateNaissanceAb(),aAbonne.getSexeAb(),aAbonne.getFourchetteRevenus());
+			if(insert)
+			{
+				System.out.println("L'abonné a été ajouté avec succès");
+			}
+			else {
+				System.out.println("L'abonné a été pas ajouté");
+			}
+		}
+		else {
+			System.out.println("Ajouter fail ! Abonné est déjà dans la liste.");
+		}
     }
     
     //•	Ajouter un film à une liste de films.
     /**
      * Method to add a film to the list, avoiding duplicates.
-     * @param film The film to be added
+     * @param aFilm The film to be added
      */
     public void addListeFilm(Film aFilm) {
         // Check if the film is not already in the list
@@ -72,8 +89,8 @@ public class Fonction {
     //•	Retrouver dans la liste des abonnés un abonné à partir de son nom et prénom.
     /**
      * Method to find a subscriber by their first name and last name.
-     * @param firstName The first name of the subscriber
-     * @param lastName The last name of the subscriber
+     * @param aNom The first name of the subscriber
+     * @param aPrenom The last name of the subscriber
      * @return The subscriber if found, otherwise null
      */
     public Abonnes trouverAbonne(String aPrenom, String aNom) {
@@ -85,15 +102,15 @@ public class Fonction {
         return null; // Return null if the subscriber is not found
     }
     //•	Enregistrer un prêt : un abonné loue un film.
-    
-    /**
-     * Method to register a loan: a subscriber rents a film.
-     * @param abonne The subscriber who is renting the film
-     * @param film The film being rented
-     * @param dateDebut The start date of the rental
-     * @param dateFin The end date of the rental
-     */
-    public void enregistrerPret(Abonnes aAbonne, Film aFilm, CharSequence aDateDebut, CharSequence aDateFin) {
+
+	/**
+	 * Method to register a loan: a subscriber rents a film.
+	 * @param aAbonne
+	 * @param aFilm
+	 * @param aDateDebut
+	 * @param aDateFin
+	 */
+	public void enregistrerPret(Abonnes aAbonne, Film aFilm, String aDateDebut, String aDateFin) {
         // Check if the film is available for rental
         if (aFilm.getNbStockage() > 0) {
             DateLocation dateLocation = new DateLocation(); // Create a new DateLocation object for the rental
@@ -115,16 +132,16 @@ public class Fonction {
     
     /**
     * Extracts the subscribers within the same income bracket.
-    * @param incomeBracket The income bracket to filter the subscribers
+    * @param aFourchetteRevenus The income bracket to filter the subscribers
     * @return List of subscribers within the specified income bracket
     */
     
     
-    public List<Abonnes> extraireAbonneMemeRevenu(String aFourchetteRevenus) {
+    public List<Abonnes> extraireAbonneMemeRevenu(int aFourchetteRevenus) {
         List<Abonnes> abonnesMemeRevenu = new ArrayList<>();
 
         for (Abonnes abonne : listeAbonnes) {
-            if (abonne.getFourchetteRevenus().equals(aFourchetteRevenus)) {
+            if (abonne.getFourchetteRevenus()==aFourchetteRevenus) {
                 abonnesMemeRevenu.add(abonne);
             }
         }
@@ -199,7 +216,7 @@ public class Fonction {
     	 
     	 /**
     	     * Extracts a list of films that are similar to the given title.
-    	     * @param title The title of the film to search for.
+    	     * @param film The title of the film to search for.
     	     * @return A list of films with similar titles.
     	     */
     	
@@ -277,83 +294,83 @@ public class Fonction {
     	 //--------------------------------------------------A VOIR --------------------------
     	 
     	 
-    	 
-    	 //•	Extraire de la liste des films les films ayant un public « typé » : les abonnés louant ces films sont similaires (on fournira en paramètre le seuil de similarité entre abonnés).
-    	 /**
-    	     * Extracts films with a "typed" audience, where subscribers renting these films are similar.
-    	     * @param similarityThreshold The threshold of similarity between subscribers.
-    	     * @return A list of films with a "typed" audience.
-    	     */
-    	    public List<Film> extraireListeFilmsSimilaireAbonne(double similariteSeuil) {
-    	        List<Film> similaireAudienceFilms = new ArrayList<>();
-    	        for (Film film : filmlist) {
-    	            boolean similaireAudience = true; // Check if the film has a similar audience
-    	            List<Abonnes> rentingSubscribers = film.getRentingSubscribers();
-    	            if (rentingSubscribers.size() > 1) { // If there are more than one subscriber for the film
-    	                Abonnes firstSubscriber = rentingSubscribers.get(0); // Get the first subscriber to compare
-    	                for (Abonnes subscriber : rentingSubscribers) { // Compare each subscriber to the first subscriber
-    	                    if (!abonneSimilaire(firstSubscriber, subscriber, similariteSeuil)) { // If the subscribers are not similar, set similaireAudience to false and break the loop
-    	                        similaireAudience = false;
-    	                        break;
-    	                    }
-    	                }
-    	            }
-    	            if (similaireAudience) { // If the film has a similar audience, add it to the list
-    	                similaireAudienceFilms.add(film);
-    	            }
-    	        }
-    	        return similaireAudienceFilms;
-    	    }
-    	    
-    	   
+//
+//    	 //•	Extraire de la liste des films les films ayant un public « typé » : les abonnés louant ces films sont similaires (on fournira en paramètre le seuil de similarité entre abonnés).
+//    	 /**
+//    	     * Extracts films with a "typed" audience, where subscribers renting these films are similar.
+//    	     * @param similariteSeuil The threshold of similarity between subscribers.
+//    	     * @return A list of films with a "typed" audience.
+//    	     */
+//    	    public List<Film> extraireListeFilmsSimilaireAbonne(double similariteSeuil) {
+//    	        List<Film> similaireAudienceFilms = new ArrayList<>();
+//    	        for (Film film : filmlist) {
+//    	            boolean similaireAudience = true; // Check if the film has a similar audience
+//    	            List<Abonnes> rentingSubscribers = film.getRentingSubscribers();
+//    	            if (rentingSubscribers.size() > 1) { // If there are more than one subscriber for the film
+//    	                Abonnes firstSubscriber = rentingSubscribers.get(0); // Get the first subscriber to compare
+//    	                for (Abonnes subscriber : rentingSubscribers) { // Compare each subscriber to the first subscriber
+//    	                    if (!abonneSimilaire(firstSubscriber, subscriber, similariteSeuil)) { // If the subscribers are not similar, set similaireAudience to false and break the loop
+//    	                        similaireAudience = false;
+//    	                        break;
+//    	                    }
+//    	                }
+//    	            }
+//    	            if (similaireAudience) { // If the film has a similar audience, add it to the list
+//    	                similaireAudienceFilms.add(film);
+//    	            }
+//    	        }
+//    	        return similaireAudienceFilms;
+//    	    }
+//
+//
 
     	   
-    	
-		// Calculate the age of the subscriber based on the date of birth
-    	   /** private int calculateAge(String dateNaissanceAb) {
-    	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");// Define the date formatter for the subscriber's date of birth
-    	        LocalDate birthDate = LocalDate.parse(dateNaissanceAb, formatter);// Parse the subscriber's date of birth into a LocalDate object
-    	        LocalDate currentDate = LocalDate.now(); // Get the current date
-    	        return Period.between(birthDate, currentDate).getYears();// Calculate the age based on the difference between the current date and the date of birth
+//
+//		// Calculate the age of the subscriber based on the date of birth
+//    	   /** private int calculateAge(String dateNaissanceAb) {
+//    	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");// Define the date formatter for the subscriber's date of birth
+//    	        LocalDate birthDate = LocalDate.parse(dateNaissanceAb, formatter);// Parse the subscriber's date of birth into a LocalDate object
+//    	        LocalDate currentDate = LocalDate.now(); // Get the current date
+//    	        return Period.between(birthDate, currentDate).getYears();// Calculate the age based on the difference between the current date and the date of birth
+//
+//    	    }*/
+//
+//
+//    	    /**
+//    	     * Extracts films with a "typed" audience based on subscriber similarity.
+//    	     * @param similarityThreshold The threshold of similarity between subscribers.
+//    	     * @return A list of films with a "typed" audience.
+//    	     */
+//    	    public List<Film> extractTypedAudienceFilms(double similarityThreshold) {
+//    	        List<Film> typedAudienceFilms = new ArrayList<>();
+//
+//    	        // Iterate through each film
+//    	        for (Film film : filmlist) {
+//    	            // Calculate the total number of subscribers for the film
+//    	            int totalSubscribers = film.getRentingSubscribers().size();
+//
+//    	            // Check if the film has more than one subscriber
+//    	            if (totalSubscribers > 1) {
+//    	                // Calculate the similarity percentage for each subscriber
+//    	                Map<Abonnes, Double> similarityMap = new HashMap<>();
+//    	                for (Abonnes subscriber : film.getRentingSubscribers()) {
+//    	                    double similarity = abonneSimilaire(subscriber, film, subscriber);
+//    	                    similarityMap.put(subscriber, similarity);
+//    	                }
+//
+//    	                // Check if there are subscribers with similarity percentage greater than or equal to 70%
+//    	                for (Map.Entry<Abonnes, Double> entry : similarityMap.entrySet()) {
+//    	                    if (entry.getValue() >= similarityThreshold) {
+//    	                        typedAudienceFilms.add(film);
+//    	                        break;
+//    	                    }
+//    	                }
+//    	            }
+//    	        }
+//
+//    	        return typedAudienceFilms;
+//    	    }
 
-    	    }*/
-    	    
-    	    
-    	    /**
-    	     * Extracts films with a "typed" audience based on subscriber similarity.
-    	     * @param similarityThreshold The threshold of similarity between subscribers.
-    	     * @return A list of films with a "typed" audience.
-    	     */
-    	    public List<Film> extractTypedAudienceFilms(double similarityThreshold) {
-    	        List<Film> typedAudienceFilms = new ArrayList<>();
-
-    	        // Iterate through each film
-    	        for (Film film : filmlist) {
-    	            // Calculate the total number of subscribers for the film
-    	            int totalSubscribers = film.getRentingSubscribers().size();
-
-    	            // Check if the film has more than one subscriber
-    	            if (totalSubscribers > 1) {
-    	                // Calculate the similarity percentage for each subscriber
-    	                Map<Abonnes, Double> similarityMap = new HashMap<>();
-    	                for (Abonnes subscriber : film.getRentingSubscribers()) {
-    	                    double similarity = abonneSimilaire(subscriber, film, subscriber);
-    	                    similarityMap.put(subscriber, similarity);
-    	                }
-
-    	                // Check if there are subscribers with similarity percentage greater than or equal to 70%
-    	                for (Map.Entry<Abonnes, Double> entry : similarityMap.entrySet()) {
-    	                    if (entry.getValue() >= similarityThreshold) {
-    	                        typedAudienceFilms.add(film);
-    	                        break;
-    	                    }
-    	                }
-    	            }
-    	        }
-
-    	        return typedAudienceFilms;
-    	    }
-
     	    
     	    
     	    
@@ -361,50 +378,50 @@ public class Fonction {
     	    
     	    
     	    
-    	    
-    	    
-    	    /**
-    	     * Calculate the similarity percentage between a subscriber and a film.
-    	     * @param subscriber The subscriber.
-    	     * @param film The film.
-    	     * @return The similarity percentage.
-    	     */
-    	    private double abonneSimilaire(Abonnes subscriber, Film film,Abonnes subscriber2 ) {
-    	        double similarityPercentage = 0.0;
-
-    	        // Check if they have the same gender
-    	        if (subscriber.getSexeAb().equals(film.getGenre().getGenreNom())) {
-    	            similarityPercentage += 40.0;
-    	        }
-
-    	        // Check if they are in the same age bracket (not more than 10 years apart)
-    	        int ageDifference = Math.abs(calculateAge(subscriber.getDateNaissanceAb()) - calculateAge(subscriber2.getDateNaissanceAb()));
-    	        if (ageDifference <= 10) {
-    	            similarityPercentage += 30.0;
-    	        } else if (ageDifference <= 20) {
-    	            similarityPercentage += 20.0;
-    	        } else if (ageDifference <= 30) {
-    	            similarityPercentage += 10.0;
-    	        }
-
-    	        // Check if they are in the same income bracket
-    	        if (subscriber.getFourchetteRevenus().equals(film.getGenre().getGenreNom())) {
-    	            similarityPercentage += 30.0;
-    	        }
-
-    	        return similarityPercentage;
-    	    }
-    	 // Calculate the age of the subscriber based on the date of birth
-    	    private int calculateAge(String dateNaissanceAb) {
-    	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");// Define the date formatter for the subscriber's date of birth
-    	        LocalDate birthDate = LocalDate.parse(dateNaissanceAb, formatter);// Parse the subscriber's date of birth into a LocalDate object
-    	        LocalDate currentDate = LocalDate.now(); // Get the current date
-    	        return Period.between(birthDate, currentDate).getYears();// Calculate the age based on the difference between the current date and the date of birth
-
-    	    }
-    	    
-    	    
-    	    
+//
+//
+//    	    /**
+//    	     * Calculate the similarity percentage between a subscriber and a film.
+//    	     * @param subscriber The subscriber.
+//    	     * @param film The film.
+//    	     * @return The similarity percentage.
+//    	     */
+//    	    private double abonneSimilaire(Abonnes subscriber, Film film,Abonnes subscriber2 ) {
+//    	        double similarityPercentage = 0.0;
+//
+//    	        // Check if they have the same gender
+//    	        if (subscriber.getSexeAb().equals(film.getGenre().getGenreNom())) {
+//    	            similarityPercentage += 40.0;
+//    	        }
+//
+//    	        // Check if they are in the same age bracket (not more than 10 years apart)
+//    	        int ageDifference = Math.abs(calculateAge(subscriber.getDateNaissanceAb()) - calculateAge(subscriber2.getDateNaissanceAb()));
+//    	        if (ageDifference <= 10) {
+//    	            similarityPercentage += 30.0;
+//    	        } else if (ageDifference <= 20) {
+//    	            similarityPercentage += 20.0;
+//    	        } else if (ageDifference <= 30) {
+//    	            similarityPercentage += 10.0;
+//    	        }
+//
+//    	        // Check if they are in the same income bracket
+//    	        if (subscriber.getFourchetteRevenus().equals(film.getGenre().getGenreNom())) {
+//    	            similarityPercentage += 30.0;
+//    	        }
+//
+//    	        return similarityPercentage;
+//    	    }
+//    	 // Calculate the age of the subscriber based on the date of birth
+//    	    private int calculateAge(String dateNaissanceAb) {
+//    	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");// Define the date formatter for the subscriber's date of birth
+//    	        LocalDate birthDate = LocalDate.parse(dateNaissanceAb, formatter);// Parse the subscriber's date of birth into a LocalDate object
+//    	        LocalDate currentDate = LocalDate.now(); // Get the current date
+//    	        return Period.between(birthDate, currentDate).getYears();// Calculate the age based on the difference between the current date and the date of birth
+//
+//    	    }
+//
+//
+//
     	    
     	    //---------------------------------------------------------------------
     	    

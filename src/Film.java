@@ -1,17 +1,26 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Film {
 	private String titreF;
 	private boolean couleurF;
 	private int NbStockage = 10;
-	private List<Acteurs> acteurs;
+	private List<Acteurs> acteursList;
 	private Map<Abonnes,DateLocation> location;
 
 	private Genre genre;
 
+	private Acteurs acteurs;
+	private Map<String,List<List<String>>> historique;
+
+
+	/**
+	 *
+	 **/
+	public Film()
+	{
+		this.location=new HashMap<>(NbStockage);
+		this.historique=new HashMap<>();
+	}
 
 
 	/**
@@ -22,30 +31,24 @@ public class Film {
 	public Film(String titreF, boolean couleurF, Genre genre) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
-		this.acteurs = new ArrayList<>();
+		this.acteursList = new ArrayList<>();
 		location = new HashMap<>(NbStockage);
+
+		this.genre = genre;
+		historique=new HashMap<>();
+
 		this.setGenre(genre);
+
 	}
 
-	
-	/**
-	 * @param location
-	**/
-	public Film()
-	{
-		this.location=new HashMap<>(NbStockage);
-	}
-	
-	/**
-	 * @param titreF
-	 * @param couleurF
-	 * @param acteurs
-	 * @param location
-	 */
-	public Film(String titreF, boolean couleurF, List<Acteurs> acteurs) {
+	public Film(String titreF, boolean couleurF,Genre genre, Acteurs acteurs) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
+		this.acteursList = new ArrayList<>();
+		location = new HashMap<>(NbStockage);
+		this.genre = genre;
 		this.acteurs = acteurs;
+		historique=new HashMap<>();
 	}
 	
 
@@ -77,6 +80,7 @@ public class Film {
 		{
 			NbStockage--;
 			location.put(abonnes, datelocation);
+			historiqueLocation(abonnes,datelocation);
 			System.out.println("ok"+titreF);
 			return true;
 		}
@@ -93,8 +97,22 @@ public class Film {
 	public void removeLocation(final Abonnes abonnes,final DateLocation datelocation)
 	{
 		NbStockage++;
-//		location.remove(abonnes);
+		location.remove(abonnes);
 		System.out.println("ok"+titreF);
+	}
+
+	public void historiqueLocation(Abonnes ab,DateLocation dateLocation) {
+		//Map<Abonnes,List<List<String>>> historique;
+		//List<String>= []  String film,date
+		// tiantian ,  [[film ,2020-2-9],[film2 , 2023-03-12]]
+		List<List<String>> listofList = new ArrayList<List<String>>();
+
+		List<String> innerList=new ArrayList<>();
+		innerList.add(getTitreF()); //film
+		innerList.add(dateLocation.getDateDebut()); //2020-2-9
+		listofList.add(innerList);//[[film,2020-2-9]]
+		historique.put(ab.getNomAb(),listofList);
+
 	}
 
 	/**
@@ -114,7 +132,7 @@ public class Film {
 	 */
 	public List<Acteurs> getActeursList()
 	{
-		return acteurs;
+		return acteursList;
 	}
 	/**
 	 * @return the nbStockage
@@ -130,6 +148,10 @@ public class Film {
 		NbStockage = nbStockage;
 	}
 
+	public Acteurs getActeurs() {
+		return acteurs;
+	}
+
 	/**
 	 *
 	 * @param aActeurs ajouter les acteurs de ce film
@@ -137,7 +159,7 @@ public class Film {
 
 	public void addActeurs(Acteurs aActeurs)
 	{
-		acteurs.add(aActeurs);
+		acteursList.add(aActeurs);
 	}
 
 	/**
@@ -146,7 +168,7 @@ public class Film {
 	 */
 	public void removeActeurs(Acteurs aActeurs)
 	{
-		acteurs.remove(aActeurs);
+		acteursList.remove(aActeurs);
 	}
 
 
@@ -171,10 +193,23 @@ public class Film {
     }
 
 
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 
-	
-	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 
-
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

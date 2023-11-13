@@ -1,12 +1,4 @@
-import java.util.List;
-import java.util.Objects;
-import java.util.HashMap;
-import java.util.Map;
-
-
-
-
-
+import java.util.*;
 
 
 /**
@@ -17,54 +9,26 @@ public class Abonnes {
 
 
 	private String nomAb;
+	private String prenomAb;
 	private String dateNaissanceAb;
 	private String sexeAb;
-	private String fourchetteRevenus;
+	private int fourchetteRevenus;
 	private final List<Film> locationFilm;
 	private Map<Film, DateLocation> location; // History of Subscriber Rentals
 
-	
-	
-	
-
-
-	
-	
-	/**
-	 * Constructor of the class of 'Abonnes'
-	 * @param nomAb
-	 * @param dateNaissanceAb
-	 * @param sexeAb
-	 * @param fourchetteRevenus
-	 * @param dateLocation
-	 * 
-	 */
-	public Abonnes(String aPrenomAb,String aNomAb, String aDateNaissanceAb, String aSexeAb, String aFourchetteRevenus,
-			 List<Film> aLocationFilm) {
-		super();
-		this.prenomAb= aPrenomAb;
-		this.nomAb = aNomAb;
-		this.dateNaissanceAb = aDateNaissanceAb;
-		this.sexeAb = aSexeAb;
-		this.fourchetteRevenus = aFourchetteRevenus;
-		this.locationFilm= aLocationFilm;
-		
-        location = new HashMap<>(); // Initialize the HashMap
-	
+	public Abonnes(String nomAb, String prenomAb, String dateNaissanceAb, String sexeAb, int fourchetteRevenus) {
+		this.nomAb = nomAb;
+		this.prenomAb = prenomAb;
+		this.dateNaissanceAb = dateNaissanceAb;
+		this.sexeAb = sexeAb;
+		this.fourchetteRevenus = fourchetteRevenus;
+		this.locationFilm = new ArrayList<>();
+		this.location = new HashMap<>();
 	}
 
 
 
 
-	/**
-	 * @return the dateLocation
-	 */
-
-	public Map<Film, DateLocation> getLocation() {
-        return location;
-    }
-	
-	private String prenomAb;
 	/**
 	 * @return the prenomAb
 	 */
@@ -124,7 +88,7 @@ public class Abonnes {
 	/**
 	 * @return the fourchetteRevenus
 	 */
-	public String getFourchetteRevenus() {
+	public int getFourchetteRevenus() {
 		return fourchetteRevenus;
 	}
 	
@@ -140,13 +104,7 @@ public class Abonnes {
 	 *Method to set the income bracket based on the income value
 	 */
     public void setFourchetteRevenus(int aFourchetteRevenus) {
-        if (aFourchetteRevenus <= 1000) {
-            this.fourchetteRevenus = "revenu faible: Tranche 1";
-        } else if (aFourchetteRevenus <= 2000) {
-            this.fourchetteRevenus = "revenu moyen: Tranche 2";
-        } else {
-            this.fourchetteRevenus = "revenu élevé: Tranche 3";
-        }
+        this.fourchetteRevenus=aFourchetteRevenus;
     }
     
  
