@@ -1,6 +1,24 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class Main {
     public static void main(String[] args) {
-    // construire les arbre de genre
+        //connect base de donnee de SQLite
+        //instead of your own path.
+        String path="jdbc:sqlite:Projet_Location.db";
+        Connection connection=BdConnector.connect(path);
+        if (connection!=null)
+        {
+            System.out.println("connection successful!");
+        }
+        else {
+            System.out.println("connection failure!");
+        }
+
+
+
+        // construire les arbre de genre
         Genre tree=new Genre("genre");
         Genre action=new Genre("action");
         Genre comedie=new Genre("comédie");
