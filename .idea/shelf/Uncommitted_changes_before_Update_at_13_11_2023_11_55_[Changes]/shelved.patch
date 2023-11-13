@@ -1,0 +1,262 @@
+Index: src/Abonnes.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.ArrayList;\nimport java.util.List;\nimport java.util.Objects;\n\n\n\n\n\n\n/**\n *Allows to build a subscriber \n */\n\npublic class Abonnes {\n\n\n\tprivate String nomAb;\n\tprivate String dateNaissanceAb;\n\tprivate String sexeAb;\n\n\tprivate int fourchetteRevenus;\n\n\tprivate final List<DateLocation> dateLocation;\n\tprivate final List<Film> locationFilm;\n\n\t\n\t\n\n\n\t\n\t\n\t/**\n\t * Constructor of the class of 'Abonnes'\n\t * @param nomAb\n\t * @param dateNaissanceAb\n\t * @param sexeAb\n\t * @param fourchetteRevenus\n\t * @param dateLocation\n\t * \n\t */\n\tpublic Abonnes(String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {\n\n\tpublic Abonnes(String aPrenomAb,String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {\n\n\t\tsuper();\n\t\tthis.prenomAb= aPrenomAb;\n\t\tthis.nomAb = aNomAb;\n\t\tthis.dateNaissanceAb = aDateNaissanceAb;\n\t\tthis.sexeAb = aSexeAb;\n\t\tthis.fourchetteRevenus = aFourchetteRevenus;\n\n\t}\n\n\t\tthis.dateLocation = aDateLocation;\n\t\tthis.locationFilm= aLocationFilm;\n\t\n\t}\n\n\n\n\n\t/**\n\t * @return the dateLocation\n\t */\n\tpublic List<DateLocation> getDateLocation() {\n\t\treturn dateLocation;\n\t}\n\t\n\tprivate String prenomAb;\n\t/**\n\t * @return the prenomAb\n\t */\n\tpublic String getPrenomAb() {\n\t\treturn prenomAb;\n\t}\n\n\n\n\n\t/**\n\t * @param prenomAb the prenomAb to set\n\t */\n\tpublic void setPrenomAb(String prenomAb) {\n\t\tthis.prenomAb = prenomAb;\n\t}\n\n\t/**\n\t * @return the nomAb\n\t */\n\tpublic String getNomAb() {\n\t\treturn nomAb;\n\t}\n\t/**\n\t * @param nomAb the nomAb to set\n\t */\n\tpublic void setNomAb(String aNomAb) {\n\t\tthis.nomAb = aNomAb;\n\t}\n\t/**\n\t * @return the dateNaissanceAb\n\t */\n\tpublic String getDateNaissanceAb() {\n\t\treturn dateNaissanceAb;\n\t}\n\t/**\n\t * @param dateNaissanceAb the dateNaissanceAb to set\n\t */\n\tpublic void setDateNaissanceAb(String aDateNaissanceAb) {\n\t\tthis.dateNaissanceAb = aDateNaissanceAb;\n\t}\n\t/**\n\t * @return the sexeAb\n\t */\n\tpublic String getSexeAb() {\n\t\treturn sexeAb;\n\t}\n\t/**\n\t * @param sexeAb the sexeAb to set\n\t */\n\tpublic void setSexeAb(String aSexeAb) {\n\t\tthis.sexeAb = aSexeAb;\n\t}\n\t/**\n\t * @return the fourchetteRevenus\n\t */\n\tpublic int getFourchetteRevenus() {\n\t\treturn fourchetteRevenus;\n\t}\n\t\n\t/**\n\t * @return the locationFilm\n\t */\n\tpublic List<Film> getLocationFilm() {\n\t\treturn locationFilm;\n\t}\n\t/**\n\t * @param fourchetteRevenus the fourchetteRevenus to set\n\t *\n\t *Method to set the income bracket based on the income value\n\t */\n\n\tpublic void setFourchetteRevenus(int aFourchetteRevenus) {\n\t\tthis.fourchetteRevenus = aFourchetteRevenus;\n\n    public void setFourchetteRevenus(int aFourchetteRevenus) {\n        if (aFourchetteRevenus <= 1000) {\n            this.fourchetteRevenus = \"revenu faible\";\n        } else if (aFourchetteRevenus <= 2000) {\n            this.fourchetteRevenus = \"revenu moyen\";\n        } else {\n            this.fourchetteRevenus = \"revenu élevé\";\n        }\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Abonnes.java b/src/Abonnes.java
+--- a/src/Abonnes.java	
++++ b/src/Abonnes.java	
+@@ -1,14 +1,8 @@
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.Objects;
+-
+-
+-
+-
++import java.util.*;
+ 
+ 
+ /**
+- *Allows to build a subscriber 
++ *Allows to build a subscriber
+  */
+ 
+ public class Abonnes {
+@@ -17,18 +11,19 @@
+ 	private String nomAb;
+ 	private String dateNaissanceAb;
+ 	private String sexeAb;
+-
+ 	private int fourchetteRevenus;
+-
+-	private final List<DateLocation> dateLocation;
+ 	private final List<Film> locationFilm;
++	private Map<Film, DateLocation> location; // History of Subscriber Rentals
+ 
+-	
+-	
++	public Abonnes(String nomAb, String dateNaissanceAb, String sexeAb, int fourchetteRevenus) {
++		this.nomAb = nomAb;
++		this.dateNaissanceAb = dateNaissanceAb;
++		this.sexeAb = sexeAb;
++		this.fourchetteRevenus = fourchetteRevenus;
++		this.locationFilm=new ArrayList<>();
++		this.location=new HashMap<>();
++	}
+ 
+-
+-	
+-	
+ 	/**
+ 	 * Constructor of the class of 'Abonnes'
+ 	 * @param nomAb
+@@ -36,53 +31,18 @@
+ 	 * @param sexeAb
+ 	 * @param fourchetteRevenus
+ 	 * @param dateLocation
+-	 * 
++	 *
+ 	 */
+-	public Abonnes(String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {
+-
+-	public Abonnes(String aPrenomAb,String aNomAb, String aDateNaissanceAb, String aSexeAb, int aFourchetteRevenus) {
+-
+-		super();
+-		this.prenomAb= aPrenomAb;
+-		this.nomAb = aNomAb;
+-		this.dateNaissanceAb = aDateNaissanceAb;
+-		this.sexeAb = aSexeAb;
+-		this.fourchetteRevenus = aFourchetteRevenus;
+-
+-	}
+-
+-		this.dateLocation = aDateLocation;
+-		this.locationFilm= aLocationFilm;
+-	
+-	}
+-
+-
+-
+ 
+ 	/**
+ 	 * @return the dateLocation
+ 	 */
+-	public List<DateLocation> getDateLocation() {
+-		return dateLocation;
+-	}
+-	
+-	private String prenomAb;
+-	/**
+-	 * @return the prenomAb
+-	 */
+-	public String getPrenomAb() {
+-		return prenomAb;
++
++	public Map<Film, DateLocation> getLocation() {
++		return location;
+ 	}
+ 
+ 
+-
+-
+-	/**
+-	 * @param prenomAb the prenomAb to set
+-	 */
+-	public void setPrenomAb(String prenomAb) {
+-		this.prenomAb = prenomAb;
+-	}
+ 
+ 	/**
+ 	 * @return the nomAb
+@@ -126,7 +86,7 @@
+ 	public int getFourchetteRevenus() {
+ 		return fourchetteRevenus;
+ 	}
+-	
++
+ 	/**
+ 	 * @return the locationFilm
+ 	 */
+@@ -139,17 +99,36 @@
+ 	 *Method to set the income bracket based on the income value
+ 	 */
+ 
+-	public void setFourchetteRevenus(int aFourchetteRevenus) {
+-		this.fourchetteRevenus = aFourchetteRevenus;
++
++//	public void setFourchetteRevenus(int aFourchetteRevenus) {
++//		if (aFourchetteRevenus <= 1000) {
++//			this.fourchetteRevenus = "revenu faible: Tranche 1";
++//		} else if (aFourchetteRevenus <= 2000) {
++//			this.fourchetteRevenus = "revenu moyen: Tranche 2";
++//		} else {
++//			this.fourchetteRevenus = "revenu élevé: Tranche 3";
++//		}
++//	}
++
++
++
+ 
+-    public void setFourchetteRevenus(int aFourchetteRevenus) {
+-        if (aFourchetteRevenus <= 1000) {
+-            this.fourchetteRevenus = "revenu faible";
+-        } else if (aFourchetteRevenus <= 2000) {
+-            this.fourchetteRevenus = "revenu moyen";
+-        } else {
+-            this.fourchetteRevenus = "revenu élevé";
+-        }
+-    }
++
++
++
++	@Override
++	public String toString() {
++		return "Abonnes [nomAb=" + nomAb + ", dateNaissanceAb=" + dateNaissanceAb + ", sexeAb=" + sexeAb
++				+ ", fourchetteRevenus=" + fourchetteRevenus + ", locationFilm="
++				+ locationFilm + "]";
++	}
++
++
+ 
+-}
++
++	// Implementation of the hashCode method to enable hashing of the Abonnes object
++	@Override
++	public int hashCode() {
++		return Objects.hash(nomAb, dateNaissanceAb, sexeAb, fourchetteRevenus);
++	}
++}
+\ No newline at end of file
+Index: src/DateLocation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.time.LocalDate;\nimport java.time.format.DateTimeFormatter;\n\n/**\n * A class to represent the start and end date of a video rental.\n */\npublic class DateLocation {\n\n    private LocalDate dateDebut; // Start date of the rental\n    private LocalDate dateFin; // End date of the rental\n    private static final int MAXIMUM_RENTAL_DURATION_DAYS = 30; // Maximum allowed rental duration in days\n\n    /**\n     * Sets the start date of the rental.\n     * @param dateDebut the start date of the rental in the format \"DD-MM-YYYY\"\n     */\n    public void setDateDebut(String aDateDebut) {\n        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd-MM-yyyy\");\n        this.dateDebut = LocalDate.parse(aDateDebut, formatter);\n    }\n\n    /**\n     * Sets the end date of the rental and checks if it satisfies the rental constraints.\n     * @param dateFin the end date of the rental in the format \"DD-MM-YYYY\"\n     * @throws IllegalArgumentException if the rental duration exceeds 30 days or if the end date is before the start date\n     */\n    public void setDateFin(String aDateFin) {\n        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(\"dd-MM-yyyy\");\n        LocalDate newDateFin = LocalDate.parse(aDateFin, formatter);\n        if (newDateFin.isBefore(this.dateDebut)) {\n            throw new IllegalArgumentException(\"La date de fin doit être ultérieure à la date de début.\");\n        }\n        if (newDateFin.isAfter(this.dateDebut.plusDays(MAXIMUM_RENTAL_DURATION_DAYS))) {\n            throw new IllegalArgumentException(\"La durée de location ne peut pas dépasser 30 jours.\");\n        }\n        this.dateFin = newDateFin;\n    }\n\n    /**\n     * Gets the start date of the rental.\n     * @return the start date of the rental\n     */\n    public LocalDate getDateDebut() {\n        return dateDebut;\n    }\n\n    /**\n     * Gets the end date of the rental.\n     * @return the end date of the rental\n     */\n    public LocalDate getDateFin() {\n        return dateFin;\n    }\n\n\t@Override\n\tpublic String toString() {\n\t\treturn \"DateLocation [dateDebut=\" + dateDebut + \", dateFin=\" + dateFin + \"]\";\n\t}\n    \n    \n    \n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DateLocation.java b/src/DateLocation.java
+--- a/src/DateLocation.java	
++++ b/src/DateLocation.java	
+@@ -6,17 +6,23 @@
+  */
+ public class DateLocation {
+ 
+-    private LocalDate dateDebut; // Start date of the rental
+-    private LocalDate dateFin; // End date of the rental
++    private String dateDebut; // Start date of the rental
++    private String dateFin; // End date of the rental
+     private static final int MAXIMUM_RENTAL_DURATION_DAYS = 30; // Maximum allowed rental duration in days
+ 
++    public DateLocation(String dateDebut, String dateFin) {
++        this.dateDebut = dateDebut;
++        this.dateFin = dateFin;
++    }
++
+     /**
+      * Sets the start date of the rental.
+      * @param dateDebut the start date of the rental in the format "DD-MM-YYYY"
+      */
+     public void setDateDebut(String aDateDebut) {
+-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+-        this.dateDebut = LocalDate.parse(aDateDebut, formatter);
++        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
++
++        this.dateDebut = String.valueOf(LocalDate.parse(aDateDebut, formatter));
+     }
+ 
+     /**
+@@ -25,38 +31,28 @@
+      * @throws IllegalArgumentException if the rental duration exceeds 30 days or if the end date is before the start date
+      */
+     public void setDateFin(String aDateFin) {
+-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+-        LocalDate newDateFin = LocalDate.parse(aDateFin, formatter);
+-        if (newDateFin.isBefore(this.dateDebut)) {
+-            throw new IllegalArgumentException("La date de fin doit être ultérieure à la date de début.");
+-        }
+-        if (newDateFin.isAfter(this.dateDebut.plusDays(MAXIMUM_RENTAL_DURATION_DAYS))) {
+-            throw new IllegalArgumentException("La durée de location ne peut pas dépasser 30 jours.");
+-        }
+-        this.dateFin = newDateFin;
++//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
++//        this.dateDebut = String.valueOf(LocalDate.parse(aDateFin, formatter));
++//
++//        LocalDate newDateFin = LocalDate.parse(aDateFin, formatter);
++//        if (newDateFin.isBefore(this.dateDebut)) {
++//            throw new IllegalArgumentException("La date de fin doit être ultérieure à la date de début.");
++//        }
++//        if (newDateFin.isAfter(this.dateDebut.plusDays(MAXIMUM_RENTAL_DURATION_DAYS))) {
++//            throw new IllegalArgumentException("La durée de location ne peut pas dépasser 30 jours.");
++//        }
++//        this.dateFin = String.valueOf(newDateFin);
+     }
+ 
+     /**
+      * Gets the start date of the rental.
+      * @return the start date of the rental
+      */
+-    public LocalDate getDateDebut() {
++    public String getDateDebut() {
+         return dateDebut;
+     }
+ 
+-    /**
+-     * Gets the end date of the rental.
+-     * @return the end date of the rental
+-     */
+-    public LocalDate getDateFin() {
++    public String getDateFin() {
+         return dateFin;
+     }
+-
+-	@Override
+-	public String toString() {
+-		return "DateLocation [dateDebut=" + dateDebut + ", dateFin=" + dateFin + "]";
+-	}
+-    
+-    
+-    
+ }

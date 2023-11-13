@@ -1,6 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Evolues {
-    private Abonnes abonnes;
-    private Film films;
+    private Abonnes abonnes1;
+    private Abonnes abonnes2;
+    private Film films1;
+    private Film films2;
 
 
     private Coffret coffret;
@@ -16,7 +23,16 @@ public class Evolues {
         this.coffret=coffret;
     }
 
-    public Evolues(Abonnes abonnes1,Abonnes abonnes2) {
+    public Evolues(Abonnes abonnes1, Abonnes abonnes2, Film films1, Film films2, Coffret coffret, List<Genre> genre) {
+        this.abonnes1 = abonnes1;
+        this.abonnes2 = abonnes2;
+        this.films1 = films1;
+        this.films2 = films2;
+        this.coffret = coffret;
+        this.genre = genre;
+    }
+
+    public Evolues(Abonnes abonnes1, Abonnes abonnes2) {
         this.abonnes1 = abonnes1;
         this.abonnes2=abonnes2;
     }

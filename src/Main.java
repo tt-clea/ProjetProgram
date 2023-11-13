@@ -3,19 +3,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) {
-        //connect base de donnee de SQLite
+    public static void main(String[] args) throws SQLException {
         //instead of your own path.
-        String path="jdbc:sqlite:Projet_Location.db";
-        Connection connection=BdConnector.connect(path);
-        if (connection!=null)
-        {
-            System.out.println("connection successful!");
-        }
-        else {
-            System.out.println("connection failure!");
-        }
-
+        String path="jdbc:sqlite:DBProjetJava.db";
+        //construire object de BdConnector
+        BdConnector bd=new BdConnector(path);
+        //connect base de donnee de SQLite
+//        Connection connection=BdConnector.connect();
 
 
         // construire les arbre de genre
@@ -32,7 +26,7 @@ public class Main {
         action.addSubGenre(western);
         comedie.addSubGenre(musique);
         comedie.addSubGenre(romance);
-        System.out.println("Genre de tree est :"+tree);
+//        System.out.println("Genre de tree est :"+tree);
         //construire acteurs
         Acteurs a1=new Acteurs("anne","anne");
         Acteurs a2=new Acteurs("tiantian","tiantian");
@@ -48,8 +42,8 @@ public class Main {
         Coffret c2=new Coffret("Coffret2",false);
 
         //construire abonnes
-        Abonnes ab1=new Abonnes("an","1978-12-14","f",2500);
-        Abonnes ab2=new Abonnes("tt","2000-05-09","f",10000);
+        Abonnes ab1=new Abonnes("an","anne","1978-12-14","f",2500);
+        Abonnes ab2=new Abonnes("tt","tiantian","2000-05-09","f",10000);
 
 
         //construire evolues
@@ -58,17 +52,6 @@ public class Main {
         Evolues ev_coffret=new Evolues(c1);
 
         //ajouter les acteurs dans film
-
-        //fonction1
-        //fonction2
-        //fonction3
-        Genre g1=new Genre("romance");
-        Film f1=new Film("Angle",true,g1);
-        Film f2=new Film("Angle2",true,g1);
-        Acteurs a1=new Acteurs("anne","anne");
-        Acteurs a2=new Acteurs("tiantian","tiantian");
-        System.out.println(a1.getNomA()+a1.getPrenomA());
-        System.out.println(a2.getNomA()+a2.getPrenomA());
 
         f1.addActeurs(a1);
         f1.addActeurs(a2);
@@ -80,58 +63,32 @@ public class Main {
 
 
         //ajouter les films dans coffret;
-
-        Coffret c1=new Coffret("Coffret1",g1,true,true);
-
         c1.addFilmList(f1);
         c1.addFilmList(f2);
         c1.addFilmList(f3);
         c2.addFilmList(f3);
         c2.addFilmList(f4);
         //print coffret c1 et c2
-        System.out.println(c1);
-        System.out.println(c2);
+//        System.out.println(c1);
+//        System.out.println(c2);
 
 
         //tester les evolues
-        System.out.println("Le similarité de Abonnés est "+ev_abonne.similarite_Abonnes());
-        System.out.println("Le similarité de Film est "+ev_film.similarite_Film(tree,f3,f4));//将构造的二叉树传入到evolues_film中
-        System.out.println("Le similarité de Coffret est "+ev_coffret.similarite_Coffret(tree));
-        System.out.println("Le nombre de film dans le coffret est "+ev_coffret.Nombre_Film_Coffret());
-        System.out.println("Il y a un bonus ? " + ev_coffret.YaBonus());
+//        System.out.println("Le similarité de Abonnés est "+ev_abonne.similarite_Abonnes());
+//        System.out.println("Le similarité de Film est "+ev_film.similarite_Film(tree,f3,f4));//将构造的二叉树传入到evolues_film中
+//        System.out.println("Le similarité de Coffret est "+ev_coffret.similarite_Coffret(tree));
+//        System.out.println("Le nombre de film dans le coffret est "+ev_coffret.Nombre_Film_Coffret());
+//        System.out.println("Il y a un bonus ? " + ev_coffret.YaBonus());
 
 
+        //class de founction
+        //ajouter abonnes dans une liste d'abonnes
+        Abonnes ab3=new Abonnes("11111","22222","2000-01-04","f",3000);
+        Fonction add_abonne=new Fonction(bd);
+        add_abonne.addAbonnesBD(ab3);
+//        BdConnector check=new BdConnector(path);
+//        check.insert_abonne("lucas","wifi","2000-01-04","f",3000);
+//        String fina=check.findAbonne("an","an");
 
-
-
-
-
-//        System.out.println(a1.getNomA()+a1.getPrenomA());
-//        System.out.println(a2.getNomA()+a2.getPrenomA());
-
-//        System.out.println(f1.getNbStockage());
-//        System.out.println(f1.getTitreF()+f1.getActeursList());
-
-
-
-//        System.out.println(c1.getFilmlist());
-//        System.out.println(c1.getActeursForFilm());
-
-
-
-//        System.out.println("action:"+action);
-//        System.out.println("comedie:"+comedie);
-//        System.out.println("western:"+western);
-
-//        System.out.println(tree.getSubGenre());
-
-
-
-
-
-//        System.out.println("film3 "+f3);
-
-
-//
     }
 }

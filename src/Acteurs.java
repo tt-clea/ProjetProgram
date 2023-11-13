@@ -10,8 +10,8 @@ public class Acteurs {
 	
 	/**
 	 * Constructor of the class of 'Acteurs'
-	 * @param prenomA
-	 * @param nomA
+	 * @param aPrenomA
+	 * @param aNomA
 	 */
 	 public Acteurs(String aPrenomA, String aNomA) {
 	        this.prenomA = aPrenomA;
@@ -28,7 +28,7 @@ public class Acteurs {
 		return prenomA;
 	}
 	/**
-	 * @param prenomA the prenomA to set
+	 * @param aPrenomA the prenomA to set
 	 */
 	public void setPrenomA(String aPrenomA) {
 		this.prenomA = aPrenomA;
@@ -40,7 +40,7 @@ public class Acteurs {
 		return nomA;
 	}
 	/**
-	 * @param nomA the nomA to set
+	 * @param aNomA the nomA to set
 	 */
 	public void setNomA(String aNomA) {
 		this.nomA = aNomA;

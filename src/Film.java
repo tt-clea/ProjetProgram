@@ -193,37 +193,23 @@ public class Film {
     }
 
 
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 
-	
-	
-
-
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 
 	@Override
 	public String toString() {
-		return "Film{" +
-				"titreF='" + titreF + '\'' +
-				", couleurF=" + couleurF +
-				", NbStockage=" + NbStockage +
-				", acteursList=" + acteursList +
-				", location=" + location +
-				", genre=" + genre +
-				", acteurs=" + acteurs +
-				", historique=" + historique +
-				'}';
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Film film = (Film) o;
-		return couleurF == film.couleurF && NbStockage == film.NbStockage && Objects.equals(titreF, film.titreF) && Objects.equals(acteursList, film.acteursList) && Objects.equals(location, film.location) && Objects.equals(genre, film.genre) && Objects.equals(acteurs, film.acteurs) && Objects.equals(historique, film.historique);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(titreF, couleurF, NbStockage, acteursList, location, genre, acteurs, historique);
+		return super.toString();
 	}
 }
