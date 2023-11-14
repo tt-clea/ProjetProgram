@@ -3,13 +3,13 @@ import java.util.*;
 public class Film {
 	private String titreF;
 	private boolean couleurF;
-	private int NbStockage = 10;
+	private int NbStockage;
 	private List<Acteurs> acteursList;
 	private Map<Abonnes,DateLocation> location;
 
 	private Genre genre;
 
-	private Acteurs acteurs;
+//	private Acteurs acteurs;
 	private Map<String,List<List<String>>> historique;
 
 
@@ -18,37 +18,33 @@ public class Film {
 	 **/
 	public Film()
 	{
-		this.location=new HashMap<>(NbStockage);
+		this.location=new HashMap<>();
 		this.historique=new HashMap<>();
 	}
-
 
 	/**
 	 * @param titreF
 	 * @param couleurF
 	 * @param genre
 	 */
-	public Film(String titreF, boolean couleurF, Genre genre) {
+	public Film(String titreF, boolean couleurF, Genre genre,int nbStockage) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
 		this.acteursList = new ArrayList<>();
-		location = new HashMap<>(NbStockage);
-
+		location = new HashMap<>();
+		this.NbStockage=nbStockage;
 		this.genre = genre;
 		historique=new HashMap<>();
-
-		this.setGenre(genre);
-
 	}
 
-	public Film(String titreF, boolean couleurF,Genre genre, Acteurs acteurs) {
+	public Film(String titreF, boolean couleurF,Genre genre, Acteurs acteurs,int nbStockage) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
 		this.acteursList = new ArrayList<>();
-		location = new HashMap<>(NbStockage);
+		location = new HashMap<>();
 		this.genre = genre;
-		this.acteurs = acteurs;
 		historique=new HashMap<>();
+		this.NbStockage=nbStockage;
 	}
 	
 
@@ -74,46 +70,53 @@ public class Film {
 	/**
 	 * @add the location
 	 */
-	public boolean addLocation(final Abonnes abonnes,final DateLocation datelocation)
-	{
-		if(NbStockage>0)
-		{
-			NbStockage--;
-			location.put(abonnes, datelocation);
-			historiqueLocation(abonnes,datelocation);
-			System.out.println("ok"+titreF);
-			return true;
-		}
-		else
-		{
-			System.out.println("non stockage");
-			return false;
-		}
-		
-	}
+//	public boolean addLocation(Abonnes abonnes,DateLocation datelocation)
+//	{
+//
+//		if(getNbStockage()>0)
+//		{
+//			int nb=getNbStockage();
+//			nb--;
+//			setNbStockage(nb);
+//			location.put(abonnes, datelocation);
+//
+//
+//
+//			//historique location
+//			historiqueLocation(abonnes,datelocation);
+//			System.out.println("ok"+titreF);
+//			return true;
+//		}
+//		else
+//		{
+//			System.out.println("non stockage");
+//			return false;
+//		}
+//
+//	}
 	/**
 	 * @remove the location
 	 */
-	public void removeLocation(final Abonnes abonnes,final DateLocation datelocation)
-	{
-		NbStockage++;
-		location.remove(abonnes);
-		System.out.println("ok"+titreF);
-	}
+//	public void removeLocation(final Abonnes abonnes,DateLocation datelocation)
+//	{
+//		NbStockage++;
+//		location.remove(abonnes);
+//		System.out.println("ok"+titreF);
+//	}
 
-	public void historiqueLocation(Abonnes ab,DateLocation dateLocation) {
-		//Map<Abonnes,List<List<String>>> historique;
-		//List<String>= []  String film,date
-		// tiantian ,  [[film ,2020-2-9],[film2 , 2023-03-12]]
-		List<List<String>> listofList = new ArrayList<List<String>>();
-
-		List<String> innerList=new ArrayList<>();
-		innerList.add(getTitreF()); //film
-		innerList.add(dateLocation.getDateDebut()); //2020-2-9
-		listofList.add(innerList);//[[film,2020-2-9]]
-		historique.put(ab.getNomAb(),listofList);
-
-	}
+//	public void historiqueLocation(Abonnes ab,DateLocation dateLocation) {
+//		//Map<Abonnes,List<List<String>>> historique;
+//		//List<String>= []  String film,date
+//		// tiantian ,  [[film ,2020-2-9],[film2 , 2023-03-12]]
+//		List<List<String>> listofList = new ArrayList<List<String>>();
+//
+//		List<String> innerList=new ArrayList<>();
+//		innerList.add(getTitreF()); //film
+//		innerList.add(dateLocation.getDateDebut()); //2020-2-9
+//		listofList.add(innerList);//[[film,2020-2-9]]
+//		historique.put(ab.getNomAb(),listofList);
+//
+//	}
 
 	/**
 	 * @return the titreF
@@ -148,9 +151,6 @@ public class Film {
 		NbStockage = nbStockage;
 	}
 
-	public Acteurs getActeurs() {
-		return acteurs;
-	}
 
 	/**
 	 *

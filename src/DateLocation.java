@@ -13,11 +13,9 @@ public class DateLocation {
     private String dateFin; // End date of the rental
     private static final int MAXIMUM_RENTAL_DURATION_DAYS = 30; // Maximum allowed rental duration in days
 
-    public DateLocation()
+    public DateLocation(String dateDebut)
     {
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-
+        this.dateDebut=dateDebut;
     }
     public DateLocation(String dateDebut, String dateFin) {
         this.dateDebut = dateDebut;
@@ -25,28 +23,33 @@ public class DateLocation {
     }
 
     public void setDateDebut(String aDateDebut) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setLenient(false);
-        try {
-            Date datedebut = sdf.parse(this.dateDebut = aDateDebut);
-            Date datefin = sdf.parse(getDateFin());
-            boolean isDatedebutBeforeTodays = !datedebut.after(new Date());
-            boolean isDateAfterDateDebut=!datefin.before(datedebut);
-            if(isDatedebutBeforeTodays && isDateAfterDateDebut)
-            {
-                System.out.println("La date de debut :"+dateDebut);
-            }
-            else {
-                if(!isDateAfterDateDebut)
-                {
-                    System.out.println("La date de fin ne peut être antérieure à la date de début.");
-                }
-                if(!isDatedebutBeforeTodays)
-                {
-                    System.out.println("La date de début ne peut être antérieure à aujourd'hui");
-                }
 
+        try {
+            if (aDateDebut!=null)
+            {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                sdf.setLenient(false);
+                Date datedebut = sdf.parse(this.dateDebut = aDateDebut);
+                Date datefin = sdf.parse(getDateFin());
+                boolean isDatedebutBeforeTodays = !datedebut.after(new Date());
+                boolean isDateAfterDateDebut=!datefin.before(datedebut);
+                if(isDatedebutBeforeTodays && isDateAfterDateDebut)
+                {
+                    System.out.println("La date de debut :"+dateDebut);
+                }
+                else {
+                    if(!isDateAfterDateDebut)
+                    {
+                        System.out.println("La date de fin ne peut être antérieure à la date de début.");
+                    }
+                    if(!isDatedebutBeforeTodays)
+                    {
+                        System.out.println("La date de début ne peut être antérieure à aujourd'hui");
+                    }
+
+                }
             }
+
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -61,32 +64,27 @@ public class DateLocation {
 
     public void setDateFin(String aDateFin) {
 
-        SimpleDateFormat sdf=new SimpleDateFormat("yyy-MM-dd");
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         sdf.setLenient(false);
         try{
-            Date datedebut=sdf.parse(getDateDebut());
-            Date datefin=sdf.parse(this.dateFin=aDateFin);
-            boolean isDateAfterDateDebut=!datefin.before(datedebut);
-            if (isDateAfterDateDebut)
+            if (aDateFin !=null)
             {
-                System.out.println("La date de fin :"+dateFin);
+                Date datedebut=sdf.parse(getDateDebut());
+                Date datefin=sdf.parse(this.dateFin=aDateFin);
+                boolean isDateAfterDateDebut=!datefin.before(datedebut);
+                if (isDateAfterDateDebut)
+                {
+                    System.out.println("La date de fin :"+dateFin);
+                }
+                else {
+                    System.out.println("L'erreur de date");
+                }
             }
-            else {
-                System.out.println("L'erreur de date");
-            }
+
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
 
-//        LocalDate newDateFin = LocalDate.parse(aDateFin, formatter);
-//        if (newDateFin.isBefore(this.dateDebut)) {
-//            throw new IllegalArgumentException("La date de fin doit être ultérieure à la date de début.");
-//        }
-//        if (newDateFin.isAfter(this.dateDebut.plusDays(MAXIMUM_RENTAL_DURATION_DAYS))) {
-//            throw new IllegalArgumentException("La durée de location ne peut pas dépasser 30 jours.");
-//        }
-//        this.dateFin = newDateFin;
     }
 
 

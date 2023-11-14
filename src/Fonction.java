@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -53,8 +54,9 @@ public class Fonction {
      */
     public void addAbonnesBD(Abonnes aAbonne) throws SQLException {
         // Check if the subscriber is not already in the list
+
 		boolean find=bd.findAbonne(aAbonne.getNomAb(),aAbonne.getPrenomAb());
-		if(find)
+		if(!find)
 		{
 			//prenomAb,nomAb,dateNaissanceAb,sexeAb,fourchetteRevenus
 			//insert les information to abonnes
@@ -77,30 +79,47 @@ public class Fonction {
      * Method to add a film to the list, avoiding duplicates.
      * @param aFilm The film to be added
      */
-    public void addListeFilm(Film aFilm) {
+    public void addFilmBD(Film aFilm) throws SQLException {
         // Check if the film is not already in the list
-        if (!filmlist.contains(aFilm)) {
-        	filmlist.add(aFilm);
-            System.out.println("Film ajouté avec succès.");
-        } else {
-            System.out.println("Film est déjà dans la liste.");
-        }
+		boolean find=bd.findFilm(aFilm.getTitreF());
+		// if not find film in DB
+		if(!find)
+		{
+			//insert film
+			boolean insert=bd.insert_film(aFilm.getTitreF(),aFilm.isCouleurF(),aFilm.getNbStockage(),aFilm.getGenre().getGenreNom());
+			if (insert)
+			{
+				System.out.println("Film ajouté avec succès.");
+			}
+			else {
+				System.out.println("Film ajouté pas.");
+			}
+		}
+		else {
+			System.out.println("Film est déjà dans la liste.");
+		}
     }
+
+
+
+
+
+	public void findAbonnes(String aNom,String aPrenom) throws SQLException {
+		if(bd.findAbonne(aNom,aPrenom))
+		{
+			System.out.println("l'abonne existe");
+		}
+		else {
+			System.out.println("l'abonne existe pas");
+		}
+
+	}
     //•	Retrouver dans la liste des abonnés un abonné à partir de son nom et prénom.
-    /**
-     * Method to find a subscriber by their first name and last name.
-     * @param aNom The first name of the subscriber
-     * @param aPrenom The last name of the subscriber
-     * @return The subscriber if found, otherwise null
-     */
-    public Abonnes trouverAbonne(String aPrenom, String aNom) {
-        for (Abonnes abonne : listeAbonnes) {
-            if (abonne.getNomAb().equals(aNom) && abonne.getPrenomAb().equals(aPrenom)) {
-                return abonne;
-            }
-        }
-        return null; // Return null if the subscriber is not found
-    }
+
+	//
+
+
+
     //•	Enregistrer un prêt : un abonné loue un film.
 
 	/**
@@ -110,22 +129,42 @@ public class Fonction {
 	 * @param aDateDebut
 	 * @param aDateFin
 	 */
-	public void enregistrerPret(Abonnes aAbonne, Film aFilm, String aDateDebut, String aDateFin) {
-        // Check if the film is available for rental
-        if (aFilm.getNbStockage() > 0) {
-            DateLocation dateLocation = new DateLocation(); // Create a new DateLocation object for the rental
-            dateLocation.setDateDebut(aDateDebut); // Set the start date of the rental
-            dateLocation.setDateFin(aDateFin); // Set the end date of the rental
-            
-            // Add the rental record to the subscriber's rental history
-            aAbonne.getLocationFilm().add(aFilm);
-            
-            // Register the rental with the film
-            aFilm.addLocation(aAbonne, dateLocation);
-            System.out.println("Prêt enregistrée avec succès.");
-        } else {
-            System.out.println("Le film n'est pas disponible actuellement.");
-        }
+	public void enregistrerPret(Abonnes aAbonne, Film aFilm, DateLocation dateLocation) throws SQLException {
+
+		//check if the film is exist
+		boolean isFilm= bd.findFilm(aFilm.getTitreF());
+		if(isFilm)
+		{
+			//Check stock quantities
+			int isNb=bd.findNbFilm(aFilm.getTitreF());
+			if (isNb>0)
+			{
+				//insert into BD historique
+				int id_abonne= bd.get_id_abonne(aAbonne.getNomAb(),aAbonne.getPrenomAb());
+				int id_film=bd.get_id_film(aFilm.getTitreF());
+				boolean isHistorique=bd.historique(id_film,id_abonne,dateLocation.getDateDebut());
+				//check if recording success
+				if (isHistorique)
+				{
+					System.out.println("L'abonné "+aAbonne.getNomAb()+" s'abonne avec succès au film "+aFilm.getTitreF());
+					//mis a jour des stockage de film
+					boolean isMisAJour=bd.mis_a_jour_Nb(aFilm.getTitreF());
+					if(isMisAJour)
+					{
+						System.out.println("Stock levels updated successfully");
+					}
+					else {
+						System.out.println("Stock levels updated failed");
+					}
+				}
+				else {
+					System.out.println("Recording failed");
+				}
+			}
+			else {
+				System.out.println("Le film n'est pas disponible actuellement.");
+			}
+		}
     }
     
     //•	Extraire les abonnés dans la même fourchette de revenu.
@@ -135,19 +174,25 @@ public class Fonction {
     * @param aFourchetteRevenus The income bracket to filter the subscribers
     * @return List of subscribers within the specified income bracket
     */
-    
-    
-    public List<Abonnes> extraireAbonneMemeRevenu(int aFourchetteRevenus) {
-        List<Abonnes> abonnesMemeRevenu = new ArrayList<>();
 
-        for (Abonnes abonne : listeAbonnes) {
-            if (abonne.getFourchetteRevenus()==aFourchetteRevenus) {
-                abonnesMemeRevenu.add(abonne);
-            }
-        }
+	public void extraireAbonneMemeRevenu() throws SQLException {
+		//find all of actors in DB
+		Map<List<String>,Integer> allActor=bd.findAllAbonnes();
 
-        return abonnesMemeRevenu;
-    }
+
+	}
+    
+//    public List<Abonnes> extraireAbonneMemeRevenu(int aFourchetteRevenus) {
+//        List<Abonnes> abonnesMemeRevenu = new ArrayList<>();
+//
+//        for (Abonnes abonne : listeAbonnes) {
+//            if (abonne.getFourchetteRevenus()==aFourchetteRevenus) {
+//                abonnesMemeRevenu.add(abonne);
+//            }
+//        }
+//
+//        return abonnesMemeRevenu;
+//    }
     
     //•	Extraire le genre de films le plus populaire (le plus loué).
     

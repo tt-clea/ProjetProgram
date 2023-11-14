@@ -5,17 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="tiantian 2023/11/13">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e2423b1f-c207-4bc4-abb5-a07fee45b32f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e2423b1f-c207-4bc4-abb5-a07fee45b32f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e2423b1f-c207-4bc4-abb5-a07fee45b32f/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e2423b1f-c207-4bc4-abb5-a07fee45b32f/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Abonnes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Abonnes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Acteurs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Acteurs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DBProjetJava.db" beforeDir="false" afterPath="$PROJECT_DIR$/DBProjetJava.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BdConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BdConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DateLocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DateLocation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Evolues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evolues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Film.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Fonction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fonction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Genre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Genre.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +98,7 @@
       <workItem from="1699352413596" duration="220000" />
       <workItem from="1699357074700" duration="2313000" />
       <workItem from="1699370763946" duration="867000" />
-      <workItem from="1699371679816" duration="85995000" />
+      <workItem from="1699371679816" duration="101955000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
