@@ -28,6 +28,7 @@ public class Fonction {
 	private Map<String, Coffret> coffret;
 //	private Connection bd;
 	private BdConnector bd;
+	private Evolues evolues;
 	
 
 	
@@ -40,6 +41,7 @@ public class Fonction {
 		coffret = new HashMap<>();
 		this.listeAbonnes=new ArrayList<>();
 		this.filmlist=new ArrayList<>();
+		this.evolues=new Evolues();
 	}
 
 
@@ -175,10 +177,25 @@ public class Fonction {
     * @return List of subscribers within the specified income bracket
     */
 
-	public void extraireAbonneMemeRevenu() throws SQLException {
+	public Map<String,List<String>> extraireAbonneMemeRevenu() throws SQLException {
 		//find all of actors in DB
-		Map<List<String>,Integer> allActor=bd.findAllAbonnes();
 
+		Map<List<String>,Integer> allAbonne=bd.findAllAbonnes();
+		Map<String,List<String>> abonneMeme=new HashMap<>();
+		abonneMeme.put("L1",new ArrayList<>());
+		abonneMeme.put("L2",new ArrayList<>());
+		abonneMeme.put("L3",new ArrayList<>());
+		abonneMeme.put("L4",new ArrayList<>());
+		abonneMeme.put("L5",new ArrayList<>());
+		abonneMeme.put("L6",new ArrayList<>());
+		for (Map.Entry<List<String>,Integer> entry1: allAbonne.entrySet())
+		{
+			int salary=entry1.getValue();
+			String trancher=evolues.trancherLevel(salary);
+			List<String> valueList=abonneMeme.get(trancher);
+			valueList.add(entry1.getKey().toString());
+		}
+		return abonneMeme;
 
 	}
     
@@ -274,7 +291,6 @@ public class Fonction {
     		    }
     		    return filmsSimilaires;
     		}
-
     	 private boolean isFilmSimilaire(Film film1, Film film2) { // used to compare similarity criteria such as genre, actors and color between two films.
     		    // Compare the genres of the films
     		    if (!film1.getGenre().equals(film2.getGenre())) {

@@ -2,6 +2,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -107,7 +110,11 @@ public class Main {
 //        fonction_test.addAbonnesBD(ab1);
 //        fonction_test.addAbonnesBD(ab2);
 //
-        fonction_test.enregistrerPret(ab1,f4,dl1);
+//        fonction_test.enregistrerPret(ab1,f4,dl1);
+        fonction_test.extraireAbonneMemeRevenu();
+
+        Map<String,List<String>> extraireMemeRevenu=fonction_test.extraireAbonneMemeRevenu();
+        System.out.println(extraireMemeRevenu);
 
 
 

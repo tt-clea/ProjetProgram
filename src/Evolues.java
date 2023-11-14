@@ -114,7 +114,7 @@ public class Evolues {
 
     }
 
-    public static String trancherLevel(int salaire)
+    public String trancherLevel(int salaire)
     {
         //[1500, 3000, 5000, 7000, 10000]
         if(salaire<=1500)

@@ -254,7 +254,7 @@ public class BdConnector {
 
     }
     public Map<List<String>,Integer> findAllAbonnes() throws SQLException {
-        Map<List<String>,Integer> allActor= new HashMap<>();
+        Map<List<String>,Integer> allAbonne= new HashMap<>();
         String query="select * from Abonnes;";
         PreparedStatement preparedStatement = connect().prepareStatement(query);
 
@@ -272,11 +272,11 @@ public class BdConnector {
             chaqueActor.add(nom);
             chaqueActor.add(sexeAb);
             chaqueActor.add(birth);
-            allActor.put(chaqueActor,money);
+            allAbonne.put(chaqueActor,money);
         }
         resultSet.close();
         closeBD(preparedStatement);
-        return allActor;
+        return allAbonne;
     }
 
 }
