@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -32,10 +33,10 @@ public class Main {
         Acteurs a2=new Acteurs("tiantian","tiantian");
 
         // construire film
-        Film f1=new Film("Angle",true,musique);
-        Film f2=new Film("Angle2",true,romance);
-        Film f3=new Film("Runing man",false,musique);
-        Film f4=new Film("Runing man2",false,aventure);
+        Film f1=new Film("Angle",true,musique,10);
+        Film f2=new Film("Angle2",true,romance,15);
+        Film f3=new Film("Runing man",false,musique,15);
+        Film f4=new Film("Runing man2",false,aventure,15);
 
         //construire coffret
         Coffret c1=new Coffret("Coffret1",true);
@@ -44,6 +45,12 @@ public class Main {
         //construire abonnes
         Abonnes ab1=new Abonnes("an","anne","1978-12-14","f",2500);
         Abonnes ab2=new Abonnes("tt","tiantian","2000-05-09","f",10000);
+        Abonnes ab3=new Abonnes("11111","22222","2000-01-04","f",3000);
+
+        //DateLocation
+        DateLocation dl1=new DateLocation("2023-11-11");
+
+
 
 
         //construire evolues
@@ -83,12 +90,37 @@ public class Main {
 
         //class de founction
         //ajouter abonnes dans une liste d'abonnes
-        Abonnes ab3=new Abonnes("11111","22222","2000-01-04","f",3000);
-        Fonction add_abonne=new Fonction(bd);
-        add_abonne.addAbonnesBD(ab3);
+
+//        Fonction add_abonne=new Fonction(bd);
+//        add_abonne.addAbonnesBD(ab3);
 //        BdConnector check=new BdConnector(path);
 //        check.insert_abonne("lucas","wifi","2000-01-04","f",3000);
 //        String fina=check.findAbonne("an","an");
+        Fonction fonction_test=new Fonction(bd);
+//        fonction_test.addAbonnesBD(ab1);
+//        fonction_test.findAbonnes("an","an");
+//        fonction_test.addFilmBD(f2);
+//        fonction_test.enregistrerPret(ab1,f1,dl1);
+//        fonction_test.addFilmBD(f2);
+//        fonction_test.addFilmBD(f3);
+//        fonction_test.addFilmBD(f4);
+//        fonction_test.addAbonnesBD(ab1);
+//        fonction_test.addAbonnesBD(ab2);
+//
+        fonction_test.enregistrerPret(ab1,f4,dl1);
+
+
+
+
+
+
+        //add location
+//        f1.addLocation(ab1,dl1);
+
+
+
+
+
 
     }
 }
