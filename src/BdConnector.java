@@ -41,6 +41,31 @@ public class BdConnector {
         }
     }
 
+    public boolean insert_coffret(String titreC,String genreC,boolean bonus) throws SQLException {
+        String query="insert into Coffret(titreC, genreC, bonus) VALUES (?,?,?)";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1, titreC);
+        preparedStatement.setString(2, genreC);
+        preparedStatement.setBoolean(3, bonus);
+        int rowsInserted = preparedStatement.executeUpdate();
+//        ResultSet resultSet = preparedStatement.executeQuery();
+        if (rowsInserted > 0) {
+
+            closeBD(preparedStatement);
+            return true;
+        } else {
+
+            closeBD(preparedStatement);
+            return false;
+        }
+    }
+    public boolean insert_genre(String genreFather,String genreSon)
+    {
+
+
+    }
+
     public boolean insert_abonne(String prenom, String nom, String DateNaissance, String sexe, int Revenus) throws SQLException {
         String query = "INSERT INTO Abonnes(prenomAb,nomAb,dateNaissanceAb,sexeAb,fourchetteRevenus) VALUES(?,?,?,?,?)";
 //        System.out.println(prenom);
@@ -71,7 +96,7 @@ public class BdConnector {
 
     }
 
-    public boolean findAbonne(String Nom, String Prenom) throws SQLException {
+    public boolean findAbonneParNom(String Nom, String Prenom) throws SQLException {
         String query = "SELECT * FROM Abonnes where nomAb=? and prenomAb=?;";
         PreparedStatement preparedStatement = connect().prepareStatement(query);
         // set attribut
@@ -92,9 +117,31 @@ public class BdConnector {
             return false;
 
         }
+    }
+
+    public List<String> findAbonneParId(int id) throws SQLException {
+        String query = "select nomAb,prenomAb from Abonnes where id=?;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setInt(1, id);
+
+        List<String> profil=new ArrayList<>();
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next()) {
+            String firstname = resultSet.getString("prenomAb");
+            String lastname = resultSet.getString("nomAb");
+            profil.add(firstname);
+            profil.add(lastname);
+        }
+        resultSet.close();
+        closeBD(preparedStatement);
+        return profil;
 
 
     }
+
+
+
 
     public boolean insert_film(String titreF, Boolean couleurF, int NbStockage, String genreF) throws SQLException {
         String query = "insert into Film(titreF, couleurF, NbStockage, genreF) VALUES (?,?,?,?)";
@@ -127,7 +174,7 @@ public class BdConnector {
         preparedStatement.setString(1, titreF);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            String id_Film = resultSet.getString("id");
+            int id_Film = resultSet.getInt("id");
             String titre_Film = resultSet.getString("titreF");
             String couleur_Film = resultSet.getString("couleurF");
             int NbStrockage_Film = resultSet.getInt("NbStockage");
@@ -167,7 +214,7 @@ public class BdConnector {
 
 
     public int get_id_abonne(String Nom, String Prenom) throws SQLException {
-        if(findAbonne(Nom,Prenom))
+        if(findAbonneParNom(Nom,Prenom))
         {
             String query="select id from Abonnes where nomAb= ? and prenomAb= ?;";
             PreparedStatement preparedStatement = connect().prepareStatement(query);
@@ -253,30 +300,139 @@ public class BdConnector {
         }
 
     }
-    public Map<List<String>,Integer> findAllAbonnes() throws SQLException {
-        Map<List<String>,Integer> allAbonne= new HashMap<>();
+    public Map<List<Object>,Integer> findAllAbonnes() throws SQLException {
+        Map<List<Object>,Integer> allAbonne= new HashMap<>();
         String query="select * from Abonnes;";
         PreparedStatement preparedStatement = connect().prepareStatement(query);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         while(resultSet.next()) {
             //[nom,prenom] [fourchette]
-            List<String> chaqueActor=new ArrayList<>();
+            List<Object> chaqueAbonnes=new ArrayList<>();
             int id_abonne = resultSet.getInt("id");
             String prenom= resultSet.getString("prenomAb");
             String nom=resultSet.getString("nomAb");
             String birth=resultSet.getString("dateNaissanceAb");
             String sexeAb=resultSet.getString("sexeAb");
             int money=resultSet.getInt("fourchetteRevenus");
-            chaqueActor.add(prenom);
-            chaqueActor.add(nom);
-            chaqueActor.add(sexeAb);
-            chaqueActor.add(birth);
-            allAbonne.put(chaqueActor,money);
+            chaqueAbonnes.add(id_abonne);
+            chaqueAbonnes.add(prenom);
+            chaqueAbonnes.add(nom);
+            chaqueAbonnes.add(sexeAb);
+            chaqueAbonnes.add(birth);
+            allAbonne.put(chaqueAbonnes,money);
         }
         resultSet.close();
         closeBD(preparedStatement);
         return allAbonne;
     }
+
+    public Map<String,Integer> findFilmLoue() throws SQLException {
+        Map<String,Integer> listoffilm= new HashMap<>();
+        String query="select genreF,count(*) from Historique,Film where Historique.id_film=film.id group by genreF;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next()) {
+            String titreF= resultSet.getString("genreF");
+            int count=resultSet.getInt("count(*)");
+            listoffilm.put(titreF,count);
+        }
+        resultSet.close();
+        closeBD(preparedStatement);
+        return listoffilm;
+    }
+
+//    public boolean insert_genre()
+//    {
+//
+//    }
+    public List<List<Object>> findFilmByKeyWord(String kw) throws SQLException {
+        List<List<Object>> map_film=new ArrayList<>();
+        String keyword="%"+kw+"%";
+        String query="SELECT * FROM Film WHERE titreF LIKE ?;";
+
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        preparedStatement.setString(1,keyword);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next()) {
+            List<Object> chaquefilm=new ArrayList<>();
+            String titreF= resultSet.getString("titreF");
+            String couleurF=resultSet.getString("couleurF");
+            int NbStockage=resultSet.getInt("NbStockage");
+            String genreF=resultSet.getString("genreF");
+            chaquefilm.add(titreF);
+            chaquefilm.add(couleurF);
+            chaquefilm.add(NbStockage);
+            chaquefilm.add(genreF);
+            map_film.add(chaquefilm);
+        }
+        resultSet.close();
+        closeBD(preparedStatement);
+        return map_film;
+    }
+    public List<List<Object>> ReturnFilm() throws SQLException {
+        //[[id,titreF,couleurF,NbStockage,genreF][,,,,]]
+        List<List<Object>> list_film=new ArrayList<>();
+        String query = "select * from Film;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            List<Object> chaque_film=new ArrayList<>();
+            int id_Film = resultSet.getInt("id");
+            String titre_Film = resultSet.getString("titreF");
+            String couleur_Film = resultSet.getString("couleurF");
+            int NbStrockage_Film = resultSet.getInt("NbStockage");
+            String genre_Film = resultSet.getString("genreF");
+            chaque_film.add(id_Film);
+            chaque_film.add(titre_Film);
+            chaque_film.add(couleur_Film);
+            chaque_film.add(NbStrockage_Film);
+            chaque_film.add(genre_Film);
+            list_film.add(chaque_film);
+        }
+        resultSet.close();
+        closeBD(preparedStatement);
+        return list_film;
+    }
+
+    public List<List<String>> findHistorique(int id) throws SQLException {
+        String query = "select nomAb,prenomAb from Abonnes,Historique where id=Historique.id_abonne and id_film=?;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setInt(1, id);
+        List<List<String>> abonne_list=new ArrayList<>();
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            List<String> abonne=new ArrayList<>();
+            String firstname = resultSet.getString("prenomAb");
+            String lastname = resultSet.getString("nomAb");
+            abonne.add(firstname);
+            abonne.add(lastname);
+            abonne_list.add(abonne);
+        }
+        resultSet.close();
+        closeBD(preparedStatement);
+        return abonne_list;
+    }
+
+
+    public List<String> findTitreFilmSelonAbonnes(int id_abonne) throws SQLException {
+        List<String> listoffilm=new ArrayList<>();
+        String query="select titreF from Film,Historique where id=id_film and id_abonne=?;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        preparedStatement.setInt(1,id_abonne);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next()) {
+            String titreF= resultSet.getString("titreF");
+            listoffilm.add(titreF);
+        }
+        resultSet.close();
+        closeBD(preparedStatement);
+        return listoffilm;
+
+    }
+
+
 
 }

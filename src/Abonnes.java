@@ -56,7 +56,7 @@ public class Abonnes {
 		return nomAb;
 	}
 	/**
-	 * @param nomAb the nomAb to set
+	 * @param aNomAb the nomAb to set
 	 */
 	public void setNomAb(String aNomAb) {
 		this.nomAb = aNomAb;
@@ -68,7 +68,7 @@ public class Abonnes {
 		return dateNaissanceAb;
 	}
 	/**
-	 * @param dateNaissanceAb the dateNaissanceAb to set
+	 * @param aDateNaissanceAb the dateNaissanceAb to set
 	 */
 	public void setDateNaissanceAb(String aDateNaissanceAb) {
 		this.dateNaissanceAb = aDateNaissanceAb;
@@ -80,7 +80,7 @@ public class Abonnes {
 		return sexeAb;
 	}
 	/**
-	 * @param sexeAb the sexeAb to set
+	 * @param aSexeAb the sexeAb to set
 	 */
 	public void setSexeAb(String aSexeAb) {
 		this.sexeAb = aSexeAb;
@@ -99,7 +99,7 @@ public class Abonnes {
 		return locationFilm;
 	}
 	/**
-	 * @param fourchetteRevenus the fourchetteRevenus to set
+	 * @param aFourchetteRevenus the fourchetteRevenus to set
 	 *
 	 *Method to set the income bracket based on the income value
 	 */

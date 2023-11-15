@@ -7,7 +7,7 @@ public class Film {
 	private List<Acteurs> acteursList;
 	private Map<Abonnes,DateLocation> location;
 
-	private Genre genre;
+	private String genre;
 
 //	private Acteurs acteurs;
 	private Map<String,List<List<String>>> historique;
@@ -27,17 +27,17 @@ public class Film {
 	 * @param couleurF
 	 * @param genre
 	 */
-	public Film(String titreF, boolean couleurF, Genre genre,int nbStockage) {
+	public Film(String titreF, boolean couleurF, String  genre,int nbStockage) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
 		this.acteursList = new ArrayList<>();
 		location = new HashMap<>();
 		this.NbStockage=nbStockage;
-		this.genre = genre;
+		this.genre=genre;
 		historique=new HashMap<>();
 	}
 
-	public Film(String titreF, boolean couleurF,Genre genre, Acteurs acteurs,int nbStockage) {
+	public Film(String titreF, boolean couleurF,String genre, Acteurs acteurs,int nbStockage) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
 		this.acteursList = new ArrayList<>();
@@ -172,12 +172,12 @@ public class Film {
 	}
 
 
-	public Genre getGenre() {
+	public String getGenre() {
 		return genre;
 	}
 
 
-	public void setGenre(Genre genre) {
+	public void setGenre(String genre) {
 		this.genre = genre;
 	}
 	private List<Abonnes> listeAbonnes;

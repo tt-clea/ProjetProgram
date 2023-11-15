@@ -15,7 +15,6 @@ public class Main {
         //connect base de donnee de SQLite
 //        Connection connection=BdConnector.connect();
 
-
         // construire les arbre de genre
         Genre tree=new Genre("genre");
         Genre action=new Genre("action");
@@ -30,16 +29,16 @@ public class Main {
         action.addSubGenre(western);
         comedie.addSubGenre(musique);
         comedie.addSubGenre(romance);
-//        System.out.println("Genre de tree est :"+tree);
+        System.out.println("Genre de tree est :"+tree);
         //construire acteurs
         Acteurs a1=new Acteurs("anne","anne");
         Acteurs a2=new Acteurs("tiantian","tiantian");
 
         // construire film
-        Film f1=new Film("Angle",true,musique,10);
-        Film f2=new Film("Angle2",true,romance,15);
-        Film f3=new Film("Runing man",false,musique,15);
-        Film f4=new Film("Runing man2",false,aventure,15);
+        Film f1=new Film("Angle",true,"musique",10);
+        Film f2=new Film("Angle2",true,"romance",15);
+        Film f3=new Film("Runing man",false,"musique",15);
+        Film f4=new Film("Runing man2",false,"aventure",15);
 
         //construire coffret
         Coffret c1=new Coffret("Coffret1",true);
@@ -52,9 +51,6 @@ public class Main {
 
         //DateLocation
         DateLocation dl1=new DateLocation("2023-11-11");
-
-
-
 
         //construire evolues
         Evolues ev_abonne=new Evolues(ab1,ab2);
@@ -104,6 +100,10 @@ public class Main {
 //        fonction_test.findAbonnes("an","an");
 //        fonction_test.addFilmBD(f2);
 //        fonction_test.enregistrerPret(ab1,f1,dl1);
+//        fonction_test.enregistrerPret(ab2,f2,dl1);
+//        fonction_test.enregistrerPret(ab3,f4,dl1);
+//        fonction_test.enregistrerPret(ab3,f2,dl1);
+
 //        fonction_test.addFilmBD(f2);
 //        fonction_test.addFilmBD(f3);
 //        fonction_test.addFilmBD(f4);
@@ -115,17 +115,25 @@ public class Main {
 
         Map<String,List<String>> extraireMemeRevenu=fonction_test.extraireAbonneMemeRevenu();
         System.out.println(extraireMemeRevenu);
+        fonction_test.PlusLoueGenre();
+
+        //Extraire de la liste des films les films les plus similaires à un film ayant le titre « ? ».
+        fonction_test.KeyWordFilm("An");
 
 
+        //Extraire de la liste des abonnés, les abonnés « les plus curieux »
+        //les films loués par ces abonnés se ressemblent le moins possible.
+        fonction_test.findSimilaireFilm(tree);
 
+        //extraire de la liste des films les films ayant un public type
+        Map<Integer,List<Integer>> list_abonne=fonction_test.AbonnesSimilarite();
+        Map<Integer,List<List<String>>> list_film=fonction_test.get_film_titre_selon_abonne(list_abonne);
 
+        //extraire de la liste des abonnes, les abonnes les plus proches d'un profil type
+        Map<Integer,List<Integer>> list_abonne_id=fonction_test.AbonnesSimilarite();  //get id of abonnes
+        Map<Integer,List<List<String>>> abonnes=fonction_test.get_Abonnes_selon_id(list_abonne_id);
 
-
-        //add location
-//        f1.addLocation(ab1,dl1);
-
-
-
+        //extraire de la liste des produits videos, pour chaque produit , le ou les films les plus similarites;
 
 
 

@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -6,10 +5,9 @@ import java.util.Map;
 
 public class Coffret {
     private String titreC;
-    private Genre genre;
+    private String genre;
     private List<Film> filmlist;
     private Film film;
-    private boolean couleurC;
     private boolean bonus;// 1 est bonus , 0 est non bonus
 
     private static int NOMBRE_FILMS = 10;
@@ -20,28 +18,12 @@ public class Coffret {
         this.bonus = bonus;
         this.filmlist=new ArrayList<>();
         coffretList=new HashMap<>();
-        this.couleurC=collection_color();
         this.genre=collection_genre();
     }
-
-
-    /**
-     * set color of coffret as same as film ;
-     */
-    private boolean collection_color()
-    {
-        if (!filmlist.isEmpty())
-        {
-
-            return filmlist.get(0).isCouleurF();
-        }
-        return false;
-    }
-
     /**
      * set genre of coffret as same as film;
      */
-    private Genre collection_genre()
+    private String collection_genre()
     {
         if(!filmlist.isEmpty())
         {
@@ -55,12 +37,8 @@ public class Coffret {
         return titreC;
     }
 
-    public Genre getGenre() {
+    public String getGenre() {
         return collection_genre();
-    }
-
-    public boolean isCouleurC() {
-        return collection_color();
     }
 
 

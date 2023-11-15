@@ -48,15 +48,15 @@ public class Evolues {
      * Déterminer si deux age des abonnes ont similarite ,similarite à 0, sinon 1
      * @return
      */
-    public int similarites_Age()
+    public int similarites_Age(Abonnes a1,Abonnes a2)
     {
         //[0,1] Les résultats calculés sont similaires à l'intérieur de l'intervalle et dissemblables au-dessus de l'intervalle.
 
 
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate birthDateAb1=LocalDate.parse(abonnes1.getDateNaissanceAb(),formatter);
-        LocalDate birthDateAb2=LocalDate.parse(abonnes2.getDateNaissanceAb(),formatter);
+        LocalDate birthDateAb1=LocalDate.parse(a1.getDateNaissanceAb(),formatter);
+        LocalDate birthDateAb2=LocalDate.parse(a2.getDateNaissanceAb(),formatter);
         int ageAb1=calculateAge(birthDateAb1,currentDate);
         int ageAb2=calculateAge(birthDateAb2,currentDate);
         int fc=Math.abs(ageAb1-ageAb2)/10;
@@ -89,19 +89,19 @@ public class Evolues {
         return age;
     }
 
-    public int similarite_Sexe()
+    public int similarite_Sexe(Abonnes a1,Abonnes a2)
     {
-        if(abonnes1.getSexeAb().equals(abonnes2.getSexeAb()))
+        if(a1.getSexeAb().equals(a2.getSexeAb()))
         {
             return 0;
         }
         return 1;
     }
-    public int similarite_Salaire()
+    public int similarite_Salaire(Abonnes a1,Abonnes a2)
     {
-        String NiveauAb1=trancherLevel(abonnes1.getFourchetteRevenus());
+        String NiveauAb1=trancherLevel(a1.getFourchetteRevenus());
 
-        String NiveauAb2=trancherLevel(abonnes2.getFourchetteRevenus());
+        String NiveauAb2=trancherLevel(a2.getFourchetteRevenus());
 //        System.out.println("level 1 :"+NiveauAb1);
 //        System.out.println("level 2 :"+NiveauAb2);
         if(NiveauAb1.equals(NiveauAb2))
@@ -133,11 +133,11 @@ public class Evolues {
         }
     }
 
-    public int similarite_Abonnes()
+    public int similarite_Abonnes(Abonnes abonnes1,Abonnes abonnes2)
     {
-        int res_age=similarites_Age();
-        int res_sexe=similarite_Sexe();
-        int res_sala=similarite_Salaire();
+        int res_age=similarites_Age(abonnes1,abonnes2);
+        int res_sexe=similarite_Sexe(abonnes1,abonnes2);
+        int res_sala=similarite_Salaire(abonnes1,abonnes2);
 //        System.out.println("age: "+res_age);
 //        System.out.println("salaire: "+res_sala);
 //        System.out.println("sexe: "+res_sexe);
@@ -145,10 +145,13 @@ public class Evolues {
         return count;
     }
 
-    public int similarite_Genre_Film(Genre g,Genre genreF1,Genre genreF2,String nomGenreFilm1,String nomGenreFilm2)
+
+    //////////////////////////////film/////////////////////////////////
+
+    public int similarite_Genre_Film(Genre g,String nomGenreFilm1,String nomGenreFilm2)
     {
         //获得两个节点
-//        Genre genreF1=films1.getGenre();
+//        Genre genreF1=films1.getGenre(); action:[][]
 //        Genre genreF2=films2.getGenre();
 //        String nomGenreFilm1= genreF1.getGenreNom(); //get the nom of genre.
 //        String nomGenreFilm2= genreF2.getGenreNom();
@@ -157,12 +160,10 @@ public class Evolues {
         int size=0;
 
 
-        if (genreF1.equals(genreF2))
+        if (nomGenreFilm1.equals(nomGenreFilm2))
         {
             return 0;
-//            size=calculateHeight(g)-1;
-////            System.out.println("Size "+size);
-//            return size;
+
         }
         else{
 
@@ -216,7 +217,6 @@ public class Evolues {
 
     }
 
-
     public static int calculateHeight(Genre g)
     {
         if (g==null)
@@ -260,17 +260,15 @@ public class Evolues {
 
     public int similarite_Film(Genre g,Film films1,Film films2)
     {
-        Genre genreF1=films1.getGenre();
-        Genre genreF2=films2.getGenre();
-        String nomGenreFilm1= genreF1.getGenreNom(); //get the nom of genre.
-        String nomGenreFilm2= genreF2.getGenreNom();
+        String nomGenreFilm1= films1.getGenre(); //get the nom of genre.
+        String nomGenreFilm2= films2.getGenre();
         boolean film1_couleur=films1.isCouleurF();
         boolean film2_couleur=films2.isCouleurF();
         List<Acteurs> list_of_actor1=films1.getActeursList();
         List<Acteurs> list_of_actor2=films2.getActeursList();
 
 
-        int res_genre=similarite_Genre_Film(g,genreF1,genreF2,nomGenreFilm1,nomGenreFilm2);
+        int res_genre=similarite_Genre_Film(g,nomGenreFilm1,nomGenreFilm2);
         int res_couleur=similarite_Couleur_Film(film1_couleur,film2_couleur);
         int res_actor=similarite_Casting_Film(list_of_actor1,list_of_actor2);
         int count=res_genre+res_couleur+res_actor;
@@ -278,6 +276,9 @@ public class Evolues {
         return count;
     }
 
+
+
+    ////////////////////////coffret////////////////////////////////
 
     public int similarite_Coffret(Genre g)
     {
