@@ -49,6 +49,7 @@ public class Fonction {
 	//•	Ajouter un abonné dans une liste d'abonnés.
 	// Methods to add subscribers and films to their respective lists
 
+	///////////////////////////// ajouter les donnes dans BD/////////////////////////////
     
     /**
      * Method to add a subscriber to the list, avoiding duplicates.
@@ -75,6 +76,19 @@ public class Fonction {
 			System.out.println("Ajouter fail ! Abonné est déjà dans la liste.");
 		}
     }
+
+	public void addCoffretBD(Coffret coffret) throws SQLException {
+		String titreC= coffret.getTitreC();
+		String genreC=coffret.getGenre();
+		boolean bonus= coffret.isBonus();
+		if(bd.insert_coffret(titreC,genreC,bonus))
+		{
+			System.out.println("Coffret inséré avec succès dans la base de données");
+		}
+		else {
+			System.out.println("Coffret n'a pas été inséré dans la base de données");
+		}
+	}
     
     //•	Ajouter un film à une liste de films.
     /**
@@ -101,6 +115,101 @@ public class Fonction {
 			System.out.println("Film est déjà dans la liste.");
 		}
     }
+	public void addGenreBD(Genre genre) throws SQLException {
+		String genreF;
+		String genreS;
+		for(Genre g:genre.getSubGenre())
+		{
+			System.out.println(g);
+//			System.out.println(g.getGenreNom()); //action
+//			System.out.println(g.getSubGenre()); //[aventure:[],western:[]]
+			if (!g.getSubGenre().isEmpty()) // not null
+			{
+				genreF=g.getGenreNom();//action
+				for (Genre sub:g.getSubGenre())
+				{
+					//System.out.println(sub.getGenreNom()); //aventure , western
+					genreS= sub.getGenreNom();
+					Boolean isInsertGenre=bd.insert_genre(genreF,genreS);
+					if (isInsertGenre)
+					{
+						System.out.println("genre est:"+genreF+" subgenre est:"+genreS+" ajouté avec succès");
+					}
+					else {
+						System.out.println("genre est:"+genreF+" subgenre est:"+genreS+" ajouté pas");
+					}
+				}
+			}
+			else {
+				genreF=g.getGenreNom();
+				genreS=null;
+				Boolean isInsertGenre=bd.insert_genre(genreF,genreS);
+				if (isInsertGenre)
+				{
+					System.out.println("genre est:"+genreF+" subgenre est:"+genreS+" ajouté avec succès");
+				}
+				else {
+					System.out.println("genre est:"+genreF+" subgenre est:"+genreS+" ajouté pas");
+				}
+			}
+			System.out.println("-------------------------");
+		}
+
+	}
+
+	public void addActorBD(Acteurs acteurs) throws SQLException {
+		String prenomA= acteurs.getPrenomA();
+		String nomA=acteurs.getNomA();
+		Boolean isInsertActor=bd.insert_actor(nomA,prenomA);
+		if(isInsertActor)
+		{
+			System.out.println("Acteur :"+prenomA +" "+ nomA+" ajouté avec succès");
+		}
+		else {
+			System.out.println("Acteur :"+prenomA +" "+ nomA+" ajouté pas");
+		}
+	}
+
+	public void addFilmCoffret(Coffret coffret,Film film) throws SQLException {
+		String titreF= film.getTitreF();
+		String titreC= coffret.getTitreC();
+		//get id of film
+		int id_film=bd.get_id_film(titreF);
+		//get id of coffret
+		int id_coffret= bd.get_id_coffret(titreC);
+		Boolean isInsert=bd.insert_Avoir_Film_Coffret(id_coffret,id_film);
+		if (isInsert)
+		{
+			System.out.println("ID :"+id_film+" de film ajouté dans le id "+id_coffret+ "de coffret");
+		}
+		else
+		{
+			System.out.println("Film pas ajouté dans le coffret");
+		}
+	}
+	public void addFilmActor(Film film,Acteurs acteurs) throws SQLException {
+		String titreF= film.getTitreF();
+		String nomA= acteurs.getNomA();
+		String prenomA= acteurs.getPrenomA();
+		//get id of film
+		int id_film= bd.get_id_film(titreF);
+		//get id of actor
+		int id_actor=bd.get_id_actor(nomA,prenomA);
+		Boolean isInsert=bd.insert_avoir_film_actor(id_film,id_actor);
+		if (isInsert)
+		{
+			System.out.println("acteur id :"+id_actor +" ajouté avec success dans film id "+id_film);
+		}
+		else {
+			System.out.println("ajouter pas");
+		}
+	}
+
+
+
+
+
+	//////////////////////////////////////fonction////////////////////////////////
 
 
 
@@ -403,39 +512,14 @@ public class Fonction {
 		}
 	}
 
-	public void addCoffretBD(Coffret coffret) throws SQLException {
-		String titreC= coffret.getTitreC();
-		String genreC=coffret.getGenre();
-		boolean bonus= coffret.isBonus();
-		if(bd.insert_coffret(titreC,genreC,bonus))
-		{
-			System.out.println("Coffret inséré avec succès dans la base de données");
-		}
-		else {
-			System.out.println("Coffret n'a pas été inséré dans la base de données");
-		}
-	}
-
-	public void addGenreBD(Genre genre)
-	{
-		String genreF= genre.getGenreNom();
-		List<Genre> genreS=genre.getSubGenre(); //list
-		if (genreS.isEmpty()) // if there is no sub genre
-		{
-			String query=
-
-
-		}
-	}
 
 
 
 	public Map<Integer,List<String>> extraireCoffret()
 	{
 
+		return null;
 	}
-
-
 
 }
 

@@ -60,11 +60,90 @@ public class BdConnector {
             return false;
         }
     }
-    public boolean insert_genre(String genreFather,String genreSon)
-    {
+    public boolean insert_genre(String genreFather,String genreSon) throws SQLException {
+        String query="insert into Genre(genreNom, SubGenre) VALUES (?,?);";
 
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1, genreFather);
+        preparedStatement.setString(2, genreSon);
+        int rowsInserted = preparedStatement.executeUpdate();
+//        ResultSet resultSet = preparedStatement.executeQuery();
+        if (rowsInserted > 0) {
+
+            closeBD(preparedStatement);
+            return true;
+        } else {
+
+            closeBD(preparedStatement);
+            return false;
+        }
+    }
+
+    public boolean insert_actor(String nomA,String prenomA) throws SQLException {
+        String query="insert into Acteurs(prenomA, nomA) VALUES (?,?);";
+
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1, prenomA);
+        preparedStatement.setString(2, nomA);
+        int rowsInserted = preparedStatement.executeUpdate();
+//        ResultSet resultSet = preparedStatement.executeQuery();
+        if (rowsInserted > 0) {
+
+            closeBD(preparedStatement);
+            return true;
+        } else {
+
+            closeBD(preparedStatement);
+            return false;
+        }
+    }
+
+    public boolean insert_Avoir_Film_Coffret(int id_coffret,int id_film) throws SQLException {
+        String query="insert into avoir_film_coffret(id_coffret, id_film) VALUES (?,?);";
+
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setInt(1, id_coffret);
+        preparedStatement.setInt(2, id_film);
+        int rowsInserted = preparedStatement.executeUpdate();
+//        ResultSet resultSet = preparedStatement.executeQuery();
+        if (rowsInserted > 0) {
+
+            closeBD(preparedStatement);
+            return true;
+        } else {
+
+            closeBD(preparedStatement);
+            return false;
+        }
+    }
+
+    public boolean insert_avoir_film_actor(int id_film,int id_actor) throws SQLException {
+        String query="insert into avoir_acteur_film(id_film, id_acteur) VALUES (?,?);";
+
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setInt(1, id_film);
+        preparedStatement.setInt(2, id_actor);
+        int rowsInserted = preparedStatement.executeUpdate();
+//        ResultSet resultSet = preparedStatement.executeQuery();
+        if (rowsInserted > 0) {
+
+            closeBD(preparedStatement);
+            return true;
+        } else {
+
+            closeBD(preparedStatement);
+            return false;
+        }
 
     }
+
+
+
+
 
     public boolean insert_abonne(String prenom, String nom, String DateNaissance, String sexe, int Revenus) throws SQLException {
         String query = "INSERT INTO Abonnes(prenomAb,nomAb,dateNaissanceAb,sexeAb,fourchetteRevenus) VALUES(?,?,?,?,?)";
@@ -95,6 +174,33 @@ public class BdConnector {
         }
 
     }
+    public boolean insert_film(String titreF, Boolean couleurF, int NbStockage, String genreF) throws SQLException {
+        String query = "insert into Film(titreF, couleurF, NbStockage, genreF) VALUES (?,?,?,?)";
+
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1, titreF);
+        preparedStatement.setBoolean(2, couleurF);
+        preparedStatement.setInt(3, NbStockage);
+        preparedStatement.setString(4, genreF);
+
+        int rowsInserted = preparedStatement.executeUpdate();
+//        ResultSet resultSet = preparedStatement.executeQuery();
+        if (rowsInserted > 0) {
+
+            closeBD(preparedStatement);
+            return true;
+        } else {
+
+            closeBD(preparedStatement);
+            return false;
+        }
+
+    }
+
+
+
+    /////////////////////////find//////////////////////////////////////////////////
 
     public boolean findAbonneParNom(String Nom, String Prenom) throws SQLException {
         String query = "SELECT * FROM Abonnes where nomAb=? and prenomAb=?;";
@@ -143,29 +249,7 @@ public class BdConnector {
 
 
 
-    public boolean insert_film(String titreF, Boolean couleurF, int NbStockage, String genreF) throws SQLException {
-        String query = "insert into Film(titreF, couleurF, NbStockage, genreF) VALUES (?,?,?,?)";
 
-        PreparedStatement preparedStatement = connect().prepareStatement(query);
-        // set attribut
-        preparedStatement.setString(1, titreF);
-        preparedStatement.setBoolean(2, couleurF);
-        preparedStatement.setInt(3, NbStockage);
-        preparedStatement.setString(4, genreF);
-
-        int rowsInserted = preparedStatement.executeUpdate();
-//        ResultSet resultSet = preparedStatement.executeQuery();
-        if (rowsInserted > 0) {
-
-            closeBD(preparedStatement);
-            return true;
-        } else {
-
-            closeBD(preparedStatement);
-            return false;
-        }
-
-    }
 
     public boolean findFilm(String titreF) throws SQLException {
         String query = "select * from Film where titreF= ?";
@@ -213,6 +297,10 @@ public class BdConnector {
     }
 
 
+
+
+
+    /////////////////////// return id /////////////////////////////////////////
     public int get_id_abonne(String Nom, String Prenom) throws SQLException {
         if(findAbonneParNom(Nom,Prenom))
         {
@@ -261,6 +349,51 @@ public class BdConnector {
             return -1;
         }
     }
+    public int get_id_coffret(String titreC) throws SQLException {
+        String query="select id from Coffret where Coffret.titreC=?;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+            // set attribut
+        preparedStatement.setString(1, titreC);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            int id_Coffret = resultSet.getInt("id");
+            resultSet.close();
+            closeBD(preparedStatement);
+            return id_Coffret;
+        } else {
+            resultSet.close();
+            closeBD(preparedStatement);
+            System.out.println("No Coffret");
+            return -1;
+        }
+
+    }
+
+    public int get_id_actor(String nomA,String prenomA) throws SQLException {
+        String query="select id from Acteurs where nomA=? and prenomA = ?;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1, nomA);
+        preparedStatement.setString(2,prenomA);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            int id_Actor = resultSet.getInt("id");
+            resultSet.close();
+            closeBD(preparedStatement);
+            return id_Actor;
+        } else {
+            resultSet.close();
+            closeBD(preparedStatement);
+            System.out.println("No Coffret");
+            return -1;
+        }
+
+    }
+
+
+
+
+    ///////////////////////// founction  ////////////////////////////
 
     public boolean historique(int id_film,int id_abonne,String DateDebut) throws SQLException {
         String query="insert into Historique(id_film, id_abonne, DateDebut, DateFin) VALUES (?,?,?,?);";

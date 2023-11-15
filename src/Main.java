@@ -136,6 +136,44 @@ public class Main {
         //extraire de la liste des produits videos, pour chaque produit , le ou les films les plus similarites;
 
 
+//        fonction_test.addGenreBD(tree);
+        //c1.addFilmList(f1);
+        //        c1.addFilmList(f2);
+        //        c1.addFilmList(f3);
+        //        c2.addFilmList(f3);
+        //        c2.addFilmList(f4);
+        // ajouter coffret
+//        fonction_test.addCoffretBD(c1);
+//        fonction_test.addCoffretBD(c2);
+
+
+        //ajouter les films dans coffret
+
+//
+//        fonction_test.addFilmCoffret(c1,f1);
+//        fonction_test.addFilmCoffret(c1,f2);
+//        fonction_test.addFilmCoffret(c1,f3);
+//        fonction_test.addFilmCoffret(c2,f3);
+//        fonction_test.addFilmCoffret(c2,f4);
+
+
+        //ajouter les acteurs dans BD
+//        fonction_test.addActorBD(a1);
+//        fonction_test.addActorBD(a2);
+
+        //ajouter les acteurs dans film
+//        f1.addActeurs(a1);
+//        f1.addActeurs(a2);
+//        f2.addActeurs(a1);
+//        f2.addActeurs(a2);
+//        f3.addActeurs(a2);
+//        f3.addActeurs(a1);
+//        f4.addActeurs(a1);
+        fonction_test.addFilmActor(f1,a1);
+        fonction_test.addFilmActor(f1,a2);
+        fonction_test.addFilmActor(f2,a2);
+
+
 
     }
 }
