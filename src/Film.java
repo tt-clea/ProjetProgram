@@ -5,21 +5,12 @@ public class Film {
 	private boolean couleurF;
 	private int NbStockage;
 	private List<Acteurs> acteursList;
-	private Map<Abonnes,DateLocation> location;
 
-	private Genre genre;
-
-//	private Acteurs acteurs;
-	private Map<String,List<List<String>>> historique;
+	private String genre;
 
 
-	/**
-	 *
-	 **/
 	public Film()
 	{
-		this.location=new HashMap<>();
-		this.historique=new HashMap<>();
 	}
 
 	/**
@@ -27,96 +18,22 @@ public class Film {
 	 * @param couleurF
 	 * @param genre
 	 */
-	public Film(String titreF, boolean couleurF, Genre genre,int nbStockage) {
+	public Film(String titreF, boolean couleurF, String  genre,int nbStockage) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
 		this.acteursList = new ArrayList<>();
-		location = new HashMap<>();
+
 		this.NbStockage=nbStockage;
-		this.genre = genre;
-		historique=new HashMap<>();
+		this.genre=genre;
 	}
 
-	public Film(String titreF, boolean couleurF,Genre genre, Acteurs acteurs,int nbStockage) {
+	public Film(String titreF, boolean couleurF,String genre, Acteurs acteurs,int nbStockage) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
 		this.acteursList = new ArrayList<>();
-		location = new HashMap<>();
 		this.genre = genre;
-		historique=new HashMap<>();
 		this.NbStockage=nbStockage;
 	}
-	
-
-//	/**
-//	 * @param titreF
-//	 * @param couleurF
-//	 */
-//	public Film(String titreF, boolean couleurF) {
-//		this.titreF = titreF;
-//		this.couleurF = couleurF;
-////		this(titreF,couleurF,new ArrayList<>());
-//	}
-//
-//	/**
-//	 * @param titreF
-//	 * @param acteurs
-//	 */
-//	public Film(String titreF) {
-//		this.titreF = titreF;
-//		this.acteurs = new ArrayList<>();
-//	}
-
-	/**
-	 * @add the location
-	 */
-//	public boolean addLocation(Abonnes abonnes,DateLocation datelocation)
-//	{
-//
-//		if(getNbStockage()>0)
-//		{
-//			int nb=getNbStockage();
-//			nb--;
-//			setNbStockage(nb);
-//			location.put(abonnes, datelocation);
-//
-//
-//
-//			//historique location
-//			historiqueLocation(abonnes,datelocation);
-//			System.out.println("ok"+titreF);
-//			return true;
-//		}
-//		else
-//		{
-//			System.out.println("non stockage");
-//			return false;
-//		}
-//
-//	}
-	/**
-	 * @remove the location
-	 */
-//	public void removeLocation(final Abonnes abonnes,DateLocation datelocation)
-//	{
-//		NbStockage++;
-//		location.remove(abonnes);
-//		System.out.println("ok"+titreF);
-//	}
-
-//	public void historiqueLocation(Abonnes ab,DateLocation dateLocation) {
-//		//Map<Abonnes,List<List<String>>> historique;
-//		//List<String>= []  String film,date
-//		// tiantian ,  [[film ,2020-2-9],[film2 , 2023-03-12]]
-//		List<List<String>> listofList = new ArrayList<List<String>>();
-//
-//		List<String> innerList=new ArrayList<>();
-//		innerList.add(getTitreF()); //film
-//		innerList.add(dateLocation.getDateDebut()); //2020-2-9
-//		listofList.add(innerList);//[[film,2020-2-9]]
-//		historique.put(ab.getNomAb(),listofList);
-//
-//	}
 
 	/**
 	 * @return the titreF
@@ -152,64 +69,37 @@ public class Film {
 	}
 
 
-	/**
-	 *
-	 * @param aActeurs ajouter les acteurs de ce film
-	 */
 
-	public void addActeurs(Acteurs aActeurs)
-	{
-		acteursList.add(aActeurs);
-	}
-
-	/**
-	 *
-	 * @param aActeurs supprimer les acteurs de ce film
-	 */
-	public void removeActeurs(Acteurs aActeurs)
-	{
-		acteursList.remove(aActeurs);
-	}
-
-
-	public Genre getGenre() {
+	public String getGenre() {
 		return genre;
 	}
 
 
-	public void setGenre(Genre genre) {
+	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	private List<Abonnes> listeAbonnes;
 
-    // Autres attributs et méthodes de la classe Film
-
-    /**
-     * Récupère la liste des abonnés qui louent le film.
-     * @return La liste des abonnés qui louent le film.
-     */
-    public List<Abonnes> getRentingSubscribers() {
-        return listeAbonnes;
-    }
-
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Film film = (Film) o;
+		return couleurF == film.couleurF && NbStockage == film.NbStockage && Objects.equals(titreF, film.titreF) && Objects.equals(acteursList, film.acteursList) && Objects.equals(genre, film.genre);
+	}
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return super.equals(obj);
-	}
-
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
+		return Objects.hash(titreF, couleurF, NbStockage, acteursList, genre);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Film{" +
+				"titreF='" + titreF + '\'' +
+				", couleurF=" + couleurF +
+				", NbStockage=" + NbStockage +
+				", acteursList=" + acteursList +
+				", genre='" + genre + '\'' +
+				'}';
 	}
 }
