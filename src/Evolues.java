@@ -1,7 +1,9 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class Evolues {
     private Abonnes abonnes1;
@@ -205,9 +207,6 @@ public class Evolues {
      */
     public int similarite_Genre_Film(Genre g,String nomGenreFilm1,String nomGenreFilm2)
     {
-        int size=0;
-
-
         if (nomGenreFilm1.equals(nomGenreFilm2))
         {
             return 0;
@@ -220,17 +219,23 @@ public class Evolues {
             List<String> path2=new ArrayList<>();
             List<String> pathdeGenre1=SearchNode(g,nomGenreFilm1,path1);
             List<String> pathdeGenre2=SearchNode(g,nomGenreFilm2,path2);
-//            System.out.println("path1  :"+pathdeGenre1);
-//            System.out.println("path2  :"+pathdeGenre2);
+//            System.out.println(nomGenreFilm1+"path1  :"+pathdeGenre1);
+//            System.out.println(nomGenreFilm2+"path2  :"+pathdeGenre2);
             List<String> path_save_same_genre=new ArrayList<>(pathdeGenre1);
+            // keep value belongs to path_save_same_genre delete value not belongs to PathGenre2
             path_save_same_genre.retainAll(pathdeGenre2);
 //            System.out.println("path1  :"+pathdeGenre1);
 //            System.out.println("path2  :"+pathdeGenre2);
 //            System.out.println("same genre  :"+path_save_same_genre);
-            size=pathdeGenre1.size()-path_save_same_genre.size();
-
-//            System.out.println("Size :"+size);
-            return size;
+            if (path_save_same_genre.size()==1)
+            {
+                return 2;
+            } else if (path_save_same_genre.size()==2) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
         }
     }
 
@@ -311,16 +316,36 @@ public class Evolues {
 
     /**
      * calculte similary of actor common
-     * @param list_of_actor1
-     * @param list_of_actor2
+     * @param bd
+     * @param titreF2
+     * @param titreF1
      * @return
      */
-    public int similarite_Casting_Film(List<Acteurs> list_of_actor1,List<Acteurs> list_of_actor2)
-    {
+    public int similarite_Casting_Film(BdConnector bd,String titreF1,String titreF2) throws SQLException {
+        // list all actor from BD
+        Map<String,List<String>> list_of_actor_BD=bd.findActorFromFilm();
+        List<String> list_of_actor1=new ArrayList<>();
+        List<String> list_of_actor2=new ArrayList<>();
+        for(Map.Entry<String,List<String>> entry:list_of_actor_BD.entrySet())
+        {
+            if (entry.getKey().equals(titreF1))
+            {
+                for (String actor: entry.getValue()) {
+                    list_of_actor1.add(actor);
+                }
+            }
+            else if (entry.getKey().equals(titreF2))
+            {
+                for (String actor: entry.getValue()) {
+                    list_of_actor2.add(actor);
+                }
+            }
+
+        }
 
 //        System.out.println(list_of_actor1);
 //        System.out.println(list_of_actor2);
-        List<Acteurs> same_actor=new ArrayList<>(list_of_actor1);
+        List<String> same_actor=new ArrayList<>(list_of_actor1);
         same_actor.retainAll(list_of_actor2);
         if (!same_actor.isEmpty())
         {
@@ -331,24 +356,16 @@ public class Evolues {
 
     /**
      * return result of similary of two films
-     * @param g
+     * @param tree
      * @param films1
      * @param films2
      * @return
      */
-    public int similarite_Film(Genre g,Film films1,Film films2)
-    {
-        String nomGenreFilm1= films1.getGenre(); //get the nom of genre.
-        String nomGenreFilm2= films2.getGenre();
-        boolean film1_couleur=films1.isCouleurF();
-        boolean film2_couleur=films2.isCouleurF();
-        List<Acteurs> list_of_actor1=films1.getActeursList();
-        List<Acteurs> list_of_actor2=films2.getActeursList();
+    public int similarite_Film(BdConnector bd,Genre tree,Film films1,Film films2) throws SQLException {
 
-
-        int res_genre=similarite_Genre_Film(g,nomGenreFilm1,nomGenreFilm2);
-        int res_couleur=similarite_Couleur_Film(film1_couleur,film2_couleur);
-        int res_actor=similarite_Casting_Film(list_of_actor1,list_of_actor2);
+        int res_genre=similarite_Genre_Film(tree,films1.getGenre(),films2.getGenre());
+        int res_couleur=similarite_Couleur_Film(films1.isCouleurF(), films2.isCouleurF());
+        int res_actor=similarite_Casting_Film(bd, films1.getTitreF(),films2.getTitreF());
         int count=res_genre+res_couleur+res_actor;
 //        System.out.println(res_actor);
         return count;
@@ -363,8 +380,7 @@ public class Evolues {
      * @param g
      * @return
      */
-    public int similarite_Coffret(Genre g)
-    {
+    public int similarite_Coffret(BdConnector bd,Genre g) throws SQLException {
 //        int res_genre=similarite_Genre_Film(g);
 //        int res_actor=similarite_Casting_Film();
 
@@ -379,7 +395,7 @@ public class Evolues {
                     continue;
                 }
                 
-                int score=similarite_Film(g,f1,f2);
+                int score=similarite_Film(bd,g,f1,f2);
                 max_similarite[tag]=score;
 //                System.out.println(score);
 //                System.out.println(max_similarite[tag]);

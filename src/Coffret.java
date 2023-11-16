@@ -9,11 +9,11 @@ public class Coffret {
 
 
 
-    public Coffret(String titreC, boolean bonus) {
+    public Coffret(String titreC, boolean bonus,String genre) {
         this.titreC = titreC;
         this.bonus = bonus;
         this.filmlist=new ArrayList<>();
-        this.genre=collection_genre();
+        this.genre=genre;
     }
     /**
      * set genre of coffret as same as film;
@@ -28,24 +28,44 @@ public class Coffret {
     }
 
 
+    /**
+     * return titre of Coffret
+     * @return
+     */
     public String getTitreC() {
         return titreC;
     }
 
+    /**
+     * get genre of coffret
+     * @return
+     */
     public String getGenre() {
-        return collection_genre();
+        return genre;
     }
 
 
+    /**
+     * get list of films
+     * @return
+     */
     public List<Film> getFilmlist() {
         return filmlist;
     }
 
 
+    /**
+     * if has bonus for coffret
+     * @return
+     */
     public boolean isBonus() {
         return bonus;
     }
 
+    /**
+     * set titre of coffret
+     * @param titreC
+     */
     public void setTitreC(String titreC) {
         this.titreC = titreC;
     }

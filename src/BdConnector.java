@@ -473,6 +473,35 @@ public class BdConnector {
         return coffret_films;
     }
 
+    /**
+     * find actors of film
+     * @return
+     * @throws SQLException
+     */
+    public Map<String,List<String>> findActorFromFilm() throws SQLException {
+        String query="select titreF, nomA,prenomA from Film,avoir_acteur_film,Acteurs where id_film=Film.id and id_acteur=Acteurs.id;";
+        PreparedStatement preparedStatement= connect().prepareStatement(query);
+        ResultSet resultSet=preparedStatement.executeQuery();
+        Map<String,List<String>> actor_list=new HashMap<>();
+        while (resultSet.next())
+        {
+            String titreF=resultSet.getString("titreF");
+            String nomA=resultSet.getString("nomA");
+            String prenomA=resultSet.getString("prenomA");
+            String fullnom=nomA+" "+prenomA;
+            if (actor_list.containsKey(titreF))
+            {
+
+                actor_list.get(titreF).add(fullnom);
+            }
+            else {
+                actor_list.put(titreF,new ArrayList<>());
+                actor_list.get(titreF).add(fullnom);
+            }
+        }
+        return actor_list;
+    }
+
 
 
 
