@@ -275,6 +275,30 @@ public class BdConnector {
         }
     }
 
+    //find all information in BD film
+    public List<Object> findFilm2(String titreF) throws SQLException {
+        String query = "select * from Film where titreF= ?";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1, titreF);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Object> film=new ArrayList<>();
+        while(resultSet.next()) {
+            int id_Film = resultSet.getInt("id");
+            String titre_Film = resultSet.getString("titreF");
+            String couleur_Film = resultSet.getString("couleurF");
+            int NbStrockage_Film = resultSet.getInt("NbStockage");
+            String genre_Film = resultSet.getString("genreF");
+            film.add(titre_Film);
+            film.add(couleur_Film);
+            film.add(NbStrockage_Film);
+            film.add(genre_Film);
+        }
+        resultSet.close();
+        closeBD(preparedStatement);
+        return film;
+    }
+
     public int findNbFilm(String titreF) throws SQLException {
         String query="select NbStockage from Film  where titreF=?;";
         PreparedStatement preparedStatement= connect().prepareStatement(query);
@@ -296,143 +320,6 @@ public class BdConnector {
         }
     }
 
-
-
-
-
-    /////////////////////// return id /////////////////////////////////////////
-    public int get_id_abonne(String Nom, String Prenom) throws SQLException {
-        if(findAbonneParNom(Nom,Prenom))
-        {
-            String query="select id from Abonnes where nomAb= ? and prenomAb= ?;";
-            PreparedStatement preparedStatement = connect().prepareStatement(query);
-            // set attribut
-            preparedStatement.setString(1, Nom);
-            preparedStatement.setString(2, Prenom);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                int id= resultSet.getInt("id");
-                resultSet.close();
-                closeBD(preparedStatement);
-                return id;
-            } else {
-                resultSet.close();
-                closeBD(preparedStatement);
-                return -1;
-            }
-        }
-        else {
-            return -1;
-        }
-    }
-    public int get_id_film(String titreF) throws SQLException {
-        if(findFilm(titreF))
-        {
-            String query="select id from Film where titreF= ? ;";
-            PreparedStatement preparedStatement = connect().prepareStatement(query);
-            // set attribut
-            preparedStatement.setString(1, titreF);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                int id_Film = resultSet.getInt("id");
-                resultSet.close();
-                closeBD(preparedStatement);
-                return id_Film;
-            } else {
-                resultSet.close();
-                closeBD(preparedStatement);
-                System.out.println("No film");
-                return -1;
-            }
-        }
-        else {
-            return -1;
-        }
-    }
-    public int get_id_coffret(String titreC) throws SQLException {
-        String query="select id from Coffret where Coffret.titreC=?;";
-        PreparedStatement preparedStatement = connect().prepareStatement(query);
-            // set attribut
-        preparedStatement.setString(1, titreC);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            int id_Coffret = resultSet.getInt("id");
-            resultSet.close();
-            closeBD(preparedStatement);
-            return id_Coffret;
-        } else {
-            resultSet.close();
-            closeBD(preparedStatement);
-            System.out.println("No Coffret");
-            return -1;
-        }
-
-    }
-
-    public int get_id_actor(String nomA,String prenomA) throws SQLException {
-        String query="select id from Acteurs where nomA=? and prenomA = ?;";
-        PreparedStatement preparedStatement = connect().prepareStatement(query);
-        // set attribut
-        preparedStatement.setString(1, nomA);
-        preparedStatement.setString(2,prenomA);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            int id_Actor = resultSet.getInt("id");
-            resultSet.close();
-            closeBD(preparedStatement);
-            return id_Actor;
-        } else {
-            resultSet.close();
-            closeBD(preparedStatement);
-            System.out.println("No Coffret");
-            return -1;
-        }
-
-    }
-
-
-
-
-    ///////////////////////// founction  ////////////////////////////
-
-    public boolean historique(int id_film,int id_abonne,String DateDebut) throws SQLException {
-        String query="insert into Historique(id_film, id_abonne, DateDebut, DateFin) VALUES (?,?,?,?);";
-        PreparedStatement preparedStatement = connect().prepareStatement(query);
-        // set attribut
-        preparedStatement.setInt(1,id_film);
-        preparedStatement.setInt(2,id_abonne);
-        preparedStatement.setString(3,DateDebut);
-        preparedStatement.setString(4,null);
-
-
-        int rowsAffected=preparedStatement.executeUpdate();
-        if (rowsAffected>0) {
-            closeBD(preparedStatement);
-            System.out.println("Logging successful");
-            return true;
-        } else {
-            closeBD(preparedStatement);
-            System.out.println("Logging failed");
-            return false;
-        }
-    }
-
-    public boolean mis_a_jour_Nb(String titreF) throws SQLException {
-        String query="UPDATE Film SET NbStockage = NbStockage - 1 WHERE titreF = ?";
-        PreparedStatement preparedStatement = connect().prepareStatement(query);
-        // set attribut
-        preparedStatement.setString(1,titreF);
-
-        int rowsAffected=preparedStatement.executeUpdate();
-        if (rowsAffected>0) {
-            closeBD(preparedStatement);
-            return true;
-        } else {
-            closeBD(preparedStatement);
-            return false;
-        }
-
-    }
     public Map<List<Object>,Integer> findAllAbonnes() throws SQLException {
         Map<List<Object>,Integer> allAbonne= new HashMap<>();
         String query="select * from Abonnes;";
@@ -475,10 +362,6 @@ public class BdConnector {
         return listoffilm;
     }
 
-//    public boolean insert_genre()
-//    {
-//
-//    }
     public List<List<Object>> findFilmByKeyWord(String kw) throws SQLException {
         List<List<Object>> map_film=new ArrayList<>();
         String keyword="%"+kw+"%";
@@ -563,9 +446,166 @@ public class BdConnector {
         resultSet.close();
         closeBD(preparedStatement);
         return listoffilm;
+    }
+
+    //list films par chaque coffret
+    //Map<Coffret:Nom , List[Films]>
+    public Map<String,List<String>> FilmsParCoffret() throws SQLException {
+        String query="select titreC,titreF FROM Film,avoir_film_coffret,Coffret where Film.id=id_film and Coffret.id=avoir_film_coffret.id_coffret;";
+        PreparedStatement preparedStatement= connect().prepareStatement(query);
+        ResultSet resultSet=preparedStatement.executeQuery();
+        Map<String,List<String>> coffret_films=new HashMap<>();
+        while(resultSet.next())
+        {
+            String titreC=resultSet.getString("titreC");
+            String titreF=resultSet.getString("titreF");
+//            System.out.println(titreC);
+//            System.out.println(titreF);
+//            System.out.println("---------------");
+            //if map already has key value
+            if (coffret_films.containsKey(titreC))
+            {
+               coffret_films.get(titreC).add(titreF);
+            }else{
+                coffret_films.put(titreC,new ArrayList<>());
+                coffret_films.get(titreC).add(titreF);}
+        }
+        return coffret_films;
+    }
+
+
+
+
+    /////////////////////// return id /////////////////////////////////////////
+    public int get_id_abonne(String Nom, String Prenom) throws SQLException {
+        if(findAbonneParNom(Nom,Prenom))
+        {
+            String query="select id from Abonnes where nomAb= ? and prenomAb= ?;";
+            PreparedStatement preparedStatement = connect().prepareStatement(query);
+            // set attribut
+            preparedStatement.setString(1, Nom);
+            preparedStatement.setString(2, Prenom);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int id= resultSet.getInt("id");
+                resultSet.close();
+                closeBD(preparedStatement);
+                return id;
+            } else {
+                resultSet.close();
+                closeBD(preparedStatement);
+                return -1;
+            }
+        }
+        else {
+            return -1;
+        }
+    }
+    public int get_id_film(String titreF) throws SQLException {
+        if(findFilm(titreF))
+        {
+            String query="select id from Film where titreF= ? ;";
+            PreparedStatement preparedStatement = connect().prepareStatement(query);
+            // set attribut
+            preparedStatement.setString(1, titreF);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int id_Film = resultSet.getInt("id");
+                resultSet.close();
+                closeBD(preparedStatement);
+                return id_Film;
+            } else {
+                resultSet.close();
+                closeBD(preparedStatement);
+                System.out.println("No film");
+                return -1;
+            }
+        }
+        else {
+            return -1;
+        }
+    }
+    public int get_id_coffret(String titreC) throws SQLException {
+        String query="select id from Coffret where Coffret.titreC=?;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1, titreC);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            int id_Coffret = resultSet.getInt("id");
+            resultSet.close();
+            closeBD(preparedStatement);
+            return id_Coffret;
+        } else {
+            resultSet.close();
+            closeBD(preparedStatement);
+            System.out.println("No Coffret");
+            return -1;
+        }
 
     }
 
+    public int get_id_actor(String nomA,String prenomA) throws SQLException {
+        String query="select id from Acteurs where nomA=? and prenomA = ?;";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1, nomA);
+        preparedStatement.setString(2,prenomA);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            int id_Actor = resultSet.getInt("id");
+            resultSet.close();
+            closeBD(preparedStatement);
+            return id_Actor;
+        } else {
+            resultSet.close();
+            closeBD(preparedStatement);
+            System.out.println("No Coffret");
+            return -1;
+        }
+
+    }
+
+
+    ///////////////////////// founction  ////////////////////////////
+    public boolean historique(int id_film,int id_abonne,String DateDebut) throws SQLException {
+        String query="insert into Historique(id_film, id_abonne, DateDebut, DateFin) VALUES (?,?,?,?);";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setInt(1,id_film);
+        preparedStatement.setInt(2,id_abonne);
+        preparedStatement.setString(3,DateDebut);
+        preparedStatement.setString(4,null);
+
+
+        int rowsAffected=preparedStatement.executeUpdate();
+        if (rowsAffected>0) {
+            closeBD(preparedStatement);
+            System.out.println("Logging successful");
+            return true;
+        } else {
+            closeBD(preparedStatement);
+            System.out.println("Logging failed");
+            return false;
+        }
+    }
+
+    public boolean mis_a_jour_Nb(String titreF) throws SQLException {
+        String query="UPDATE Film SET NbStockage = NbStockage - 1 WHERE titreF = ?";
+        PreparedStatement preparedStatement = connect().prepareStatement(query);
+        // set attribut
+        preparedStatement.setString(1,titreF);
+
+        int rowsAffected=preparedStatement.executeUpdate();
+        if (rowsAffected>0) {
+            closeBD(preparedStatement);
+            return true;
+        } else {
+            closeBD(preparedStatement);
+            return false;
+        }
+
+    }
 
 
 }

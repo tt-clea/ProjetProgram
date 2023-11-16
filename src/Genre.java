@@ -19,10 +19,6 @@ public class Genre {
 	{
 		subGenre.add(sub);
 	}
-	public void removeSubGenre(Genre sub)
-	{
-		subGenre.remove(sub);
-	}
 	public void setGenreNom(String genreNom) {
 		this.genreNom = genreNom;
 	}

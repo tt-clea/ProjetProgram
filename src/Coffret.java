@@ -1,23 +1,18 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Coffret {
     private String titreC;
     private String genre;
     private List<Film> filmlist;
-    private Film film;
+
     private boolean bonus;// 1 est bonus , 0 est non bonus
 
-    private static int NOMBRE_FILMS = 10;
-    private Map<String,List<Acteurs>> coffretList;
+
 
     public Coffret(String titreC, boolean bonus) {
         this.titreC = titreC;
         this.bonus = bonus;
         this.filmlist=new ArrayList<>();
-        coffretList=new HashMap<>();
         this.genre=collection_genre();
     }
     /**
@@ -46,9 +41,6 @@ public class Coffret {
         return filmlist;
     }
 
-    public Film getFilm() {
-        return film;
-    }
 
     public boolean isBonus() {
         return bonus;
@@ -58,39 +50,26 @@ public class Coffret {
         this.titreC = titreC;
     }
 
-    /**
-     *
-     * @param film
-     * ajouter les films dans le coffret
-     */
-    public void addFilmList(Film film)
-    {
-        filmlist.add(film);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coffret coffret = (Coffret) o;
+        return bonus == coffret.bonus && Objects.equals(titreC, coffret.titreC) && Objects.equals(genre, coffret.genre) && Objects.equals(filmlist, coffret.filmlist);
     }
 
-
-
-//    public Map<String,List<Acteurs>> getActeursForFilm()
-//    {
-//        for(Film f:filmlist)
-//        {
-//            List<Acteurs> acteursList = f.getActeursList();
-//            coffretList.put(f.getTitreF(),acteursList);
-//        }
-//        return coffretList;
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(titreC, genre, filmlist, bonus);
+    }
 
     @Override
     public String toString() {
         return "Coffret{" +
                 "titreC='" + titreC + '\'' +
-
+                ", genre='" + genre + '\'' +
                 ", filmlist=" + filmlist +
-                ", film=" + film +
-
                 ", bonus=" + bonus +
-                ", coffretList=" + coffretList +
                 '}';
     }
-
 }

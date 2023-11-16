@@ -15,16 +15,7 @@ import java.util.Map.Entry;
  * 
  */
 public class Fonction {
-	
-	// Mettre les MAP()
-	
-//	private List<Abonnes> listeAbonnes;
-//    private List<Film> filmlist;
-//
-//    private Map<String, Abonnes> abonne;
-//	private Map<String, Film> film;
-//	private Map<String, Coffret> coffret;
-//	private Connection bd;
+
 	private BdConnector bd;
 	private Evolues evolues;
 	private Abonnes abonnes;
@@ -36,25 +27,18 @@ public class Fonction {
 		this.abonnes=abonnes;
 		this.evolues=new Evolues();
 		this.films = new Film();
-//        abonne = new HashMap<>();
-//		film = new HashMap<>();
-//		coffret = new HashMap<>();
-//		this.listeAbonnes=new ArrayList<>();
-//		this.filmlist=new ArrayList<>();
-//		this.evolues=new Evolues();
 	}
 
 
 
-	//•	Ajouter un abonné dans une liste d'abonnés.
-	// Methods to add subscribers and films to their respective lists
-
 	///////////////////////////// ajouter les donnes dans BD/////////////////////////////
-    
-    /**
-     * Method to add a subscriber to the list, avoiding duplicates.
-     * @param aAbonne The subscriber to be added
-     */
+
+
+	/**
+	 * Method to add a subscriber to the list, avoiding duplicates.
+	 * @param aAbonne
+	 * @throws SQLException
+	 */
     public void addAbonnesBD(Abonnes aAbonne) throws SQLException {
         // Check if the subscriber is not already in the list
 
@@ -77,6 +61,11 @@ public class Fonction {
 		}
     }
 
+	/**
+	 * Method to add coffret into BD
+	 * @param coffret
+	 * @throws SQLException
+	 */
 	public void addCoffretBD(Coffret coffret) throws SQLException {
 		String titreC= coffret.getTitreC();
 		String genreC=coffret.getGenre();
@@ -89,13 +78,13 @@ public class Fonction {
 			System.out.println("Coffret n'a pas été inséré dans la base de données");
 		}
 	}
-    
-    //•	Ajouter un film à une liste de films.
-    /**
-     * Method to add a film to the list, avoiding duplicates.
-     * @param aFilm The film to be added
-     */
-    public void addFilmBD(Film aFilm) throws SQLException {
+
+	/**
+	 * method to add movies into BD
+	 * @param aFilm
+	 * @throws SQLException
+	 */
+	public void addFilmBD(Film aFilm) throws SQLException {
         // Check if the film is not already in the list
 		boolean find=bd.findFilm(aFilm.getTitreF());
 		// if not find film in DB
@@ -115,6 +104,12 @@ public class Fonction {
 			System.out.println("Film est déjà dans la liste.");
 		}
     }
+
+	/**
+	 * method to add genre into BD
+	 * @param genre
+	 * @throws SQLException
+	 */
 	public void addGenreBD(Genre genre) throws SQLException {
 		String genreF;
 		String genreS;
@@ -157,6 +152,11 @@ public class Fonction {
 
 	}
 
+	/**
+	 * method to add actor into BD
+	 * @param acteurs
+	 * @throws SQLException
+	 */
 	public void addActorBD(Acteurs acteurs) throws SQLException {
 		String prenomA= acteurs.getPrenomA();
 		String nomA=acteurs.getNomA();
@@ -170,6 +170,12 @@ public class Fonction {
 		}
 	}
 
+	/**
+	 * method to add coffret and film into BD
+	 * @param coffret
+	 * @param film
+	 * @throws SQLException
+	 */
 	public void addFilmCoffret(Coffret coffret,Film film) throws SQLException {
 		String titreF= film.getTitreF();
 		String titreC= coffret.getTitreC();
@@ -187,6 +193,13 @@ public class Fonction {
 			System.out.println("Film pas ajouté dans le coffret");
 		}
 	}
+
+	/**
+	 * method to add film and actor into BD
+	 * @param film
+	 * @param acteurs
+	 * @throws SQLException
+	 */
 	public void addFilmActor(Film film,Acteurs acteurs) throws SQLException {
 		String titreF= film.getTitreF();
 		String nomA= acteurs.getNomA();
@@ -211,10 +224,12 @@ public class Fonction {
 
 	//////////////////////////////////////fonction////////////////////////////////
 
-
-
-
-
+	/**
+	 * find subscriber from BD
+	 * @param aNom
+	 * @param aPrenom
+	 * @throws SQLException
+	 */
 	public void findAbonnes(String aNom,String aPrenom) throws SQLException {
 		if(bd.findAbonneParNom(aNom,aPrenom))
 		{
@@ -228,10 +243,6 @@ public class Fonction {
     //•	Retrouver dans la liste des abonnés un abonné à partir de son nom et prénom.
 
 	//
-
-
-
-    //•	Enregistrer un prêt : un abonné loue un film.
 
 	/**
 	 * Method to register a loan: a subscriber rents a film.
@@ -280,7 +291,9 @@ public class Fonction {
 
 	/**
 	 * Extracts the subscribers within the same income bracket.
-	 * **/
+	 * @return
+	 * @throws SQLException
+	 */
 	public Map<String,List<String>> extraireAbonneMemeRevenu() throws SQLException {
 		//find all of actors in DB
 
@@ -305,8 +318,12 @@ public class Fonction {
 
 
 
-
-	public void PlusLoueGenre() throws SQLException {
+	/**
+	 * Extraire le genre de films le plus populaire (le plus loué)
+	 * @return
+	 * @throws SQLException
+	 */
+	public Entry<String,Integer> PlusLoueGenre() throws SQLException {
 		//Get the number and names of movies being rented
 		Map<String,Integer> genre_count=bd.findFilmLoue();
 		Entry<String,Integer> max=null;
@@ -318,17 +335,31 @@ public class Fonction {
 			}
 		}
 
-		System.out.println("Le genre de films le plus populaire est :"+max.getKey() +"\n"+"Nombre de location est "+max.getValue());
+		return max;
+//		System.out.println("Le genre de films le plus populaire est :"+max.getKey() +"\n"+"Nombre de location est "+max.getValue());
 	}
 
-	public void KeyWordFilm(String keyword) throws SQLException {
+
+	/**
+	 * Extraire de la liste des films les films les plus similaires à un film ayant le titre « ? »
+	 * @param keyword
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<List<Object>> KeyWordFilm(String keyword) throws SQLException {
 		List<List<Object>> list_of_film=bd.findFilmByKeyWord(keyword);
-		System.out.println(list_of_film);
+//		System.out.println(list_of_film);
+		return list_of_film;
 	}
 
 
-
-	public void findSimilaireFilm(Genre tree) throws SQLException {
+	/**
+	 * Extraire de la liste des abonnés, les abonnés « les plus curieux » : les films loués par ces abonnés se ressemblent le moins possible.
+	 * @param tree
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<List<String>> findSimilaireFilm(Genre tree) throws SQLException {
 		//return list_of_film
 		List<List<Object>> list_of_film=bd.ReturnFilm();
 		Map<List<Integer>,Integer> evolu_films=new HashMap<>();
@@ -400,10 +431,17 @@ public class Fonction {
 			}
 		}
 		System.out.println(abonne_list);
+		return abonne_list;
 	}
 
 
-	//les abonnes sont similaires, on fournira en paramètre le seuil de similarite entre abonnés
+
+
+	/**
+	 * Extraire de la liste des films les films ayant un public « typé » : les abonnés louant ces films sont similaires (on fournira en paramètre le seuil de similarité entre abonnés).
+	 * @return
+	 * @throws SQLException
+	 */
 	public Map<Integer,List<Integer>> AbonnesSimilarite() throws SQLException {
 		// find all of abonnes in BD
 		Map<List<Object>,Integer> all_abonne=bd.findAllAbonnes();
@@ -454,14 +492,19 @@ public class Fonction {
 				}
 			}
 		}
-
 //		System.out.println(group_abonne_similarite);
 		//removing duplicate values
 		removeDuplicateValuesInMapList(group_abonne_similarite);
-		System.out.println(group_abonne_similarite);
+//		System.out.println(group_abonne_similarite);
 		return group_abonne_similarite;
 	}
 
+	/**
+	 * return id of film according abonnes
+	 * @param group_abonne_similarite
+	 * @return
+	 * @throws SQLException
+	 */
 	public Map<Integer,List<List<String>>> get_film_titre_selon_abonne(Map<Integer,List<Integer>> group_abonne_similarite) throws SQLException {
 		//group_film_silimarite   key:result de silimarite value: films
 		Map<Integer,List<List<String>>> group_film_similarite=new HashMap<>();
@@ -478,6 +521,12 @@ public class Fonction {
 		return group_film_similarite;
 	}
 
+	/**
+	 * return abonnes according id
+	 * @param list_abonne_id
+	 * @return
+	 * @throws SQLException
+	 */
 	public Map<Integer,List<List<String>>> get_Abonnes_selon_id(Map<Integer,List<Integer>> list_abonne_id) throws SQLException {
 		Map<Integer,List<List<String>>> abonnes =new HashMap<>();
 		//entry: {0:[1,2,3],1:{2,4}}
@@ -496,339 +545,98 @@ public class Fonction {
 				}
 			}
 		}
-		System.out.println(abonnes);
 		return abonnes;
 	}
+
+	/**
+	 * removeing dulicate value in map list
+	 * @param map
+	 */
 	private static void removeDuplicateValuesInMapList(Map<Integer, List<Integer>> map) {
 		for (Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
 			List<Integer> originalList = entry.getValue();
 			Set<Integer> uniqueValues = new LinkedHashSet<>(originalList);
 
-			// 创建一个新的List，其中包含唯一的值
+			// create new list ,and contains unique value
 			List<Integer> uniqueList = new ArrayList<>(uniqueValues);
 
-			// 替换原始List
+			// instead of original List
 			entry.setValue(uniqueList);
 		}
 	}
 
 
+	/**
+	 * extraire de la liste des coffret, pour chaque coffret, le ou les films le plus similaires
+	 * @param genre
+	 * @return
+	 * @throws SQLException
+	 */
+	public Map<String,Map<String,List<String>>> extraireCoffret(Genre genre) throws SQLException {
+		// find all coffret and films
+		Map<String,List<String>> coffret_films=new HashMap<>();
+		coffret_films=bd.FilmsParCoffret();
 
-
-	public Map<Integer,List<String>> extraireCoffret()
-	{
-
-		return null;
+		// Coffret1 : {Film1: [film2.....], Film2:[film1....], Film3:[Film1.....]} Map<String,Map<String,List<String>> for stocking movies in same coffret.
+		Map<String,Map<String,List<String>>> lesFilmParCoffret_isSimialrite=new HashMap<>();
+		//calcule les simialrite dans cette  coffret
+		for(Map.Entry<String,List<String>> entry:coffret_films.entrySet())
+		{
+			Map<String,List<String>> films_isSimilarite=new HashMap<>();
+			int tag_similarite=3;
+			for (String titreF1: entry.getValue())
+			{
+				for (String titreF2:entry.getValue())
+				{
+					if (!titreF1.equals(titreF2))
+					{
+						//find information of film and build Object film for Evolues.
+						List<Object> film1=bd.findFilm2(titreF1);
+						List<Object> film2=bd.findFilm2(titreF2);
+						Boolean couleur1=true;
+						if (film1.get(1).equals("0"))
+						{
+							couleur1=false;
+						}
+						Boolean couleur2=true;
+						if (film1.get(1).equals("0"))
+						{
+							couleur2=false;
+						}
+						Film f1=new Film((String) film1.get(0), couleur1,(String)film1.get(3),(int)film1.get(2));
+						Film f2=new Film((String) film2.get(0), couleur2,(String)film2.get(3),(int)film2.get(2));
+						int res_film=evolues.similarite_Film(genre,f1,f2);
+						if(films_isSimilarite.containsKey(titreF1))
+						{
+							if(res_film<=tag_similarite)
+							{
+								films_isSimilarite.get(titreF1).clear();
+								tag_similarite=res_film;
+								films_isSimilarite.get(titreF1).add(titreF2);
+							}
+							else {
+								films_isSimilarite.get(titreF1).add(titreF2);
+							}
+						}
+						else {
+							films_isSimilarite.put(titreF1,new ArrayList<>());
+							if(res_film<=tag_similarite)
+							{
+								films_isSimilarite.get(titreF1).clear();
+								tag_similarite=res_film;
+								films_isSimilarite.get(titreF1).add(titreF2);
+							}
+							else {
+								films_isSimilarite.get(titreF1).add(titreF2);
+							}
+						}
+					}
+				}
+			}
+			lesFilmParCoffret_isSimialrite.put(entry.getKey(), films_isSimilarite);
+		}
+//		System.out.println(lesFilmParCoffret_isSimialrite);
+		return lesFilmParCoffret_isSimialrite;
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-//	public Genre extraireGenrePlusLoue() {
-//
-//
-//
-//
-//
-//
-//
-//        Map<Genre, Integer> genreFrequences = new HashMap<>();
-//
-//        // Calculer la fréquence de chaque genre de film loué
-//        for (Film film : listeFilms) {
-//            Genre genre = film.getGenre();
-//            if (genreFrequences.containsKey(genre)) {
-//                genreFrequences.put(genre, genreFrequences.get(genre) + 1);
-//            } else {
-//                genreFrequences.put(genre, 1);
-//            }
-//        }
-//
-//        // Trouver le genre de film le plus populaire (le plus loué)
-//        Genre genrePlusLoue = null;
-//        int maxFrequence = 0;
-//        for (Map.Entry<Genre, Integer> entry : genreFrequences.entrySet()) {
-//            if (entry.getValue() > maxFrequence) {
-//                genrePlusLoue = entry.getKey();
-//                maxFrequence = entry.getValue();
-//            }
-//        }
-//
-//        return genrePlusLoue;
-//
-//
-//        */
-//
-//    	 //•Extraire de la liste des films les films les plus similaires à un film ayant le titre « ? ».
-//
-//    	 /**
-//    	     * Extracts a list of films that are similar to the given title.
-//    	     * @param film The title of the film to search for.
-//    	     * @return A list of films with similar titles.
-//    	     */
-//
-//    	 public List<Film> extraireListeFilmSimilaire(Film film) { //browse the list of movies and add similar movies to the list 'filmSimilaires'
-//    		    List<Film> filmsSimilaires = new ArrayList<>();
-//    		    for (Film f : filmlist) {
-//    		        if (f.getTitreF().equals(film.getTitreF()) && isFilmSimilaire(f, film)) {
-//    		            filmsSimilaires.add(f);
-//    		        }
-//    		    }
-//    		    return filmsSimilaires;
-//    		}
-//    	 private boolean isFilmSimilaire(Film film1, Film film2) { // used to compare similarity criteria such as genre, actors and color between two films.
-//    		    // Compare the genres of the films
-//    		    if (!film1.getGenre().equals(film2.getGenre())) {
-//    		        return false;
-//    		    }
-//
-//    		    // Comparer the actors
-//    		    List<Acteurs> acteurs1 = film1.getActeursList();
-//    		    List<Acteurs> acteurs2 = film2.getActeursList();
-//    		    boolean acteurSimilaire = false;
-//    		    for (Acteurs a1 : acteurs1) {
-//    		        for (Acteurs a2 : acteurs2) {
-//    		            if (a1.equals(a2)) {
-//    		                acteurSimilaire = true;
-//    		                break;
-//    		            }
-//    		        }
-//    		    }
-//    		    if (!acteurSimilaire) {
-//    		        return false;
-//    		    }
-//
-//    		    // Comparer the colors
-//    		    if (film1.isCouleurF() != film2.isCouleurF()) {
-//    		        return false;
-//    		    }
-//
-//    		    return true; // returns true If all similarity criteria are met
-//    		}
-//
-//    	 //•	Extraire de la liste des abonnés, les abonnés « les plus curieux » : les films loués par ces abonnés se ressemblent le moins possible.
-//
-//    	 /**
-//    	  * Extracts a list of subscribers who do not watch similar films.
-//    	  * @return A list of subscribers who watch dissimilar films.
-//    	  */
-//
-//
-//    	 public List<Abonnes> extraireListeAbonnesSimilaireLoue() {
-//    		    List<Abonnes> LoueNonSimilaires = new ArrayList<>(); // Initialize a list to store subscribers who watch dissimilar films
-//    		    for (Abonnes abonne : listeAbonnes) { // Iterate through each subscriber in the list
-//    		        boolean estCurieux = true; // Initialize if the subscriber is curious or not
-//    		        List<Film> filmsLoues = abonne.getLocationFilm(); // Get the list of films rented by the subscriber
-//    		        for (int i = 0; i < filmsLoues.size(); i++) { // Loop through each film in the rented films list
-//    		            for (int j = i + 1; j < filmsLoues.size(); j++) { // Loop through the remaining films in the rented films list
-//    		                if (isFilmSimilaire(filmsLoues.get(i), filmsLoues.get(j))) { // Check if the films are similar
-//    		                    estCurieux = false; // If similar films are found, set the flag to false
-//    		                    break; // Break out of the inner loop
-//    		                }
-//    		            }
-//    		            if (!estCurieux) { // If the subscriber is found to not be curious, break out of the outer loop break;
-//    		                break;
-//    		            }
-//    		        }
-//    		        if (estCurieux) { // If the subscriber is curious, add them to the list of LoueNonSimilaires
-//    		            LoueNonSimilaires.add(abonne);
-//    		        }
-//    		    }
-//    		    return LoueNonSimilaires; // Return the list of subscribers who watch dissimilar films
-//    		}
-//
-//    	 //--------------------------------------------------A VOIR --------------------------
-//
-//
-////
-////    	 //•	Extraire de la liste des films les films ayant un public « typé » : les abonnés louant ces films sont similaires (on fournira en paramètre le seuil de similarité entre abonnés).
-////    	 /**
-////    	     * Extracts films with a "typed" audience, where subscribers renting these films are similar.
-////    	     * @param similariteSeuil The threshold of similarity between subscribers.
-////    	     * @return A list of films with a "typed" audience.
-////    	     */
-////    	    public List<Film> extraireListeFilmsSimilaireAbonne(double similariteSeuil) {
-////    	        List<Film> similaireAudienceFilms = new ArrayList<>();
-////    	        for (Film film : filmlist) {
-////    	            boolean similaireAudience = true; // Check if the film has a similar audience
-////    	            List<Abonnes> rentingSubscribers = film.getRentingSubscribers();
-////    	            if (rentingSubscribers.size() > 1) { // If there are more than one subscriber for the film
-////    	                Abonnes firstSubscriber = rentingSubscribers.get(0); // Get the first subscriber to compare
-////    	                for (Abonnes subscriber : rentingSubscribers) { // Compare each subscriber to the first subscriber
-////    	                    if (!abonneSimilaire(firstSubscriber, subscriber, similariteSeuil)) { // If the subscribers are not similar, set similaireAudience to false and break the loop
-////    	                        similaireAudience = false;
-////    	                        break;
-////    	                    }
-////    	                }
-////    	            }
-////    	            if (similaireAudience) { // If the film has a similar audience, add it to the list
-////    	                similaireAudienceFilms.add(film);
-////    	            }
-////    	        }
-////    	        return similaireAudienceFilms;
-////    	    }
-////
-////
-//
-//
-////
-////		// Calculate the age of the subscriber based on the date of birth
-////    	   /** private int calculateAge(String dateNaissanceAb) {
-////    	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");// Define the date formatter for the subscriber's date of birth
-////    	        LocalDate birthDate = LocalDate.parse(dateNaissanceAb, formatter);// Parse the subscriber's date of birth into a LocalDate object
-////    	        LocalDate currentDate = LocalDate.now(); // Get the current date
-////    	        return Period.between(birthDate, currentDate).getYears();// Calculate the age based on the difference between the current date and the date of birth
-////
-////    	    }*/
-////
-////
-////    	    /**
-////    	     * Extracts films with a "typed" audience based on subscriber similarity.
-////    	     * @param similarityThreshold The threshold of similarity between subscribers.
-////    	     * @return A list of films with a "typed" audience.
-////    	     */
-////    	    public List<Film> extractTypedAudienceFilms(double similarityThreshold) {
-////    	        List<Film> typedAudienceFilms = new ArrayList<>();
-////
-////    	        // Iterate through each film
-////    	        for (Film film : filmlist) {
-////    	            // Calculate the total number of subscribers for the film
-////    	            int totalSubscribers = film.getRentingSubscribers().size();
-////
-////    	            // Check if the film has more than one subscriber
-////    	            if (totalSubscribers > 1) {
-////    	                // Calculate the similarity percentage for each subscriber
-////    	                Map<Abonnes, Double> similarityMap = new HashMap<>();
-////    	                for (Abonnes subscriber : film.getRentingSubscribers()) {
-////    	                    double similarity = abonneSimilaire(subscriber, film, subscriber);
-////    	                    similarityMap.put(subscriber, similarity);
-////    	                }
-////
-////    	                // Check if there are subscribers with similarity percentage greater than or equal to 70%
-////    	                for (Map.Entry<Abonnes, Double> entry : similarityMap.entrySet()) {
-////    	                    if (entry.getValue() >= similarityThreshold) {
-////    	                        typedAudienceFilms.add(film);
-////    	                        break;
-////    	                    }
-////    	                }
-////    	            }
-////    	        }
-////
-////    	        return typedAudienceFilms;
-////    	    }
-//
-//
-//
-//
-//
-//
-//
-//
-////
-////
-////    	    /**
-////    	     * Calculate the similarity percentage between a subscriber and a film.
-////    	     * @param subscriber The subscriber.
-////    	     * @param film The film.
-////    	     * @return The similarity percentage.
-////    	     */
-////    	    private double abonneSimilaire(Abonnes subscriber, Film film,Abonnes subscriber2 ) {
-////    	        double similarityPercentage = 0.0;
-////
-////    	        // Check if they have the same gender
-////    	        if (subscriber.getSexeAb().equals(film.getGenre().getGenreNom())) {
-////    	            similarityPercentage += 40.0;
-////    	        }
-////
-////    	        // Check if they are in the same age bracket (not more than 10 years apart)
-////    	        int ageDifference = Math.abs(calculateAge(subscriber.getDateNaissanceAb()) - calculateAge(subscriber2.getDateNaissanceAb()));
-////    	        if (ageDifference <= 10) {
-////    	            similarityPercentage += 30.0;
-////    	        } else if (ageDifference <= 20) {
-////    	            similarityPercentage += 20.0;
-////    	        } else if (ageDifference <= 30) {
-////    	            similarityPercentage += 10.0;
-////    	        }
-////
-////    	        // Check if they are in the same income bracket
-////    	        if (subscriber.getFourchetteRevenus().equals(film.getGenre().getGenreNom())) {
-////    	            similarityPercentage += 30.0;
-////    	        }
-////
-////    	        return similarityPercentage;
-////    	    }
-////    	 // Calculate the age of the subscriber based on the date of birth
-////    	    private int calculateAge(String dateNaissanceAb) {
-////    	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");// Define the date formatter for the subscriber's date of birth
-////    	        LocalDate birthDate = LocalDate.parse(dateNaissanceAb, formatter);// Parse the subscriber's date of birth into a LocalDate object
-////    	        LocalDate currentDate = LocalDate.now(); // Get the current date
-////    	        return Period.between(birthDate, currentDate).getYears();// Calculate the age based on the difference between the current date and the date of birth
-////
-////    	    }
-////
-////
-////
-//
-//    	    //---------------------------------------------------------------------
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//    	    //•	Extraire de la liste des abonnés, les abonnés les plus proches d'un profil type.
-//
-//    	    /**
-//    	     * Extracts subscribers who are closest to a typical profile based on the genre and sub-genre of films they rent.
-//    	     * @param targetGenre The target genre for comparison.
-//    	     * @return A list of subscribers closest to the typical profile.
-//    	     */
-//    	    public List<Abonnes> extraireListeAbonneProcheProfil(Genre targetGenre) {
-//    	        List<Abonnes> abonnesProchesProfil = new ArrayList<>();
-//    	        for (Abonnes abonne : listeAbonnes) {
-//    	            List<Film> filmsLoues = abonne.getLocationFilm();
-//    	            for (Film film : filmsLoues) {
-//    	                // Check if the genre of the film is the same as the target genre
-//    	                if (film.getGenre().equals(targetGenre)) {
-//    	                    abonnesProchesProfil.add(abonne);
-//    	                    break;
-//    	                }
-//    	                // Check if the genre of the film is an instance of a sub-genre
-//    	                if (film.getGenre().getSubGenre() != null && !film.getGenre().getSubGenre().isEmpty()) {
-//    	                    for (Genre subGenre : film.getGenre().getSubGenre()) {
-//    	                        // Check if the sub-genre of the film is the same as the target genre
-//    	                        if (subGenre.getGenreNom().equals(targetGenre.getGenreNom())) {
-//    	                            abonnesProchesProfil.add(abonne);
-//    	                            break;
-//    	                        }
-//    	                    }
-//    	                }
-//    	            }
-//    	        }
-//    	        return abonnesProchesProfil;
-//    	    }
-//
-//
-//
-//
-//
-
- 
-

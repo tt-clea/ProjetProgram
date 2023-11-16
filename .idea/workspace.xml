@@ -4,13 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="tiantian 2023/11/15 version1">
+    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="tiantian 2023/11/15 version2">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/e2423b1f-c207-4bc4-abb5-a07fee45b32f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e2423b1f-c207-4bc4-abb5-a07fee45b32f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/e2423b1f-c207-4bc4-abb5-a07fee45b32f/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e2423b1f-c207-4bc4-abb5-a07fee45b32f/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DBProjetJava.db" beforeDir="false" afterPath="$PROJECT_DIR$/DBProjetJava.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Abonnes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Abonnes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BdConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BdConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Coffret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coffret.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evolues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evolues.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Film.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Fonction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fonction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Genre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Genre.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +52,9 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar:///Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home/lib/src.zip!/java.base/java/util/ArrayList.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -66,6 +74,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
     "git-widget-placeholder": "Tiantian-test",
     "last_opened_file_path": "/Users/tiantianliu/IdeaProjects/ProjetProgram/BD",
     "node.js.detected.package.eslint": "true",
@@ -75,6 +84,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -95,7 +105,7 @@
       <workItem from="1699352413596" duration="220000" />
       <workItem from="1699357074700" duration="2313000" />
       <workItem from="1699370763946" duration="867000" />
-      <workItem from="1699371679816" duration="133274000" />
+      <workItem from="1699371679816" duration="148357000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
@@ -233,7 +243,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700064690512</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="tiantian 2023/11/15 version2">
+      <option name="closed" value="true" />
+      <created>1700070706688</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1700070706688</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,7 +280,8 @@
     <MESSAGE value="tiantian 2023/11/14" />
     <MESSAGE value="tiantian 2023/11/14 2" />
     <MESSAGE value="tiantian 2023/11/15 version1" />
-    <option name="LAST_COMMIT_MESSAGE" value="tiantian 2023/11/15 version1" />
+    <MESSAGE value="tiantian 2023/11/15 version2" />
+    <option name="LAST_COMMIT_MESSAGE" value="tiantian 2023/11/15 version2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -13,17 +13,21 @@ public class Abonnes {
 	private String dateNaissanceAb;
 	private String sexeAb;
 	private int fourchetteRevenus;
-	private final List<Film> locationFilm;
-	private Map<Film, DateLocation> location; // History of Subscriber Rentals
 
+	/**
+	 *
+	 * @param nomAb
+	 * @param prenomAb
+	 * @param dateNaissanceAb
+	 * @param sexeAb
+	 * @param fourchetteRevenus
+	 */
 	public Abonnes(String nomAb, String prenomAb, String dateNaissanceAb, String sexeAb, int fourchetteRevenus) {
 		this.nomAb = nomAb;
 		this.prenomAb = prenomAb;
 		this.dateNaissanceAb = dateNaissanceAb;
 		this.sexeAb = sexeAb;
 		this.fourchetteRevenus = fourchetteRevenus;
-		this.locationFilm = new ArrayList<>();
-		this.location = new HashMap<>();
 	}
 
 
@@ -92,12 +96,7 @@ public class Abonnes {
 		return fourchetteRevenus;
 	}
 	
-	/**
-	 * @return the locationFilm
-	 */
-	public List<Film> getLocationFilm() {
-		return locationFilm;
-	}
+
 	/**
 	 * @param aFourchetteRevenus the fourchetteRevenus to set
 	 *
@@ -106,38 +105,28 @@ public class Abonnes {
     public void setFourchetteRevenus(int aFourchetteRevenus) {
         this.fourchetteRevenus=aFourchetteRevenus;
     }
-    
- 
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Abonnes abonnes = (Abonnes) o;
+		return fourchetteRevenus == abonnes.fourchetteRevenus && Objects.equals(nomAb, abonnes.nomAb) && Objects.equals(prenomAb, abonnes.prenomAb) && Objects.equals(dateNaissanceAb, abonnes.dateNaissanceAb) && Objects.equals(sexeAb, abonnes.sexeAb);
+	}
 
-
-
+	@Override
+	public int hashCode() {
+		return Objects.hash(nomAb, prenomAb, dateNaissanceAb, sexeAb, fourchetteRevenus);
+	}
 
 	@Override
 	public String toString() {
-		return "Abonnes [prenomAb=" + prenomAb + ",  nomAb=" + nomAb + ", dateNaissanceAb=" + dateNaissanceAb + ", sexeAb=" + sexeAb
-				+ ", fourchetteRevenus=" + fourchetteRevenus + ", locationFilm="
-				+ locationFilm + "]";
+		return "Abonnes{" +
+				"nomAb='" + nomAb + '\'' +
+				", prenomAb='" + prenomAb + '\'' +
+				", dateNaissanceAb='" + dateNaissanceAb + '\'' +
+				", sexeAb='" + sexeAb + '\'' +
+				", fourchetteRevenus=" + fourchetteRevenus +
+				'}';
 	}
-
-
-
-
-	// Implementation of the hashCode method to enable hashing of the Abonnes object
-	@Override
-	public int hashCode() {
-	    return Objects.hash(prenomAb,nomAb, dateNaissanceAb, sexeAb, fourchetteRevenus);
-	}
-	
-
-
-	
-	
-
-
-
-	
-	
-	
-	
 }
