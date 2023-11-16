@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="film.java : ajouter genre">
-      <change afterPath="$PROJECT_DIR$/src/Evolues.java" afterDir="false" />
+    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="tiantian 2023/11/16">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Acteurs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Acteurs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DBProjetJava.db" beforeDir="false" afterPath="$PROJECT_DIR$/DBProjetJava.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BdConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BdConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Coffret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coffret.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Film.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Evolues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evolues.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Fonction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fonction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +47,9 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar:///Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home/lib/src.zip!/java.base/java/util/ArrayList.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -55,19 +59,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Tiantian-test&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
+    "git-widget-placeholder": "Tiantian-test",
+    "last_opened_file_path": "/Users/tiantianliu/IdeaProjects/ProjetProgram/BD",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/BD" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -80,7 +100,7 @@
       <workItem from="1699352413596" duration="220000" />
       <workItem from="1699357074700" duration="2313000" />
       <workItem from="1699370763946" duration="867000" />
-      <workItem from="1699371679816" duration="11608000" />
+      <workItem from="1699371679816" duration="155670000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
@@ -146,17 +166,135 @@
       <option name="project" value="LOCAL" />
       <updated>1699373503401</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="modifier Coffret.java , Film.java&#10;creer class de Evolues.java">
+      <option name="closed" value="true" />
+      <created>1699455963181</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1699455963181</updated>
+    </task>
+    <task id="LOCAL-00010" summary="modifier Coffret.java , Film.java&#10;creer class de Evolues.java">
+      <option name="closed" value="true" />
+      <created>1699456286078</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1699456286078</updated>
+    </task>
+    <task id="LOCAL-00011" summary="tiantian modifier">
+      <option name="closed" value="true" />
+      <created>1699613484032</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1699613484032</updated>
+    </task>
+    <task id="LOCAL-00012" summary="tiantian modifier">
+      <option name="closed" value="true" />
+      <created>1699627753761</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1699627753761</updated>
+    </task>
+    <task id="LOCAL-00013" summary="tiantian modifier">
+      <option name="closed" value="true" />
+      <created>1699804318488</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1699804318488</updated>
+    </task>
+    <task id="LOCAL-00014" summary="tiantian 2023/11/13">
+      <option name="closed" value="true" />
+      <created>1699872949838</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1699872949838</updated>
+    </task>
+    <task id="LOCAL-00015" summary="tiantian 2023/11/14">
+      <option name="closed" value="true" />
+      <created>1699978234086</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1699978234086</updated>
+    </task>
+    <task id="LOCAL-00016" summary="tiantian 2023/11/14 2">
+      <option name="closed" value="true" />
+      <created>1699980682825</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1699980682825</updated>
+    </task>
+    <task id="LOCAL-00017" summary="tiantian 2023/11/15 version1">
+      <option name="closed" value="true" />
+      <created>1700064690512</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1700064690512</updated>
+    </task>
+    <task id="LOCAL-00018" summary="tiantian 2023/11/15 version2">
+      <option name="closed" value="true" />
+      <created>1700070706688</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1700070706688</updated>
+    </task>
+    <task id="LOCAL-00019" summary="tiantian 2023/11/16">
+      <option name="closed" value="true" />
+      <created>1700154956842</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1700154956842</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
     <MESSAGE value="pour construire sousGenre.java" />
     <MESSAGE value="ajouter toString,hashcode,equals" />
     <MESSAGE value="film.java : ajouter genre" />
-    <option name="LAST_COMMIT_MESSAGE" value="film.java : ajouter genre" />
+    <MESSAGE value="modifier Coffret.java , Film.java&#10;creer class de Evolues.java" />
+    <MESSAGE value="tiantian modifier film" />
+    <MESSAGE value="tiantian modifier" />
+    <MESSAGE value="tiantian 2023/11/13" />
+    <MESSAGE value="tiantian 2023/11/14" />
+    <MESSAGE value="tiantian 2023/11/14 2" />
+    <MESSAGE value="tiantian 2023/11/15 version1" />
+    <MESSAGE value="tiantian 2023/11/15 version2" />
+    <MESSAGE value="tiantian 2023/11/16" />
+    <option name="LAST_COMMIT_MESSAGE" value="tiantian 2023/11/16" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.sql.SQLFeatureNotSupportedException" package="java.sql" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

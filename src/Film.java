@@ -1,100 +1,38 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Film {
 	private String titreF;
 	private boolean couleurF;
-	private int NbStockage = 10;
-	private List<Acteurs> acteurs;
-	private Map<Abonnes,DateLocation> location;
+	private int NbStockage;
+	private List<Acteurs> acteursList;
 
-	private Genre genre;
+	private String genre;
 
 
+	public Film()
+	{
+	}
 
 	/**
 	 * @param titreF
 	 * @param couleurF
 	 * @param genre
 	 */
-	public Film(String titreF, boolean couleurF, Genre genre) {
+	public Film(String titreF, boolean couleurF, String  genre,int nbStockage) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
-		this.acteurs = new ArrayList<>();
-		location = new HashMap<>(NbStockage);
-		this.setGenre(genre);
+		this.acteursList = new ArrayList<>();
+
+		this.NbStockage=nbStockage;
+		this.genre=genre;
 	}
 
-	
-	/**
-	 * @param location
-	**/
-	public Film()
-	{
-		this.location=new HashMap<>(NbStockage);
-	}
-	
-	/**
-	 * @param titreF
-	 * @param couleurF
-	 * @param acteurs
-	 * @param location
-	 */
-	public Film(String titreF, boolean couleurF, List<Acteurs> acteurs) {
+	public Film(String titreF, boolean couleurF,String genre, Acteurs acteurs,int nbStockage) {
 		this.titreF = titreF;
 		this.couleurF = couleurF;
-		this.acteurs = acteurs;
-	}
-	
-
-//	/**
-//	 * @param titreF
-//	 * @param couleurF
-//	 */
-//	public Film(String titreF, boolean couleurF) {
-//		this.titreF = titreF;
-//		this.couleurF = couleurF;
-////		this(titreF,couleurF,new ArrayList<>());
-//	}
-//
-//	/**
-//	 * @param titreF
-//	 * @param acteurs
-//	 */
-//	public Film(String titreF) {
-//		this.titreF = titreF;
-//		this.acteurs = new ArrayList<>();
-//	}
-
-	/**
-	 * @add the location
-	 */
-	public boolean addLocation(final Abonnes abonnes,final DateLocation datelocation)
-	{
-		if(NbStockage>0)
-		{
-			NbStockage--;
-			location.put(abonnes, datelocation);
-			System.out.println("ok"+titreF);
-			return true;
-		}
-		else
-		{
-			System.out.println("non stockage");
-			return false;
-		}
-		
-	}
-	/**
-	 * @remove the location
-	 */
-	public void removeLocation(final Abonnes abonnes,final DateLocation datelocation)
-	{
-		NbStockage++;
-//		location.remove(abonnes);
-		System.out.println("ok"+titreF);
+		this.acteursList = new ArrayList<>();
+		this.genre = genre;
+		this.NbStockage=nbStockage;
 	}
 
 	/**
@@ -114,7 +52,7 @@ public class Film {
 	 */
 	public List<Acteurs> getActeursList()
 	{
-		return acteurs;
+		return acteursList;
 	}
 	/**
 	 * @return the nbStockage
@@ -130,51 +68,38 @@ public class Film {
 		NbStockage = nbStockage;
 	}
 
-	/**
-	 *
-	 * @param aActeurs ajouter les acteurs de ce film
-	 */
-
-	public void addActeurs(Acteurs aActeurs)
-	{
-		acteurs.add(aActeurs);
-	}
-
-	/**
-	 *
-	 * @param aActeurs supprimer les acteurs de ce film
-	 */
-	public void removeActeurs(Acteurs aActeurs)
-	{
-		acteurs.remove(aActeurs);
-	}
 
 
-	public Genre getGenre() {
+	public String getGenre() {
 		return genre;
 	}
 
 
-	public void setGenre(Genre genre) {
+	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	private List<Abonnes> listeAbonnes;
 
-    // Autres attributs et méthodes de la classe Film
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Film film = (Film) o;
+		return couleurF == film.couleurF && NbStockage == film.NbStockage && Objects.equals(titreF, film.titreF) && Objects.equals(acteursList, film.acteursList) && Objects.equals(genre, film.genre);
+	}
 
-    /**
-     * Récupère la liste des abonnés qui louent le film.
-     * @return La liste des abonnés qui louent le film.
-     */
-    public List<Abonnes> getRentingSubscribers() {
-        return listeAbonnes;
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(titreF, couleurF, NbStockage, acteursList, genre);
+	}
 
-
-
-
-	
-	
-
-
+	@Override
+	public String toString() {
+		return "Film{" +
+				"titreF='" + titreF + '\'' +
+				", couleurF=" + couleurF +
+				", NbStockage=" + NbStockage +
+				", acteursList=" + acteursList +
+				", genre='" + genre + '\'' +
+				'}';
+	}
 }

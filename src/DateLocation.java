@@ -1,46 +1,98 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * A class to represent the start and end date of a video rental.
  */
 public class DateLocation {
 
-    private LocalDate dateDebut; // Start date of the rental
-    private LocalDate dateFin; // End date of the rental
+    private String dateDebut; // Start date of the rental
+    private String dateFin; // End date of the rental
     private static final int MAXIMUM_RENTAL_DURATION_DAYS = 30; // Maximum allowed rental duration in days
 
-    /**
-     * Sets the start date of the rental.
-     * @param dateDebut the start date of the rental in the format "DD-MM-YYYY"
-     */
-    public void setDateDebut(CharSequence aDateDebut) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.dateDebut = LocalDate.parse(aDateDebut, formatter);
+    public DateLocation(String dateDebut)
+    {
+        this.dateDebut=dateDebut;
+    }
+    public DateLocation(String dateDebut, String dateFin) {
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
     }
 
-    /**
+    public void setDateDebut(String aDateDebut) {
+
+        try {
+            if (aDateDebut!=null)
+            {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                sdf.setLenient(false);
+                Date datedebut = sdf.parse(this.dateDebut = aDateDebut);
+                Date datefin = sdf.parse(getDateFin());
+                boolean isDatedebutBeforeTodays = !datedebut.after(new Date());
+                boolean isDateAfterDateDebut=!datefin.before(datedebut);
+                if(isDatedebutBeforeTodays && isDateAfterDateDebut)
+                {
+                    System.out.println("La date de debut :"+dateDebut);
+                }
+                else {
+                    if(!isDateAfterDateDebut)
+                    {
+                        System.out.println("La date de fin ne peut être antérieure à la date de début.");
+                    }
+                    if(!isDatedebutBeforeTodays)
+                    {
+                        System.out.println("La date de début ne peut être antérieure à aujourd'hui");
+                    }
+
+                }
+            }
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+        /**
      * Sets the end date of the rental and checks if it satisfies the rental constraints.
-     * @param dateFin the end date of the rental in the format "DD-MM-YYYY"
+     * @param aDateFin the end date of the rental in the format "DD-MM-YYYY"
      * @throws IllegalArgumentException if the rental duration exceeds 30 days or if the end date is before the start date
      */
-    public void setDateFin(CharSequence aDateFin) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate newDateFin = LocalDate.parse(aDateFin, formatter);
-        if (newDateFin.isBefore(this.dateDebut)) {
-            throw new IllegalArgumentException("La date de fin doit être ultérieure à la date de début.");
+
+
+    public void setDateFin(String aDateFin) {
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+        try{
+            if (aDateFin !=null)
+            {
+                Date datedebut=sdf.parse(getDateDebut());
+                Date datefin=sdf.parse(this.dateFin=aDateFin);
+                boolean isDateAfterDateDebut=!datefin.before(datedebut);
+                if (isDateAfterDateDebut)
+                {
+                    System.out.println("La date de fin :"+dateFin);
+                }
+                else {
+                    System.out.println("L'erreur de date");
+                }
+            }
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
-        if (newDateFin.isAfter(this.dateDebut.plusDays(MAXIMUM_RENTAL_DURATION_DAYS))) {
-            throw new IllegalArgumentException("La durée de location ne peut pas dépasser 30 jours.");
-        }
-        this.dateFin = newDateFin;
+
     }
+
 
     /**
      * Gets the start date of the rental.
      * @return the start date of the rental
      */
-    public LocalDate getDateDebut() {
+    public String getDateDebut() {
         return dateDebut;
     }
 
@@ -48,17 +100,18 @@ public class DateLocation {
      * Gets the end date of the rental.
      * @return the end date of the rental
      */
-    public LocalDate getDateFin() {
+    public String getDateFin() {
         return dateFin;
     }
 
-	@Override
-	public String toString() {
-		return "DateLocation [dateDebut=" + dateDebut + ", dateFin=" + dateFin + "]";
-	}
 
-
-    
-    
-    
+    @Override
+    public String toString() {
+        return "DateLocation{" +
+                "dateDebut='" + dateDebut + '\'' +
+                ", dateFin='" + dateFin + '\'' +
+                '}';
+    }
 }
+
+

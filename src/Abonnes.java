@@ -1,12 +1,4 @@
-import java.util.List;
-import java.util.Objects;
-import java.util.HashMap;
-import java.util.Map;
-
-
-
-
-
+import java.util.*;
 
 
 /**
@@ -17,54 +9,30 @@ public class Abonnes {
 
 
 	private String nomAb;
+	private String prenomAb;
 	private String dateNaissanceAb;
 	private String sexeAb;
-	private String fourchetteRevenus;
-	private final List<Film> locationFilm;
-	private Map<Film, DateLocation> location; // History of Subscriber Rentals
+	private int fourchetteRevenus;
 
-	
-	
-	
-
-
-	
-	
 	/**
-	 * Constructor of the class of 'Abonnes'
+	 *
 	 * @param nomAb
+	 * @param prenomAb
 	 * @param dateNaissanceAb
 	 * @param sexeAb
 	 * @param fourchetteRevenus
-	 * @param dateLocation
-	 * 
 	 */
-	public Abonnes(String aPrenomAb,String aNomAb, String aDateNaissanceAb, String aSexeAb, String aFourchetteRevenus,
-			 List<Film> aLocationFilm) {
-		super();
-		this.prenomAb= aPrenomAb;
-		this.nomAb = aNomAb;
-		this.dateNaissanceAb = aDateNaissanceAb;
-		this.sexeAb = aSexeAb;
-		this.fourchetteRevenus = aFourchetteRevenus;
-		this.locationFilm= aLocationFilm;
-		
-        location = new HashMap<>(); // Initialize the HashMap
-	
+	public Abonnes(String nomAb, String prenomAb, String dateNaissanceAb, String sexeAb, int fourchetteRevenus) {
+		this.nomAb = nomAb;
+		this.prenomAb = prenomAb;
+		this.dateNaissanceAb = dateNaissanceAb;
+		this.sexeAb = sexeAb;
+		this.fourchetteRevenus = fourchetteRevenus;
 	}
 
 
 
 
-	/**
-	 * @return the dateLocation
-	 */
-
-	public Map<Film, DateLocation> getLocation() {
-        return location;
-    }
-	
-	private String prenomAb;
 	/**
 	 * @return the prenomAb
 	 */
@@ -92,7 +60,7 @@ public class Abonnes {
 		return nomAb;
 	}
 	/**
-	 * @param nomAb the nomAb to set
+	 * @param aNomAb the nomAb to set
 	 */
 	public void setNomAb(String aNomAb) {
 		this.nomAb = aNomAb;
@@ -104,7 +72,7 @@ public class Abonnes {
 		return dateNaissanceAb;
 	}
 	/**
-	 * @param dateNaissanceAb the dateNaissanceAb to set
+	 * @param aDateNaissanceAb the dateNaissanceAb to set
 	 */
 	public void setDateNaissanceAb(String aDateNaissanceAb) {
 		this.dateNaissanceAb = aDateNaissanceAb;
@@ -116,7 +84,7 @@ public class Abonnes {
 		return sexeAb;
 	}
 	/**
-	 * @param sexeAb the sexeAb to set
+	 * @param aSexeAb the sexeAb to set
 	 */
 	public void setSexeAb(String aSexeAb) {
 		this.sexeAb = aSexeAb;
@@ -124,62 +92,41 @@ public class Abonnes {
 	/**
 	 * @return the fourchetteRevenus
 	 */
-	public String getFourchetteRevenus() {
+	public int getFourchetteRevenus() {
 		return fourchetteRevenus;
 	}
 	
+
 	/**
-	 * @return the locationFilm
-	 */
-	public List<Film> getLocationFilm() {
-		return locationFilm;
-	}
-	/**
-	 * @param fourchetteRevenus the fourchetteRevenus to set
+	 * @param aFourchetteRevenus the fourchetteRevenus to set
 	 *
 	 *Method to set the income bracket based on the income value
 	 */
     public void setFourchetteRevenus(int aFourchetteRevenus) {
-        if (aFourchetteRevenus <= 1000) {
-            this.fourchetteRevenus = "revenu faible: Tranche 1";
-        } else if (aFourchetteRevenus <= 2000) {
-            this.fourchetteRevenus = "revenu moyen: Tranche 2";
-        } else {
-            this.fourchetteRevenus = "revenu élevé: Tranche 3";
-        }
+        this.fourchetteRevenus=aFourchetteRevenus;
     }
-    
- 
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Abonnes abonnes = (Abonnes) o;
+		return fourchetteRevenus == abonnes.fourchetteRevenus && Objects.equals(nomAb, abonnes.nomAb) && Objects.equals(prenomAb, abonnes.prenomAb) && Objects.equals(dateNaissanceAb, abonnes.dateNaissanceAb) && Objects.equals(sexeAb, abonnes.sexeAb);
+	}
 
-
-
+	@Override
+	public int hashCode() {
+		return Objects.hash(nomAb, prenomAb, dateNaissanceAb, sexeAb, fourchetteRevenus);
+	}
 
 	@Override
 	public String toString() {
-		return "Abonnes [prenomAb=" + prenomAb + ",  nomAb=" + nomAb + ", dateNaissanceAb=" + dateNaissanceAb + ", sexeAb=" + sexeAb
-				+ ", fourchetteRevenus=" + fourchetteRevenus + ", locationFilm="
-				+ locationFilm + "]";
+		return "Abonnes{" +
+				"nomAb='" + nomAb + '\'' +
+				", prenomAb='" + prenomAb + '\'' +
+				", dateNaissanceAb='" + dateNaissanceAb + '\'' +
+				", sexeAb='" + sexeAb + '\'' +
+				", fourchetteRevenus=" + fourchetteRevenus +
+				'}';
 	}
-
-
-
-
-	// Implementation of the hashCode method to enable hashing of the Abonnes object
-	@Override
-	public int hashCode() {
-	    return Objects.hash(prenomAb,nomAb, dateNaissanceAb, sexeAb, fourchetteRevenus);
-	}
-	
-
-
-	
-	
-
-
-
-	
-	
-	
-	
 }
