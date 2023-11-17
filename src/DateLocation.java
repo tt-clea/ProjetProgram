@@ -1,15 +1,19 @@
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.io.Serializable;
+
 
 /**
  * A class to represent the start and end date of a video rental.
  */
-public class DateLocation {
+public class DateLocation implements Serializable{
 
-    private String dateDebut; // Start date of the rental
+    private static final long serialVersionUID = 4L;
+	private String dateDebut; // Start date of the rental
     private String dateFin; // End date of the rental
     private static final int MAXIMUM_RENTAL_DURATION_DAYS = 30; // Maximum allowed rental duration in days
 
@@ -113,5 +117,3 @@ public class DateLocation {
                 '}';
     }
 }
-
-
