@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -5,9 +6,10 @@ import java.util.*;
  *Allows to build a subscriber 
  */
 
-public class Abonnes {
+public class Abonnes  implements Serializable{
 
 
+	private static final long serialVersionUID = 1L;
 	private String nomAb;
 	private String prenomAb;
 	private String dateNaissanceAb;
@@ -105,6 +107,13 @@ public class Abonnes {
     public void setFourchetteRevenus(int aFourchetteRevenus) {
         this.fourchetteRevenus=aFourchetteRevenus;
     }
+    
+    /**
+     * Checks if two subscribers are equal based on their attributes.
+     *
+     * @param o Object to compare.
+     * @return True if the subscribers are equal, false otherwise.
+     */
 
 	@Override
 	public boolean equals(Object o) {
@@ -113,11 +122,23 @@ public class Abonnes {
 		Abonnes abonnes = (Abonnes) o;
 		return fourchetteRevenus == abonnes.fourchetteRevenus && Objects.equals(nomAb, abonnes.nomAb) && Objects.equals(prenomAb, abonnes.prenomAb) && Objects.equals(dateNaissanceAb, abonnes.dateNaissanceAb) && Objects.equals(sexeAb, abonnes.sexeAb);
 	}
+	
+	/**
+     * Generates a hash code for the subscriber based on its attributes.
+     *
+     * @return The hash code of the subscriber.
+     */
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(nomAb, prenomAb, dateNaissanceAb, sexeAb, fourchetteRevenus);
 	}
+	
+	/**
+     * Returns a string representation of the subscriber.
+     *
+     * @return A string containing the attributes of the subscriber.
+     */
 
 	@Override
 	public String toString() {
