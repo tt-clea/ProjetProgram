@@ -370,7 +370,6 @@ public class Fonction {
 				if (!lists1.equals(lists2))
 				{
 					//similarite_Film(Genre g,Film films1,Film films2)
-
 					String titre1= (String) lists1.get(1);
 					boolean couleur1=true;
 					if (lists1.get(2).equals("1"))
@@ -402,7 +401,7 @@ public class Fonction {
 					List<Integer> id_film_abonne=new ArrayList<>();
 					id_film_abonne.add((Integer) lists1.get(0));
 					id_film_abonne.add((Integer) lists2.get(0));
-					int similarite_film=evolues.similarite_Film(tree,f1,f2);
+					int similarite_film=evolues.similarite_Film(bd,tree,f1,f2);
 					evolu_films.put(id_film_abonne,similarite_film);
 				}
             }
@@ -574,9 +573,8 @@ public class Fonction {
 	 */
 	public Map<String,Map<String,List<String>>> extraireCoffret(Genre genre) throws SQLException {
 		// find all coffret and films
-		Map<String,List<String>> coffret_films=new HashMap<>();
-		coffret_films=bd.FilmsParCoffret();
-
+		Map<String,List<String>> coffret_films=bd.FilmsParCoffret();
+		System.out.println("Liste de films pour chaque coffret :"+coffret_films);
 		// Coffret1 : {Film1: [film2.....], Film2:[film1....], Film3:[Film1.....]} Map<String,Map<String,List<String>> for stocking movies in same coffret.
 		Map<String,Map<String,List<String>>> lesFilmParCoffret_isSimialrite=new HashMap<>();
 		//calcule les simialrite dans cette  coffret
@@ -605,7 +603,8 @@ public class Fonction {
 						}
 						Film f1=new Film((String) film1.get(0), couleur1,(String)film1.get(3),(int)film1.get(2));
 						Film f2=new Film((String) film2.get(0), couleur2,(String)film2.get(3),(int)film2.get(2));
-						int res_film=evolues.similarite_Film(genre,f1,f2);
+						int res_film=evolues.similarite_Film(bd,genre,f1,f2);
+//						System.out.println(res_film);
 						if(films_isSimilarite.containsKey(titreF1))
 						{
 							if(res_film<=tag_similarite)
@@ -632,6 +631,7 @@ public class Fonction {
 						}
 					}
 				}
+//				System.out.println("----------");
 			}
 			lesFilmParCoffret_isSimialrite.put(entry.getKey(), films_isSimilarite);
 		}
