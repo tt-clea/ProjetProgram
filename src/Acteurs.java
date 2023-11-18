@@ -1,10 +1,13 @@
+import java.io.Serializable;
+
 /**
  * A class to represent the "Acteurs"
  */
 
 
-public class Acteurs {
+public class Acteurs implements Serializable {
 	
+	private static final long serialVersionUID = 2L;
 	private String prenomA;
 	private String nomA;
 	

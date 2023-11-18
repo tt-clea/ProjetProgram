@@ -1,13 +1,18 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Coffret {
-    private String titreC;
+public class Coffret  implements Serializable{
+    private static final long serialVersionUID = 3L;
+	private String titreC;
     private String genre;
     private List<Film> filmlist;
 
-    private boolean bonus;// 1 est bonus , 0 est non bonus
+    private boolean bonus;// 1 = bonus , 0 = no bonus
 
-
+    /**
+     * Represents a collection of films, known as a Coffret.
+     * Allows the creation and manipulation of Coffret objects.
+     */
 
     public Coffret(String titreC, boolean bonus,String genre) {
         this.titreC = titreC;
@@ -29,7 +34,7 @@ public class Coffret {
 
 
     /**
-     * return titre of Coffret
+     * return title of Coffret
      * @return
      */
     public String getTitreC() {
@@ -69,6 +74,12 @@ public class Coffret {
     public void setTitreC(String titreC) {
         this.titreC = titreC;
     }
+    /**
+     * Checks if two Coffrets are equal based on their attributes.
+     *
+     * @param o Object to compare.
+     * @return True if the Coffrets are equal, false otherwise.
+     */
 
     @Override
     public boolean equals(Object o) {
@@ -77,11 +88,22 @@ public class Coffret {
         Coffret coffret = (Coffret) o;
         return bonus == coffret.bonus && Objects.equals(titreC, coffret.titreC) && Objects.equals(genre, coffret.genre) && Objects.equals(filmlist, coffret.filmlist);
     }
+    /**
+     * Generates a hash code for the Coffret based on its attributes.
+     *
+     * @return The hash code of the Coffret.
+     */
 
     @Override
     public int hashCode() {
         return Objects.hash(titreC, genre, filmlist, bonus);
     }
+    
+    /**
+     * Returns a string representation of the Coffret.
+     *
+     * @return A string containing the title, genre, list of films, and bonus status of the Coffret.
+     */
 
     @Override
     public String toString() {

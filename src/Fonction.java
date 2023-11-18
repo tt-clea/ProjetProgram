@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 /**
  * 
  */
+@SuppressWarnings("unused")
 public class Fonction {
 
 	private BdConnector bd;
@@ -548,7 +549,7 @@ public class Fonction {
 	}
 
 	/**
-	 * removeing dulicate value in map list
+	 * removeing duplicate value in map list
 	 * @param map
 	 */
 	private static void removeDuplicateValuesInMapList(Map<Integer, List<Integer>> map) {
