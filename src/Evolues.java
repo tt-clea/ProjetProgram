@@ -1,5 +1,7 @@
 import java.sql.SQLException;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,14 +13,14 @@ public class Evolues {
     private Film films1;
     private Film films2;
 
+    private BdConnector bd;
 
     private Coffret coffret;
 
     private List<Genre> genre;
 
-    public Evolues() {
-
-
+    public Evolues(BdConnector bd) {
+        this.bd=bd;
     }
 
     /**
@@ -79,13 +81,17 @@ public class Evolues {
         //[0,1] Les résultats calculés sont similaires à l'intérieur de l'intervalle et dissemblables au-dessus de l'intervalle.
 
 
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate birthDateAb1=LocalDate.parse(a1.getDateNaissanceAb(),formatter);
-        LocalDate birthDateAb2=LocalDate.parse(a2.getDateNaissanceAb(),formatter);
-        int ageAb1=calculateAge(birthDateAb1,currentDate);
-        int ageAb2=calculateAge(birthDateAb2,currentDate);
-        int fc=Math.abs(ageAb1-ageAb2)/10;
+        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date1=LocalDate.parse(a1.getDateNaissanceAb(),formatter);
+        LocalDate date2=LocalDate.parse(a2.getDateNaissanceAb(),formatter);
+
+        Period period=Period.between(date1,date2);
+        int ageDifference= period.getYears();
+
+        double fc=(double) ageDifference/10;
+//        System.out.println(date1);
+//        System.out.println(date2);
+//        System.out.println(ageDifference);
 //        System.out.println("distence: "+fc);
         if ( fc >= 0 && fc <=1)
         {
@@ -95,25 +101,10 @@ public class Evolues {
             return 1;
         }
 
+
+
     }
 
-    /**
-     * calculte similary of age of abonne
-     * @param birthDate
-     * @param currentDate
-     * @return calculate de Age pour chaque abonne.
-     */
-    public static int calculateAge(LocalDate birthDate,LocalDate currentDate)
-    {
-        int age=currentDate.getYear()-birthDate.getYear();
-        //check to see if the birthday has passed
-        if(currentDate.getMonthValue()<birthDate.getMonthValue())
-        {
-            age--;
-        }
-//        System.out.println(age);
-        return age;
-    }
 
     /**
      * calculte similary of sexe
@@ -344,7 +335,7 @@ public class Evolues {
         }
 
 //        System.out.println(list_of_actor1);
-//        System.out.println(list_of_actor2);
+        System.out.println(list_of_actor2);
         List<String> same_actor=new ArrayList<>(list_of_actor1);
         same_actor.retainAll(list_of_actor2);
         if (!same_actor.isEmpty())
@@ -383,23 +374,41 @@ public class Evolues {
     public int similarite_Coffret(BdConnector bd,Genre g) throws SQLException {
 //        int res_genre=similarite_Genre_Film(g);
 //        int res_actor=similarite_Casting_Film();
-
+        Map<String,List<String>> coffret_films=bd.FilmsParCoffret();
+//        System.out.println(coffret_films);
         int[] max_similarite = new int[100];
         int tag=0;
-        for(Film f1:coffret.getFilmlist())
+        Map<String,Integer> nombre_films_par_coffret=new HashMap<>();
+        for(Map.Entry<String,List<String>> entry:coffret_films.entrySet())
         {
-            for (Film f2: coffret.getFilmlist())
+            for (String titreF1: entry.getValue())
             {
-                if(f1.equals(f2))
+                for (String titreF2:entry.getValue())
                 {
-                    continue;
-                }
-                
-                int score=similarite_Film(bd,g,f1,f2);
-                max_similarite[tag]=score;
+                    if (!titreF1.equals(titreF2))
+                    {
+                        List<Object> film1=bd.findFilm2(titreF1);
+                        List<Object> film2=bd.findFilm2(titreF2);
+                        Boolean couleur1=true;
+                        if (film1.get(1).equals("0"))
+                        {
+                            couleur1=false;
+                        }
+                        Boolean couleur2=true;
+                        if (film1.get(1).equals("0"))
+                        {
+                            couleur2=false;
+                        }
+                        Film f1=new Film((String) film1.get(0), couleur1,(String)film1.get(3),(int)film1.get(2));
+                        Film f2=new Film((String) film2.get(0), couleur2,(String)film2.get(3),(int)film2.get(2));
+                        int score=similarite_Film(bd,g,f1,f2);
+                        max_similarite[tag]=score;
 //                System.out.println(score);
 //                System.out.println(max_similarite[tag]);
-                tag++;
+                        tag++;
+                    }
+
+                }
             }
         }
         if(max_similarite==null || max_similarite.length==0)
@@ -421,14 +430,21 @@ public class Evolues {
      * calculte number of movies in coffret
      * @return
      */
-    public int Nombre_Film_Coffret()
-    {
+    public Map<String,Integer> Nombre_Film_Coffret(BdConnector bd) throws SQLException {
         int nombre_film=0;
-        for (Film film: coffret.getFilmlist())
+        Map<String,List<String>> coffret_films=bd.FilmsParCoffret();
+//        System.out.println(coffret_films);
+        Map<String,Integer> nombre_films_par_coffret=new HashMap<>();
+        for(Map.Entry<String,List<String>> entry:coffret_films.entrySet())
         {
-            nombre_film+=1;
+            if (entry.getKey().equals(coffret.getTitreC()))
+            {
+                nombre_films_par_coffret.put(entry.getKey(), entry.getValue().size());
+            }
+
         }
-        return nombre_film;
+
+        return nombre_films_par_coffret;
     }
 
     /**

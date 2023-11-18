@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="tiantian 2023/11/16">
+    <list default="true" id="d7f79feb-d045-4c4e-95a8-031c32fb2799" name="Changes" comment="tiantian 2023/11/16 version2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DBProjetJava.db" beforeDir="false" afterPath="$PROJECT_DIR$/DBProjetJava.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BdConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BdConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Coffret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Coffret.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Evolues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Evolues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Fonction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fonction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
@@ -70,7 +67,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
-    "git-widget-placeholder": "Tiantian-test",
+    "git-widget-placeholder": "final-test",
     "last_opened_file_path": "/Users/tiantianliu/IdeaProjects/ProjetProgram/BD",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -100,7 +97,7 @@
       <workItem from="1699352413596" duration="220000" />
       <workItem from="1699357074700" duration="2313000" />
       <workItem from="1699370763946" duration="867000" />
-      <workItem from="1699371679816" duration="155670000" />
+      <workItem from="1699371679816" duration="179269000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <option name="closed" value="true" />
@@ -254,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700154956842</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="tiantian 2023/11/16 version2">
+      <option name="closed" value="true" />
+      <created>1700171065217</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1700171065217</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,7 +290,8 @@
     <MESSAGE value="tiantian 2023/11/15 version1" />
     <MESSAGE value="tiantian 2023/11/15 version2" />
     <MESSAGE value="tiantian 2023/11/16" />
-    <option name="LAST_COMMIT_MESSAGE" value="tiantian 2023/11/16" />
+    <MESSAGE value="tiantian 2023/11/16 version2" />
+    <option name="LAST_COMMIT_MESSAGE" value="tiantian 2023/11/16 version2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

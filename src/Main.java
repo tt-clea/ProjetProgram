@@ -30,7 +30,7 @@ public class Main {
         action.addSubGenre(western);
         comedie.addSubGenre(musique);
         comedie.addSubGenre(romance);
-//        System.out.println("Genre de tree est :"+tree); // print the structure tree of Genre
+        System.out.println("Genre de tree est :"+tree); // print the structure tree of Genre
 
         /**insert les donness dans BD de Genre**/
 //        fc.addGenreBD(tree);
@@ -158,6 +158,10 @@ public class Main {
 
         System.out.println("-------------------founction-------------------");
         //////////////////////////////founction//////////////////////////////////////////
+
+
+        /*trouver la liste des abonnés à partir de son nom*/
+        fc.findAbonnes("AbNom1","AbPreNom1");
         /*Ajouter un abonné dans une liste d'abonnés est également ajouter un abonne dans BD de Abonnes*/
 
         /*Retrouver dans la liste des abonnés un abonné à partir de son nom*/
@@ -167,7 +171,9 @@ public class Main {
 
         /*Ajouter un film à une liste de films est également ajouter un film dans BD de Film*/
         /*Enregistrer un prêt : un abonné loue un film est également ajouter les donnees dans BD de Historique*/
-
+        /*•	Extraire les abonnés dans la même fourchette de revenu.*/
+        System.out.println("les abonnés dans la même fourchette de revenu est:" +fc.extraireAbonneMemeRevenu());
+        System.out.println("------------------------------------------------");
         /*•	Extraire le genre de films le plus populaire (le plus loué)*/
         System.out.println("Le genre de films le plus populaire est :" + fc.PlusLoueGenre().getKey() + "\n" + "Nombre de location est " + fc.PlusLoueGenre().getValue());
         System.out.println("------------------------------------------------");
@@ -195,5 +201,18 @@ public class Main {
         /*•	Extraire de la liste des produits vidéos, pour chaque produit, le ou les films les plus similaires.*/
         System.out.println("la liste des produits vidéos, pour chaque produit, le ou les films les plus similaires :" + "\n" + fc.extraireCoffret(tree));
         System.out.println("------------------------------------------------");
+
+        /*nombre  de films dans le coffret*/
+        Evolues evolues=new Evolues(c1);
+        System.out.println("Similarité entre le film et les films du coffret :"+evolues.similarite_Coffret(bd,tree));
+        System.out.println("Nombre de films dans le coffret est"+evolues.Nombre_Film_Coffret(bd));
+        System.out.println("Il y a un bonus ?"+evolues.YaBonus());
+
+        /*evolue de abonnes*/
+        System.out.println("La similarite de abonnes est "+evolues.similarite_Abonnes(ab1,ab2));
+
+        /*evolue de film*/
+        System.out.println("La similarite de films est "+evolues.similarite_Film(bd,tree,f1,f2));
+
     }
 }
