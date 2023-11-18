@@ -25,7 +25,7 @@ public class Fonction {
 	public Fonction(BdConnector bd) {
 		this.bd=bd;
 		this.abonnes=abonnes;
-		this.evolues=new Evolues();
+		this.evolues=new Evolues(bd);
 		this.films = new Film();
 	}
 
